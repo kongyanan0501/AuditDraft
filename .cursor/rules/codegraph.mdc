@@ -1,0 +1,39 @@
+---
+description: CodeGraph 代码知识图谱的维护约定（大版本更新后自动重建索引）
+alwaysApply: true
+---
+
+# CodeGraph 维护约定
+
+本项目接入了 **CodeGraph**（`@colbymchenry/codegraph`，MCP 代码知识图谱）。
+索引数据位于 `.codegraph/`（已 gitignore，仅保留 `.gitignore` 本身）。
+
+## 日常无需手动操作
+
+- MCP 服务在文件保存时**自动增量同步**（auto-sync），普通改动不用管。
+- 需要确认状态时：`codegraph status`（若有 `Pending sync` 才需 `codegraph sync`）。
+
+## 大版本更新后：自动重建图谱（硬性约定）
+
+当发生「大版本更新」时，**必须**在收尾步骤运行一次全量重建，保证图谱与代码一致：
+
+```bash
+codegraph index --force   # 全量重建索引（等价于重新 init）
+codegraph status          # 校验：节点/边数量、无 Pending
+```
+
+「大版本更新」指以下任一情况：
+
+1. `package.json` 的 `version` 主版本号升级（如 `0.x → 1.0.0`、`1.x → 2.0.0`；`0.x` 阶段视次版本号 `0.1 → 0.2` 为大版本）。
+2. 完成 `todo.md` 中的一个里程碑 / 大阶段。
+3. 大规模重构、新增核心模块或大批量文件移动/重命名。
+
+## 顺带检查工具自身更新
+
+大版本重建时一并检查 CLI 是否有新版：
+
+```bash
+codegraph upgrade --check   # 有更新则 `codegraph upgrade`
+```
+
+> 注意：CodeGraph 仅作为 AI 检索代码用的辅助索引，**不属于业务模块**，不要让业务代码依赖它。

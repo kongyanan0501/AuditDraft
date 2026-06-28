@@ -1,0 +1,29 @@
+---
+description: AI 能力层（LLM / RAG / 规则引擎 / LangGraph）约定
+globs: src/lib/llm/**,src/lib/rag/**,src/lib/rules/**,src/lib/graph/**
+---
+
+# AI 能力层规则
+
+详细设计见 `docs/architecture/ai-system.md`。
+
+## LLM (`src/lib/llm`)
+- 一切模型调用经过 `LLMProvider` 接口；业务层禁止直接 import OpenAI/Anthropic SDK。
+- Prompt 模板集中管理、可版本化（如 `prompts/`）。
+
+## RAG (`src/lib/rag`)
+- 对外只暴露 `retrieve(query: string): Promise<string[]>`，向量库实现细节内聚。
+- 知识条目 metadata：`type / risk_level / tags`，便于过滤检索。
+
+## Rule Engine (`src/lib/rules`)
+- 每条规则是独立**纯函数**，输入交易数据，输出 `AuditFinding[]`，**不依赖 LLM**。
+- 现有规则：`duplicate_payment / missing_approval / split_expense / abnormal_amount`。
+- 新增规则注册到规则集合，不要在工作流节点里内联判断逻辑。
+
+## LangGraph (`src/lib/graph`)
+- 审计流程节点顺序：`parseData → auditPlanner → ruleEngine → anomalyDetection → riskAssessment → workpaperGeneration → reportExport`。
+- 节点间通过共享 state 传递；调整流程只改图定义。
+- LLM 负责理解/生成，Rule Engine 负责确定性检测，RAG 负责知识增强——职责不得越界。
+
+## 可解释性
+- 所有风险结论统一为 `AuditFinding`（`triggeredRule / evidence / standardRef / explanation`）。

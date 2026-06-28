@@ -1,0 +1,21 @@
+---
+description: 前端（Next.js App Router / React / Tailwind / shadcn）约定
+globs: src/app/**,src/components/**
+---
+
+# 前端规则
+
+## 框架与组件
+- Next.js 14 App Router；默认 React Server Components，仅在需要交互时加 `"use client"`。
+- UI 基于 shadcn/ui + TailwindCSS，复用既有组件，避免重复造轮子。
+- 数据获取优先在 Server Component / Server Action / Route Handler 完成。
+- 遵循已安装的 `vercel-react-best-practices` skill（并行取数、Suspense 边界、避免不必要 re-render 等）。
+
+## 业务约束
+- 组件只消费 BFF 返回的标准结构（如 `AuditFinding`），不在组件内做审计推理。
+- 风险按 severity 着色：high=`#ef4444`、medium=`#f59e0b`、low/success=`#22c55e`；Primary=`#111827`，背景=`#f8fafc`。
+- 布局与模块（Workflow Tracker / Risk Cards / Report Viewer / Explainability Panel）见 `docs/architecture/ui-system.md`。
+
+## 设计质量
+- 风格：企业级 SaaS，Notion × Palantir 数据控制台。
+- 涉及视觉/页面设计时参考 `design-taste-frontend` skill，避免模板化、AI 味的默认外观。

@@ -1,0 +1,27 @@
+---
+description: AuditDraft AI 全局项目约定与核心架构原则
+alwaysApply: true
+---
+
+# AuditDraft AI · 项目规则
+
+本仓库是 **AuditDraft AI**：智能审计底稿生成 + 风险识别 + 可解释审计系统。
+技术栈：Next.js 14 (App Router) + TypeScript + Supabase + LangGraph + RAG(Pinecone) + OpenAI/Claude。
+
+## 必读上下文
+- 改动前先读根 `AGENTS.md` 和 `ARCHITECTURE.md`。
+- 深入某模块前读该目录下就近的 `AGENTS.md`。
+- 完成任务后更新 `todo.md` 的状态。
+
+## 核心原则（硬约束）
+1. **模块解耦**：LLM / RAG / DB / Rule Engine / UI 均可替换；面向接口编程，不要把 provider 细节泄漏到业务层。
+2. **混合推理职责分离**：LLM 负责理解与生成；Rule Engine 负责确定性检测且**绝不依赖 LLM**；RAG 负责知识增强。
+3. **可解释性**：任何风险结论必须能产出 `triggeredRule / evidence / standardRef / explanation`（见 `ARCHITECTURE.md` 的 `AuditFinding`）。禁止无证据结论。
+4. **流程编排集中**：审计流程通过 `src/lib/graph` 的 LangGraph 节点编排，不在业务代码里硬编码流程顺序。
+5. **数据隔离**：审计数据按 `user_id` 隔离，依赖 Supabase RLS。
+
+## 通用约定
+- 语言：与用户对话用中文；代码标识符 / 注释用英文。
+- 不要把密钥写进代码；用 `.env.local`，service role key 仅服务端使用。
+- TypeScript 严格模式；优先显式类型与纯函数。
+- 不要新增重复的抽象——先检查是否已有可复用的接口/模块。

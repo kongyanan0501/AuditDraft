@@ -1,0 +1,22 @@
+---
+description: Supabase（数据库 / 认证 / 存储 / RLS）约定
+globs: src/lib/supabase/**,supabase/**
+---
+
+# Supabase 规则
+
+详细设计见 `docs/architecture/data-model.md`。遵循已安装的 `supabase` skill。
+
+## 客户端
+- 区分 server client / browser client / middleware（`@supabase/ssr`）。
+- service role key 仅服务端使用，绝不暴露到浏览器或客户端 bundle。
+- 数据访问集中在 `src/lib/supabase`，对上层暴露 repository 风格函数，业务层不直接拼 SQL。
+
+## 数据安全
+- 所有含 `user_id` 的表启用 RLS，策略 `auth.uid() = user_id`。
+- `audit_reports` / `audit_raw_data` 通过 `job_id → audit_jobs.user_id` 校验归属。
+- 表：`audit_jobs / audit_reports / audit_raw_data`（结构见 data-model.md）。
+
+## 认证
+- Email + Password；`signUp` / `signInWithPassword`；Session 管理。
+- 用户数据严格隔离。
