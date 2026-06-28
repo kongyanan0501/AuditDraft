@@ -35,6 +35,8 @@ export function abnormalAmount(transactions: Transaction[]): AuditFinding[] {
           std: Number(std.toFixed(2)),
           zScore: Number(zScore.toFixed(2)),
         },
+        standardRef:
+          "《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》",
         explanation: `交易 ${t.id} 金额 ${t.amount} 显著偏离均值(${mean.toFixed(0)})，z-score=${zScore.toFixed(2)}，属金额离群异常。`,
       });
     }

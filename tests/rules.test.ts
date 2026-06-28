@@ -71,10 +71,11 @@ describe("规则引擎（确定性，无网络调用）", () => {
     const findings = runRules(DEMO_TRANSACTIONS);
     const types = findings.map((f) => f.riskType).sort();
     expect(types).toEqual(["duplicate_payment", "missing_approval"]);
-    // 每条结论都可解释
+    // 每条结论四要素齐全（triggeredRule / evidence / standardRef / explanation）
     for (const f of findings) {
       expect(f.triggeredRule).toBeTruthy();
       expect(f.evidence).toBeDefined();
+      expect(f.standardRef).toBeTruthy();
       expect(f.explanation).toBeTruthy();
     }
   });

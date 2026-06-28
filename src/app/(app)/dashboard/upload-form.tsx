@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
 import { uploadAndCreateJob, type UploadResult } from "./actions";
+import { triggerAudit, useRefreshPolling } from "./run-audit-button";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -22,6 +24,22 @@ export function UploadForm() {
     uploadAndCreateJob,
     null,
   );
+  const startPolling = useRefreshPolling();
+  const triggeredFor = useRef<string | null>(null);
+  const [triggerError, setTriggerError] = useState<string | null>(null);
+
+  // 上传成功后自动触发审计工作流（每个 jobId 只触发一次）。
+  useEffect(() => {
+    if (state?.ok !== true) return;
+    if (triggeredFor.current === state.jobId) return;
+    triggeredFor.current = state.jobId;
+    setTriggerError(null);
+    triggerAudit(state.jobId)
+      .then(() => startPolling())
+      .catch((err) =>
+        setTriggerError(err instanceof Error ? err.message : "触发审计失败"),
+      );
+  }, [state, startPolling]);
 
   return (
     <form action={formAction} className="space-y-3">
@@ -40,8 +58,11 @@ export function UploadForm() {
       ) : null}
       {state?.ok === true ? (
         <p className="text-sm text-[#22c55e]">
-          上传成功，已创建任务 {state.jobId.slice(0, 8)}…（status=pending）
+          上传成功，已创建任务 {state.jobId.slice(0, 8)}…，正在自动运行审计。
         </p>
+      ) : null}
+      {triggerError ? (
+        <p className="text-sm text-[#ef4444]">{triggerError}</p>
       ) : null}
     </form>
   );

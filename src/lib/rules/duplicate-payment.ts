@@ -28,6 +28,8 @@ export function duplicatePayment(transactions: Transaction[]): AuditFinding[] {
         transactionIds: group.map((t) => t.id),
         count: group.length,
       },
+      standardRef:
+        "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
       explanation: `供应商「${first.vendor}」存在 ${group.length} 笔金额(${first.amount})与发票号(${first.invoiceId})完全相同的付款，疑似重复付款 / 重复发票。`,
     });
   }

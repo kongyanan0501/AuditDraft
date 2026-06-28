@@ -18,6 +18,8 @@ export type AuditJobRow = {
   /** Storage 内的对象路径（{user_id}/{job_id}/{filename}） */
   storage_path: string | null;
   status: JobStatus;
+  /** 失败原因（status='failed' 时填充，供前端展示）。 */
+  error: string | null;
   created_at: string;
 };
 
@@ -50,6 +52,7 @@ export interface Database {
           filename: string;
           storage_path?: string | null;
           status?: JobStatus;
+          error?: string | null;
           created_at?: string;
         };
         Update: {
@@ -58,6 +61,7 @@ export interface Database {
           filename?: string;
           storage_path?: string | null;
           status?: JobStatus;
+          error?: string | null;
           created_at?: string;
         };
         Relationships: [];

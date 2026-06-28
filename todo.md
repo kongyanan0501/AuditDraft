@@ -102,19 +102,28 @@ npm run dev         # 本地启动 http://localhost:3000
 
 ## 阶段 3 · 数据与流程端到端打通
 
-- [ ] `parseData`：Excel/CSV → `Transaction[]`（列映射 + 校验）
-- [ ] API Route `POST /api/audit`：触发工作流（鉴权 + 异步执行）
-- [ ] 任务状态机：`pending → running → done/failed` 落库
-- [ ] 结果写入 `audit_reports.report_json`（结构 = `AuditReport`）
-- [ ] 可解释性：每个风险输出 触发规则 / 证据 / 标准 / 解释
+- [x] `parseData`：Excel/CSV → `Transaction[]`（`src/lib/parse`，列映射 + 校验 + 可读 `ParseError`，基于 xlsx）
+- [x] API Route `POST /api/audit`：鉴权（RLS 校验归属）+ detached 异步执行工作流，返回 202
+- [x] 任务状态机：`pending → running → done/failed` 落库（`executeAuditJob` + admin 客户端）
+- [x] 结果写入 `audit_reports.report_json`（结构 = `AuditReport`）；原始交易写入 `audit_raw_data`
+- [x] 可解释性：每个 finding 含 `triggeredRule / evidence / standardRef / explanation`（规则内置准则引用）
+- [x] 失败原因落库：迁移 `0003_job_error.sql` 新增 `audit_jobs.error`，前端展示
+- [x] 前端：上传后自动触发审计 + 运行/重试按钮 + 轻量轮询刷新
 
 ### ✅ 阶段验证
-- [ ] `typecheck + lint + build` 通过
-- [ ] **端到端**：上传 `expense_transactions.csv` → 30 秒内 `audit_jobs.status` 变为 `done`
-- [ ] `audit_reports` 出现一条记录，`report_json` 含 `findings[]` 与 `workpaper`
-- [ ] 每个 finding 四要素齐全（`triggeredRule/evidence/standardRef/explanation`），无空证据结论
-- [ ] 内置风险全部被识别：重复付款 / 拆分报销 / 无审批大额 / 重复发票
-- [ ] 异常输入（坏 CSV）→ 任务 `failed` 且前端有可读错误
+- [x] `typecheck + lint + build` 通过；`npm run test` 17 项全绿（含解析 + 4 类风险识别）
+- [ ] **端到端**：上传 `expense_transactions.csv` → 30 秒内 `audit_jobs.status` 变为 `done` → 需 live key + 跑迁移实测
+- [ ] `audit_reports` 出现一条记录，`report_json` 含 `findings[]` 与 `workpaper` → 同上（live）
+- [x] 每个 finding 四要素齐全（`triggeredRule/evidence/standardRef/explanation`），无空证据结论（`tests/rules.test.ts` 断言）
+- [x] 内置风险全部被识别：重复付款 / 拆分报销 / 无审批大额 / 重复发票（`tests/parse.test.ts` 用演示数据集断言）
+- [x] 异常输入（坏 CSV）→ `ParseError`（`tests/parse.test.ts`）；运行器落库 `failed` 且前端展示 `error`
+
+> 说明：端到端打通的代码与单测已就绪。演示数据集见 `samples/expense_transactions.csv`（含 4 类风险）。
+> 剩余 2 项为运行时验证，需 `.env.local` 配真实 key、执行 `supabase/migrations/*.sql`（含 `0003`）、
+> `npm run seed:rag` 后用真实账号上传走查。
+>
+> 决策（技术债「长任务执行方式」）：阶段3采用 **API 触发 + detached 异步执行 + 任务状态机轮询**。
+> 适合本地与长驻 Node；Serverless 长任务（>限额）后续可换队列/后台 job（阶段5 部署再评估）。
 
 ---
 
@@ -160,5 +169,5 @@ npm run dev         # 本地启动 http://localhost:3000
 - [ ] LLM 默认 provider 选型（成本 vs 质量）
 - [ ] RAG 知识库初始语料来源与版权
 - [ ] 底稿模板格式标准（事务所是否有既定模板）
-- [ ] 是否引入测试框架（Vitest）作为规则引擎/解析器的回归保障
-- [ ] 长任务执行方式（同步 API vs 队列/后台 job）
+- [x] 是否引入测试框架（Vitest）作为规则引擎/解析器的回归保障 → 阶段2 已引入 Vitest（`npm run test`）
+- [x] 长任务执行方式（同步 API vs 队列/后台 job）→ 阶段3 决策：API 触发 + detached 异步 + 状态机轮询；Serverless 限额场景后续换队列

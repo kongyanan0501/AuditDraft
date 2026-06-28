@@ -1,0 +1,12 @@
+id,vendor,amount,approver,invoice_id
+1,ABC Corp,5000,,INV-1001
+2,ABC Corp,5000,,INV-1001
+3,XYZ Ltd,12000,John,INV-2001
+4,LMN Inc,20000,,INV-3001
+5,QuickBuy,9000,Alice,INV-4001
+6,QuickBuy,9500,Alice,INV-4002
+7,Office Co,300,Bob,INV-5001
+8,Office Co,320,Bob,INV-5002
+9,Office Co,310,Bob,INV-5003
+10,Office Co,290,Bob,INV-5004
+11,Mega Supplier,500000,Carol,INV-6001

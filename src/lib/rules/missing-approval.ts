@@ -23,6 +23,8 @@ export function missingApproval(transactions: Transaction[]): AuditFinding[] {
           approver: t.approver,
           invoiceId: t.invoiceId,
         },
+        standardRef:
+          "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
         explanation: `交易 ${t.id}（供应商「${t.vendor}」，金额 ${t.amount}）超过审批阈值 ${APPROVAL_THRESHOLD} 却无审批人，存在未授权大额支出风险。`,
       });
     }

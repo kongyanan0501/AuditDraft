@@ -2,6 +2,7 @@ import { signOut } from "@/app/(auth)/actions";
 import { getJobs, requireUser } from "@/lib/supabase/repository";
 import type { JobStatus } from "@/types/audit";
 
+import { RunAuditButton } from "./run-audit-button";
 import { UploadForm } from "./upload-form";
 
 export const dynamic = "force-dynamic";
@@ -65,12 +66,23 @@ export default async function DashboardPage() {
                   <p className="text-xs text-muted-foreground">
                     {formatDate(job.created_at)}
                   </p>
+                  {job.status === "failed" && job.error ? (
+                    <p className="mt-1 text-xs text-[#ef4444]">{job.error}</p>
+                  ) : null}
                 </div>
-                <span
-                  className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLE[job.status]}`}
-                >
-                  {job.status}
-                </span>
+                <div className="flex shrink-0 items-center gap-3">
+                  {job.status === "pending" || job.status === "failed" ? (
+                    <RunAuditButton
+                      jobId={job.id}
+                      label={job.status === "failed" ? "重试" : "运行审计"}
+                    />
+                  ) : null}
+                  <span
+                    className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLE[job.status]}`}
+                  >
+                    {job.status}
+                  </span>
+                </div>
               </li>
             ))}
           </ul>

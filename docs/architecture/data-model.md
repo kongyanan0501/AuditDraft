@@ -8,11 +8,13 @@
 ```sql
 -- 审计任务
 audit_jobs (
-  id          uuid primary key default gen_random_uuid(),
-  user_id     uuid references auth.users(id),
-  filename    text,
-  status      text,              -- pending | running | done | failed
-  created_at  timestamptz default now()
+  id           uuid primary key default gen_random_uuid(),
+  user_id      uuid references auth.users(id),
+  filename     text,
+  storage_path text,             -- Storage 对象路径 {user_id}/{job_id}/{filename}
+  status       text,             -- pending | running | done | failed
+  error        text,             -- 失败原因（status='failed' 时填充）
+  created_at   timestamptz default now()
 );
 
 -- 审计报告

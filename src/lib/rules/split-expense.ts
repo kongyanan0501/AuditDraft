@@ -38,6 +38,8 @@ export function splitExpense(transactions: Transaction[]): AuditFinding[] {
         total,
         count: group.length,
       },
+      standardRef:
+        "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
       explanation: `供应商「${vendor}」存在 ${group.length} 笔接近审批阈值(${APPROVAL_THRESHOLD})的支出，合计 ${total}，疑似拆分报销以规避审批。`,
     });
   }
