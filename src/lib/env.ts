@@ -109,9 +109,22 @@ export const getPineconeEnv = memo(() =>
   ),
 );
 
+/**
+ * Embedding（RAG 向量化）。无论对话 provider 是谁，向量化统一走 OpenAI，
+ * 因此独立要求 OPENAI_API_KEY。模型 / 维度可通过 EMBEDDING_MODEL 覆盖。
+ */
+export const getEmbeddingEnv = memo(() =>
+  validate(
+    "Embedding(OpenAI)",
+    z.object({ OPENAI_API_KEY: nonEmpty("OPENAI_API_KEY") }),
+    { OPENAI_API_KEY: process.env.OPENAI_API_KEY },
+  ),
+);
+
 /** 一次性校验全部子系统（用于部署前自检 / CI / `npm run check:env`）。 */
 export function validateAllEnv(): void {
   getSupabaseEnv();
   getLLMEnv();
   getPineconeEnv();
+  getEmbeddingEnv();
 }

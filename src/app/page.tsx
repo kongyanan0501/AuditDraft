@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16">
@@ -15,8 +17,22 @@ export default function Home() {
         <span className="rounded border border-border px-2 py-1">LangGraph</span>
         <span className="rounded border border-border px-2 py-1">RAG · Pinecone</span>
       </div>
+      <div className="flex gap-3">
+        <Link
+          href="/login"
+          className="h-10 rounded-md bg-primary px-5 text-sm font-medium leading-10 text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          登录
+        </Link>
+        <Link
+          href="/register"
+          className="h-10 rounded-md border border-input bg-card px-5 text-sm font-medium leading-10 transition-colors hover:bg-secondary"
+        >
+          注册
+        </Link>
+      </div>
       <p className="text-sm text-muted-foreground">
-        项目处于架构初始化阶段，开发进度见 <code>todo.md</code>。
+        基础设施（Supabase 认证与数据）已就绪，开发进度见 <code>todo.md</code>。
       </p>
     </main>
   );

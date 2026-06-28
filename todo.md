@@ -39,57 +39,64 @@ npm run dev         # 本地启动 http://localhost:3000
 
 ## 阶段 1 · 基础设施（Supabase 认证与数据）
 
-- [ ] 接入 Supabase 客户端：`lib/supabase/{server,browser,middleware}.ts`（`@supabase/ssr`）
-- [ ] `middleware.ts`：刷新 Session + 保护路由
-- [ ] 建表迁移 `supabase/migrations/*.sql`：`audit_jobs` / `audit_reports` / `audit_raw_data`
-- [ ] 为三张表开启 RLS：`audit_jobs` 用 `auth.uid() = user_id`；子表经 `job_id → audit_jobs.user_id` 校验归属
-- [ ] Auth 流程：注册 / 登录 / 登出 / Session（`signUp` / `signInWithPassword`）
-- [ ] Storage bucket：Excel/CSV 上传（私有 bucket + 按 user 隔离）
-- [ ] repository 函数：`createJob / getJobs / saveReport / saveRawData`
+- [x] 接入 Supabase 客户端：`lib/supabase/{server,browser,middleware}.ts`（`@supabase/ssr`）+ `admin.ts`（service role）+ `types.ts`
+- [x] `middleware.ts`：刷新 Session + 保护路由（`/dashboard` 需登录；已登录访问 `/login`、`/register` 跳转 dashboard）
+- [x] 建表迁移 `supabase/migrations/*.sql`：`audit_jobs` / `audit_reports` / `audit_raw_data`（`0001_audit_tables.sql`）
+- [x] 为三张表开启 RLS：`audit_jobs` 用 `auth.uid() = user_id`；子表经 `job_id → audit_jobs.user_id` 校验归属（`TO authenticated` + USING/WITH CHECK）
+- [x] Auth 流程：注册 / 登录 / 登出 / Session（`src/app/(auth)`：`signUp` / `signInWithPassword` / `signOut`）
+- [x] Storage bucket：Excel/CSV 上传（私有 `audit-uploads` + 按 user 路径隔离，`0002_storage_bucket.sql`）
+- [x] repository 函数：`createJob / getJobs / getJob / updateJobStatus / setJobStoragePath / saveReport / saveRawData / uploadAuditFile`
+- [x] 受保护工作台 `/dashboard`：任务列表 + CSV/Excel 上传（验证用）
 
 ### ✅ 阶段验证
-- [ ] `typecheck + lint + build` 通过
-- [ ] 注册新用户 → 邮箱出现在 Supabase `auth.users`
-- [ ] 登录后 Session 持久化；登出后访问受保护页被重定向到登录页
+- [x] `typecheck + lint + build` 通过
+- [x] service role key 不出现在客户端 bundle（已搜索 `.next/static` 确认无 `SERVICE_ROLE` / `createAdminClient`）
+- [ ] 注册新用户 → 邮箱出现在 Supabase `auth.users`（需配置 `.env.local` 与真实 Supabase 项目 + 跑迁移后实测）
+- [ ] 登录后 Session 持久化；登出后访问受保护页被重定向到登录页（同上，需 live 实测）
 - [ ] **RLS 验证**：用户 A 无法查询/读取用户 B 的 `audit_jobs`（用两个账号实测或 SQL 模拟 `auth.uid()`）
-- [ ] 上传一个 CSV → Storage 出现文件且 `audit_jobs` 新增一条 `status='pending'` 记录
-- [ ] service role key 不出现在客户端 bundle（搜索构建产物确认）
+- [ ] 上传一个 CSV → Storage 出现文件且 `audit_jobs` 新增一条 `status='pending'` 记录（live 实测）
+
+> 说明：代码与迁移已就绪；剩余 4 项为运行时验证，需先在 `.env.local` 配置真实 Supabase 项目并执行 `supabase/migrations/*.sql`（建表 + RLS + bucket），再用真实账号走查。
 
 ---
 
 ## 阶段 2 · AI 核心（解耦模块，可独立单测）
 
 ### 2.1 LLM 层 `lib/llm`
-- [ ] 定义 `LLMProvider` 接口（`generate(prompt)`）
-- [ ] 实现 OpenAI provider 与 Anthropic provider
-- [ ] `getLLM()` 工厂：按 `LLM_PROVIDER` 环境变量选择
-- [ ] `prompts/`：Audit Planner / Executor / Risk Engine / Workpaper 四套模板
+- [x] 定义 `LLMProvider` 接口（`generate(prompt, options?)`，`types.ts`）
+- [x] 实现 OpenAI provider 与 Anthropic provider（`providers/{openai,anthropic}.ts`，均 server-only）
+- [x] `getLLM()` 工厂：按 `LLM_PROVIDER` 环境变量选择（`index.ts`，带缓存 + `resetLLM`）
+- [x] `prompts/`：Audit Planner / Executor / Risk Engine / Workpaper 四套模板（纯函数 builder）
 
 ### 2.2 RAG 层 `lib/rag`
-- [ ] 实现 `retrieve(query): Promise<string[]>`（embedding → Pinecone → Top-K）
-- [ ] 知识库灌入脚本 `scripts/seed-rag.ts`（准则 / 风险规则 / 程序 / 案例）
+- [x] 实现 `retrieve(query): Promise<string[]>`（OpenAI embedding → Pinecone Top-K；`createRetriever` 可注入依赖）
+- [x] 向量库 / embedding 抽象（`VectorStore` / `Embedder`），Pinecone 实现内聚于 `pinecone.ts`
+- [x] 知识库灌入脚本 `scripts/seed-rag.ts` + `knowledge.ts`（准则 / 风险规则 / 程序 / 案例）；`npm run seed:rag`
 
 ### 2.3 规则引擎 `lib/rules`
-- [ ] 纯函数：`duplicate_payment` / `missing_approval` / `split_expense` / `abnormal_amount`
-- [ ] 规则注册表 + `runRules(transactions): AuditFinding[]`
-- [ ] 每个 finding 带 `triggeredRule` 与 `evidence`
+- [x] 纯函数：`duplicate_payment` / `missing_approval` / `split_expense` / `abnormal_amount`（各独立文件）
+- [x] 规则注册表 `RULE_REGISTRY` + `runRules(transactions, ruleIds?)`
+- [x] 每个 finding 带 `triggeredRule` / `evidence` / `explanation`
 
 ### 2.4 编排 `lib/graph`
-- [ ] LangGraph 7 节点：`parseData → auditPlanner → ruleEngine → anomalyDetection → riskAssessment → workpaperGeneration → reportExport`
-- [ ] 节点间共享 state 类型定义
-- [ ] 失败节点更新 `audit_jobs.status='failed'`
+- [x] LangGraph 7 节点：`parseData → auditPlanner → ruleEngine → anomalyDetection → riskAssessment → workpaperGeneration → reportExport`
+- [x] 共享 state 类型（`state.ts` Annotation.Root）；依赖注入式节点（`createNodes(deps)`）便于 mock 单测
+- [x] 失败节点更新 `audit_jobs.status='failed'`（`run.ts` 运行器维护状态机）
 
 ### 2.5 导出 `lib/export`
-- [ ] Word 导出（底稿模板）
-- [ ] PDF 导出
+- [x] Word 导出（`docx`，完整中文支持）
+- [x] PDF 导出（`pdfkit`；中文需配置 `PDF_CJK_FONT_PATH`，否则降级为可读结构）
 
 ### ✅ 阶段验证
-- [ ] `typecheck + lint + build` 通过
-- [ ] **LLM**：切换 `LLM_PROVIDER=openai|anthropic`，同一 prompt 都能返回结果（provider 可替换）
-- [ ] **RAG**：对「重复付款」查询，`retrieve()` 返回相关知识条目（Top-K 命中率人工抽检）
-- [ ] **规则引擎单测**：用 `initial.md` 的演示数据，断言能命中重复付款(行1&2)、无审批大额(行4)等预期 finding；纯函数测试不触发任何网络调用
-- [ ] **图**：以 mock LLM 跑通 7 节点，state 在节点间正确流转，最终产出 `AuditReport`
-- [ ] **导出**：生成的 Word/PDF 能正常打开且含风险与底稿内容
+- [x] `typecheck + lint + build` 通过
+- [ ] **LLM**：切换 `LLM_PROVIDER=openai|anthropic`，同一 prompt 都能返回结果（provider 可替换）→ 需 live key 实测
+- [ ] **RAG**：对「重复付款」查询，`retrieve()` 返回相关知识条目（Top-K 命中率人工抽检）→ 需先 `npm run seed:rag` + live Pinecone
+- [x] **规则引擎单测**：`tests/rules.test.ts` 用演示数据断言命中重复付款(行1&2)、无审批大额(行4)；纯函数无网络调用
+- [x] **图**：`tests/graph.test.ts` 以 mock LLM 跑通 7 节点，state 正确流转，产出 `AuditReport`
+- [x] **导出**：`tests/export.test.ts` 断言生成的 Word(PK)/PDF(%PDF) 为合法文件且含风险与底稿内容
+
+> 说明：模块代码与单测（`npm run test`，12 项全绿）已就绪。剩余 2 项为运行时验证，需在 `.env.local`
+> 配置真实 OpenAI / Anthropic / Pinecone key，并先 `npm run seed:rag` 灌库后实测。
 
 ---
 
