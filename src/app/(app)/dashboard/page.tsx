@@ -1,58 +1,50 @@
-import { signOut } from "@/app/(auth)/actions";
-import { getJobs, requireUser } from "@/lib/supabase/repository";
-import type { JobStatus } from "@/types/audit";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
-import { RunAuditButton } from "./run-audit-button";
+import { RunAuditButton } from "@/components/audit/run-audit-button";
+import { StatusBadge } from "@/components/audit/status-badge";
+import { StatusPoller } from "@/components/audit/status-poller";
+import { getJobs } from "@/lib/supabase/repository";
+
 import { UploadForm } from "./upload-form";
 
 export const dynamic = "force-dynamic";
-
-const STATUS_STYLE: Record<JobStatus, string> = {
-  pending: "border-border bg-secondary text-secondary-foreground",
-  running: "border-[#f59e0b]/30 bg-[#f59e0b]/10 text-[#f59e0b]",
-  done: "border-[#22c55e]/30 bg-[#22c55e]/10 text-[#22c55e]",
-  failed: "border-[#ef4444]/30 bg-[#ef4444]/10 text-[#ef4444]",
-};
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString("zh-CN", { hour12: false });
 }
 
 export default async function DashboardPage() {
-  const [user, jobs] = await Promise.all([requireUser(), getJobs()]);
+  const jobs = await getJobs();
+  const hasRunning = jobs.some((j) => j.status === "running");
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12">
-      <header className="mb-10 flex items-start justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">审计工作台</h1>
-          <p className="text-sm text-muted-foreground">{user.email}</p>
-        </div>
-        <form action={signOut}>
-          <button
-            type="submit"
-            className="h-9 rounded-md border border-input bg-card px-3 text-sm font-medium transition-colors hover:bg-secondary"
-          >
-            登出
-          </button>
-        </form>
-      </header>
+    <div className="space-y-8">
+      <StatusPoller active={hasRunning} />
 
-      <section className="mb-10 rounded-lg border border-border bg-card p-5">
-        <h2 className="mb-1 text-base font-medium">上传审计数据</h2>
-        <p className="mb-4 text-sm text-muted-foreground">
-          支持 CSV / Excel，上传后会创建一条待处理审计任务。
+      <div>
+        <h1 className="text-xl font-semibold tracking-tight">审计任务</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          上传财务数据，自动运行审计工作流并生成可解释底稿。
+        </p>
+      </div>
+
+      <section className="rounded-lg border border-border bg-card p-5">
+        <h2 className="mb-1 text-sm font-medium">上传审计数据</h2>
+        <p className="mb-4 text-xs text-muted-foreground">
+          支持 CSV / Excel。上传后将自动创建任务并运行审计。
         </p>
         <UploadForm />
       </section>
 
       <section>
-        <h2 className="mb-4 text-base font-medium">
-          我的任务 <span className="text-muted-foreground">({jobs.length})</span>
+        <h2 className="mb-3 text-sm font-medium">
+          任务列表{" "}
+          <span className="text-muted-foreground">({jobs.length})</span>
         </h2>
         {jobs.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-border px-4 py-10 text-center text-sm text-muted-foreground">
-            还没有任务，上传一个文件试试。
+          <p className="rounded-lg border border-dashed border-border bg-card px-4 py-12 text-center text-sm text-muted-foreground">
+            还没有任务，上传一个文件开始。
           </p>
         ) : (
           <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
@@ -62,12 +54,20 @@ export default async function DashboardPage() {
                 className="flex items-center justify-between gap-4 px-4 py-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{job.filename}</p>
+                  <Link
+                    href={`/jobs/${job.id}`}
+                    className="group flex items-center gap-1 text-sm font-medium hover:underline"
+                  >
+                    <span className="truncate">{job.filename}</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                  </Link>
                   <p className="text-xs text-muted-foreground">
                     {formatDate(job.created_at)}
                   </p>
                   {job.status === "failed" && job.error ? (
-                    <p className="mt-1 text-xs text-[#ef4444]">{job.error}</p>
+                    <p className="mt-1 line-clamp-2 text-xs text-risk-high">
+                      {job.error}
+                    </p>
                   ) : null}
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
@@ -77,17 +77,13 @@ export default async function DashboardPage() {
                       label={job.status === "failed" ? "重试" : "运行审计"}
                     />
                   ) : null}
-                  <span
-                    className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLE[job.status]}`}
-                  >
-                    {job.status}
-                  </span>
+                  <StatusBadge status={job.status} />
                 </div>
               </li>
             ))}
           </ul>
         )}
       </section>
-    </main>
+    </div>
   );
 }

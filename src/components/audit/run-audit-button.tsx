@@ -1,5 +1,6 @@
 "use client";
 
+import { Play } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -18,7 +19,6 @@ export async function triggerAudit(jobId: string): Promise<void> {
 
 /**
  * 后台工作流为异步执行，这里用轻量轮询刷新 Server Component 数据以反映状态变化。
- * （阶段4 会用更完善的 Workflow Tracker 替代。）
  */
 export function useRefreshPolling() {
   const router = useRouter();
@@ -75,11 +75,12 @@ export function RunAuditButton({
         type="button"
         onClick={onClick}
         disabled={pending}
-        className="h-8 shrink-0 rounded-md border border-input bg-card px-3 text-xs font-medium transition-colors hover:bg-secondary disabled:opacity-50"
+        className="flex h-8 items-center gap-1.5 rounded-md border border-input bg-card px-3 text-xs font-medium transition-colors hover:bg-secondary active:translate-y-px disabled:opacity-50"
       >
+        <Play className="h-3.5 w-3.5" strokeWidth={2} />
         {pending ? "触发中…" : label}
       </button>
-      {error ? <span className="text-xs text-[#ef4444]">{error}</span> : null}
+      {error ? <span className="text-xs text-risk-high">{error}</span> : null}
     </div>
   );
 }

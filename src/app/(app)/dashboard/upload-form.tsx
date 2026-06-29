@@ -3,8 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
+import {
+  triggerAudit,
+  useRefreshPolling,
+} from "@/components/audit/run-audit-button";
+
 import { uploadAndCreateJob, type UploadResult } from "./actions";
-import { triggerAudit, useRefreshPolling } from "./run-audit-button";
 
 function SubmitButton() {
   const { pending } = useFormStatus();

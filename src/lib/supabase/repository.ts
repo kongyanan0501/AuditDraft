@@ -125,6 +125,26 @@ export async function setJobStoragePath(
   }
 }
 
+/** 读取某任务最新的审计报告（不存在或非本人 → null）。RLS 保证归属。 */
+export async function getReportByJobId(
+  jobId: string,
+): Promise<AuditReportRow | null> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("audit_reports")
+    .select()
+    .eq("job_id", jobId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new RepositoryError("getReportByJobId", error.message);
+  }
+  return data;
+}
+
 /** 落库审计报告（report_json = AuditReport 结构）。 */
 export async function saveReport(input: {
   jobId: string;

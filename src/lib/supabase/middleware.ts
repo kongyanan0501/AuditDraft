@@ -5,7 +5,7 @@ import { getSupabaseEnv } from "@/lib/env";
 import type { Database } from "./types";
 
 /** 需要登录才能访问的路由前缀。 */
-const PROTECTED_PREFIXES = ["/dashboard"];
+const PROTECTED_PREFIXES = ["/dashboard", "/jobs", "/reports", "/rag"];
 
 /** 已登录用户不应再看到的路由（登录/注册）。 */
 const AUTH_ROUTES = ["/login", "/register"];

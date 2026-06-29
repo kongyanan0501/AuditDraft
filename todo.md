@@ -127,23 +127,26 @@ npm run dev         # 本地启动 http://localhost:3000
 
 ---
 
-## 阶段 4 · 前端工作台（Notion × Palantir 风格）
+## 阶段 4 · 前端工作台（Notion × Palantir 风格）✅ 已完成
 
-- [ ] Layout：TopBar + Sidebar（Jobs / Reports / RAG）+ Main Workspace
-- [ ] 上传页：拖拽上传 CSV/Excel + 任务列表
-- [ ] Workflow Tracker：7 节点流程可视化 + 实时状态（轮询/订阅）
-- [ ] Risk Cards：按 severity 着色（high `#ef4444` / medium `#f59e0b` / low `#22c55e`）
-- [ ] Audit Report Viewer：Notion 风格可折叠底稿 + 风险高亮
-- [ ] Explainability Panel：规则原因 / 数据证据 / 标准引用
-- [ ] 一键导出 Word/PDF 按钮
+- [x] Layout：TopBar + Sidebar（Jobs / Reports / RAG）+ Main Workspace（`(app)/layout.tsx` 外壳 + `SidebarNav` 客户端高亮，`max-w-[1400px]` 容器）
+- [x] 上传页：CSV/Excel 上传 + 任务列表（`/dashboard`，任务行链接详情、状态徽章、运行/重试按钮、失败原因）
+- [x] Workflow Tracker：7 节点流程可视化 + 实时状态（`WorkflowTracker` 按 job 状态推导节点态 + `StatusPoller` 轮询刷新）
+- [x] Risk Cards：按 severity 着色（high `#ef4444` / medium `#f59e0b` / low `#22c55e`，配色集中在 `severity.ts`）
+- [x] Audit Report Viewer：Notion 风格可折叠底稿（`ReportViewer` 轻量 Markdown 渲染 + 原生 `<details>` 分节，零 JS）
+- [x] Explainability Panel：规则原因 / 数据证据 / 标准引用（内置于 `RiskCard` 的可折叠区，展开见四要素）
+- [x] 一键导出 Word/PDF 按钮（`ExportButtons` 原生下载链接 → `GET /api/audit/[jobId]/export`，鉴权 + RLS）
 
 ### ✅ 阶段验证
-- [ ] `typecheck + lint + build` 通过
-- [ ] 完整走查：登录 → 上传 → 看到流程实时推进 → 报告展示 → 导出
-- [ ] 配色符合 `ui-system.md`；风险卡片颜色随 severity 正确变化
-- [ ] Explainability Panel 能展开看到每条结论的证据与标准引用
-- [ ] 响应式：笔记本屏幕（≤1440px）布局不破版
-- [ ] 遵循 `vercel-react-best-practices`（RSC 优先、无明显多余 re-render）
+- [x] `typecheck + lint + build` 通过（build 9 路由；`npm run test` 17 项全绿）
+- [ ] 完整走查：登录 → 上传 → 看到流程实时推进 → 报告展示 → 导出（需 live key + 跑迁移实测）
+- [x] 配色符合 `ui-system.md`；风险卡片颜色随 severity 正确变化（`severity.ts` 锁定 risk 配色，单一 accent）
+- [x] Explainability Panel 能展开看到每条结论的证据与标准引用（`RiskCard` 折叠区渲染 `triggeredRule/evidence/standardRef`）
+- [x] 响应式：笔记本屏幕（≤1440px）布局不破版（侧栏 `md:` 断点折叠为顶部导航，主区 `min-w-0` + Grid）
+- [x] 遵循 `vercel-react-best-practices`（RSC 优先：页面/卡片/查看器均为 Server Component，客户端仅 `SidebarNav`/`StatusPoller`/`RunAuditButton`/`UploadForm` 叶子岛；首屏 JS ≤ ~99KB）
+
+> 说明：UI 全部就绪并通过三件套 + 测试 + 无 client bundle 泄漏（`.next/static` 无 `getReportByJobId`/`SERVICE_ROLE` 等）。
+> 唯一剩余「完整走查」为运行时验证，需 `.env.local` 配真实 key、执行 `supabase/migrations/*.sql`、`npm run seed:rag` 后实测。
 
 ---
 
