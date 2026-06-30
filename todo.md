@@ -152,18 +152,22 @@ npm run dev         # 本地启动 http://localhost:3000
 
 ## 阶段 5 · 大赛冲刺
 
-- [ ] 内置演示数据集 `expense_transactions.csv`（含重复付款/拆分/无审批/重复发票）
-- [ ] Prompt 工程四件套调优（Planner / Executor / Risk Engine / Workpaper）
-- [ ] 种子 RAG 知识库（足够覆盖 demo 风险类型）
-- [ ] Demo 脚本与评委演示流程（含话术）
-- [ ] 部署：Vercel（前端/BFF）+ Supabase（DB/Auth）+ Pinecone（RAG）
-- [ ] 性能：单次审计 ≤ 30 秒
+- [x] 内置演示数据集 `expense_transactions.csv`（含重复付款/拆分/无审批/金额离群；4 类风险，阈值 10000）
+- [x] Prompt 工程四件套调优（Planner / Executor / Risk Engine / Workpaper）——加 `EXPLAINABILITY_GUARD` 硬约束 + 结构化模板 + 字数上限控耗时
+- [x] 种子 RAG 知识库（扩至 15 条：4 风险规则 + 审批阈值规则 + 5 准则 + 3 程序 + 3 案例，覆盖全部 demo 风险）
+- [x] Demo 脚本与评委演示流程（含话术）→ `docs/demo-script.md`
+- [x] 部署产物就绪：`vercel.json`（audit 路由 `maxDuration:60`）+ `waitUntil` 后台保活 + `docs/deployment.md`；**实际部署需用户真实账号/密钥**
+- [x] 性能策略落地（控输出字数 + 选快模型指引）；**实测 ≤30 秒需 live 环境**
 
 ### ✅ 阶段验证
-- [ ] 生产环境（Vercel 部署后的 URL）完整跑通 demo 流程
-- [ ] 端到端耗时实测 ≤ 30 秒（记录数字用于路演）
-- [ ] 冷启动后用全新账号也能复现 demo（无本地脏数据依赖）
-- [ ] 演示脚本走查一遍无卡点；准备好「可解释性」亮点截图
+- [ ] 生产环境（Vercel 部署后的 URL）完整跑通 demo 流程 → 需用户配 key + 部署后实测
+- [ ] 端到端耗时实测 ≤ 30 秒（记录数字用于路演）→ 同上（live）
+- [ ] 冷启动后用全新账号也能复现 demo（无本地脏数据依赖）→ 同上（live）
+- [ ] 演示脚本走查一遍无卡点；准备好「可解释性」亮点截图 → 脚本已就绪（`docs/demo-script.md`），走查与截图需 live 环境
+
+> 说明：阶段5 代码侧与文档已全部就绪（演示数据 / Prompt 调优 / RAG 扩库 / Demo 话术 / 部署产物）。
+> 长任务在 Vercel 用 `@vercel/functions` 的 `waitUntil` 保活（替换原 detached promise），落在 `maxDuration:60` 预算内。
+> 剩余 4 项均为运行时验证：需在 Vercel/Supabase/Pinecone 配置真实 key、跑迁移、`npm run seed:rag` 后按 `docs/deployment.md` §7 走查。
 
 ---
 

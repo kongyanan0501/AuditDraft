@@ -15,7 +15,13 @@ export interface PromptInput {
 
 const AUDITOR_PERSONA =
   "你是一名资深注册会计师（CPA），精通财务报表审计、内控评价与舞弊识别。" +
-  "输出务必专业、严谨、可归档，使用规范的中文审计语言。";
+  "输出务必专业、严谨、可归档，使用规范的中文审计语言，避免空话套话。";
+
+// 可解释性硬约束：贯穿所有需要给结论的 prompt，禁止 LLM 编造无证据的新风险。
+const EXPLAINABILITY_GUARD =
+  "硬性要求：你不得新增任何「规则引擎未命中」的风险结论；" +
+  "所有确定性结论以下方给定的 findings（含触发规则与证据）为唯一事实来源，" +
+  "你只能对这些既定事实做专业解读、评级说明与建议。";
 
 /** 把交易压缩成紧凑的表格文本，控制 token 体积。 */
 function summarizeTransactions(transactions: Transaction[]): string {
@@ -32,11 +38,15 @@ function summarizeTransactions(transactions: Transaction[]): string {
 function summarizeFindings(findings: AuditFinding[]): string {
   if (findings.length === 0) return "（规则引擎未命中任何确定性风险）";
   return findings
-    .map(
-      (f, i) =>
-        `${i + 1}. [${f.severity}] ${f.riskType} — 触发规则：${f.triggeredRule}；证据：${JSON.stringify(
-          f.evidence,
-        )}`,
+    .map((f, i) =>
+      [
+        `${i + 1}. [${f.severity.toUpperCase()}] ${f.riskType}`,
+        `   触发规则：${f.triggeredRule}`,
+        `   数据证据：${JSON.stringify(f.evidence)}`,
+        f.standardRef ? `   审计准则：${f.standardRef}` : null,
+      ]
+        .filter(Boolean)
+        .join("\n"),
     )
     .join("\n");
 }
@@ -57,18 +67,19 @@ export function buildPlannerPrompt(args: {
   return {
     system: `${AUDITOR_PERSONA}\n本步骤：制定审计计划（风险识别 + 审计程序），不要下最终结论。`,
     user: [
-      "## 待审计交易数据（概览）",
+      `## 待审计交易数据（共 ${args.transactions.length} 笔，概览）`,
       summarizeTransactions(args.transactions),
       "",
       "## 可参考的审计知识（RAG 检索）",
       knowledgeBlock(args.knowledge),
       "",
       "## 任务",
-      "请输出一份结构化审计计划，包含：",
-      "1. 重点关注的风险领域（结合上述数据特征）；",
-      "2. 针对每个风险领域拟执行的审计程序；",
-      "3. 需要重点核验的字段 / 凭证。",
-      "用 Markdown 分点输出。",
+      "结合上述数据特征（如审批缺失、金额聚集/离群、供应商集中度、发票号重复等），",
+      "输出一份**结构化审计计划**，用 Markdown 分点，控制在 350 字以内：",
+      "1. **重点风险领域**：列出 3-5 个，每个一句话说明为何由这批数据触发；",
+      "2. **拟执行审计程序**：每个风险领域对应 1-2 条可操作程序；",
+      "3. **重点核验字段/凭证**：列出需调阅的原始单据与字段。",
+      "不要下最终风险结论（结论由后续规则引擎确定）。",
     ].join("\n"),
   };
 }
@@ -82,18 +93,20 @@ export function buildExecutorPrompt(args: {
   findings: AuditFinding[];
 }): PromptInput {
   return {
-    system: `${AUDITOR_PERSONA}\n本步骤：异常分析。只能基于给定数据与已命中规则结论展开，禁止臆造无证据的结论。`,
+    system: `${AUDITOR_PERSONA}\n本步骤：异常分析。\n${EXPLAINABILITY_GUARD}`,
     user: [
       "## 交易数据",
       summarizeTransactions(args.transactions),
       "",
-      "## 规则引擎已确定命中的风险（既定事实）",
+      "## 规则引擎已确定命中的风险（既定事实，不可增删）",
       summarizeFindings(args.findings),
       "",
       "## 任务",
-      "基于以上信息，分析数据中的异常模式（如金额聚集、审批缺失分布、供应商集中度等），",
-      "解释这些异常为何值得审计关注。只做分析与解读，不要新增没有数据证据的结论。",
-      "用简洁的 Markdown 段落输出。",
+      "基于以上既定事实，分析数据中的异常模式并解释其审计含义，控制在 300 字以内：",
+      "- 围绕已命中的 findings 展开（金额聚集/离群、审批缺失分布、供应商集中度、发票号重复等）；",
+      "- 说明这些异常为何指向舞弊或内控失效；",
+      "- 如多条 finding 相互印证，请点明其关联。",
+      "用简洁的 Markdown 段落输出，只做解读，不新增无证据的结论。",
     ].join("\n"),
   };
 }
@@ -108,21 +121,21 @@ export function buildRiskEnginePrompt(args: {
   knowledge: string[];
 }): PromptInput {
   return {
-    system: `${AUDITOR_PERSONA}\n本步骤：风险评级说明与内控建议。`,
+    system: `${AUDITOR_PERSONA}\n本步骤：风险评级说明与内控建议。\n${EXPLAINABILITY_GUARD}\n注意：整体风险等级由系统确定性推导，你负责解释其合理性，不得擅自改判。`,
     user: [
-      `## 系统判定的整体风险等级：${args.overallRisk}`,
+      `## 系统判定的整体风险等级：${args.overallRisk.toUpperCase()}`,
+      "（取所有 findings 的最高 severity，确定性推导，不可更改）",
       "",
-      "## 已命中风险清单（含证据）",
+      "## 已命中风险清单（含触发规则、证据、准则）",
       summarizeFindings(args.findings),
       "",
       "## 可参考的审计准则（RAG 检索）",
       knowledgeBlock(args.knowledge),
       "",
-      "## 任务",
-      "1. 说明整体风险等级判定的合理性（结合具体 finding）；",
-      "2. 指出反映出的内控缺陷；",
-      "3. 给出可执行的审计建议 / 整改措施。",
-      "用 Markdown 分点输出。",
+      "## 任务（Markdown 分点，控制在 400 字以内）",
+      "1. **评级合理性**：结合最高 severity 的具体 finding，说明该整体等级为何成立；",
+      "2. **内控缺陷**：指出这批风险暴露出的关键控制点失效（如审批授权、发票唯一性校验）；",
+      "3. **审计建议/整改**：给出可落地的整改措施与后续审计应对程序。",
     ].join("\n"),
   };
 }
@@ -138,21 +151,30 @@ export function buildWorkpaperPrompt(args: {
   overallRisk: string;
 }): PromptInput {
   return {
-    system: `${AUDITOR_PERSONA}\n本步骤：撰写标准审计工作底稿，语言专业、结构清晰、可直接归档。`,
+    system: `${AUDITOR_PERSONA}\n本步骤：撰写标准审计工作底稿，语言专业、结构清晰、可直接归档。\n${EXPLAINABILITY_GUARD}`,
     user: [
-      "请整合以下内容，生成一份完整的审计工作底稿（Markdown）。",
-      "结构建议：一、审计概述；二、审计程序；三、发现的风险事项（逐条列出触发规则与证据）；",
-      "四、风险评级与内控评价；五、审计结论与建议。",
+      "请整合以下材料，生成一份**完整、可直接归档的审计工作底稿**（Markdown），严格按以下章节组织：",
       "",
-      `## 整体风险等级\n${args.overallRisk}`,
+      "# 审计工作底稿",
+      "## 一、审计概述（审计对象、范围、整体风险等级）",
+      "## 二、审计程序（实际执行的审计步骤）",
+      "## 三、发现的风险事项",
+      "（**逐条**列出每个 finding，每条必须包含：风险类型与等级 / 触发规则 / 数据证据 / 审计准则引用 / 风险解释——不得省略证据）",
+      "## 四、风险评级与内控评价",
+      "## 五、审计结论与建议",
       "",
-      `## 审计计划\n${args.plan}`,
+      "要求：第三章每条风险事项必须忠实保留下方给定的触发规则与证据，禁止改写或编造；语言简洁专业。",
       "",
-      `## 异常分析\n${args.anomalyAnalysis}`,
+      "---",
+      `## [素材] 整体风险等级\n${args.overallRisk.toUpperCase()}`,
       "",
-      `## 风险评级说明\n${args.riskNarrative}`,
+      `## [素材] 审计计划\n${args.plan}`,
       "",
-      "## 已确认风险事项（必须逐条体现，保留触发规则与证据）",
+      `## [素材] 异常分析\n${args.anomalyAnalysis}`,
+      "",
+      `## [素材] 风险评级说明\n${args.riskNarrative}`,
+      "",
+      "## [素材] 已确认风险事项（必须逐条体现，保留触发规则与证据）",
       summarizeFindings(args.findings),
     ].join("\n"),
   };

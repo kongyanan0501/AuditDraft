@@ -24,6 +24,8 @@
 | [`AGENTS.md`](./AGENTS.md) | AI agent / 开发者主上下文（**先读这个**） |
 | [`ARCHITECTURE.md`](./ARCHITECTURE.md) | 系统架构总览 |
 | [`docs/architecture/`](./docs/architecture/) | AI 系统 / 数据模型 / UI 详细设计 |
+| [`docs/deployment.md`](./docs/deployment.md) | 部署指南（Vercel + Supabase + Pinecone） |
+| [`docs/demo-script.md`](./docs/demo-script.md) | 评委演示流程与话术 |
 | [`todo.md`](./todo.md) | 开发路线图与任务追踪 |
 
 ## 快速开始
@@ -48,13 +50,16 @@ npm run lint         # 代码检查
 
 ## 环境变量
 
+完整清单与说明见 [`docs/deployment.md`](./docs/deployment.md) §4；最小必填：
+
 ```bash
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
-# LLM
+# LLM（默认 openai；可切 anthropic）
+LLM_PROVIDER=openai
 OPENAI_API_KEY=
 ANTHROPIC_API_KEY=
 
@@ -62,4 +67,9 @@ ANTHROPIC_API_KEY=
 PINECONE_API_KEY=
 PINECONE_INDEX=
 ```
-# AuditDraft
+
+## 部署与演示
+
+- 部署（Vercel + Supabase + Pinecone）：见 [`docs/deployment.md`](./docs/deployment.md)
+- 评委演示流程与话术：见 [`docs/demo-script.md`](./docs/demo-script.md)
+- 内置演示数据集：[`samples/expense_transactions.csv`](./samples/expense_transactions.csv)（含重复付款 / 无审批大额 / 拆分报销 / 金额离群）
