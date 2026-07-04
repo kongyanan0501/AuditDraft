@@ -4,6 +4,7 @@ import { getLLMEnv } from "@/lib/env";
 
 import { AnthropicProvider } from "./providers/anthropic";
 import { OpenAIProvider } from "./providers/openai";
+import { QwenProvider } from "./providers/qwen";
 import type { LLMProvider } from "./types";
 
 export type { LLMGenerateOptions, LLMProvider } from "./types";
@@ -18,10 +19,13 @@ export function getLLM(): LLMProvider {
   if (cached) return cached;
 
   const env = getLLMEnv();
-  cached =
-    env.provider === "anthropic"
-      ? new AnthropicProvider(env.anthropicApiKey)
-      : new OpenAIProvider(env.openaiApiKey);
+  if (env.provider === "anthropic") {
+    cached = new AnthropicProvider(env.anthropicApiKey);
+  } else if (env.provider === "qwen") {
+    cached = new QwenProvider(env.qwenApiKey);
+  } else {
+    cached = new OpenAIProvider(env.openaiApiKey);
+  }
 
   return cached;
 }

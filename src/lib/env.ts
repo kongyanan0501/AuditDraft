@@ -69,8 +69,8 @@ export const getLLMEnv = memo(() => {
     "LLM",
     z.object({
       LLM_PROVIDER: z
-        .enum(["openai", "anthropic"], {
-          error: "LLM_PROVIDER 必须是 openai 或 anthropic",
+        .enum(["openai", "anthropic", "qwen"], {
+          error: "LLM_PROVIDER 必须是 openai、anthropic 或 qwen",
         })
         .default("openai"),
     }),
@@ -84,6 +84,21 @@ export const getLLMEnv = memo(() => {
       { OPENAI_API_KEY: process.env.OPENAI_API_KEY },
     );
     return { provider: "openai" as const, openaiApiKey: OPENAI_API_KEY };
+  }
+
+  if (base.LLM_PROVIDER === "qwen") {
+    const { DASHSCOPE_API_KEY } = validate(
+      "LLM(Qwen)",
+      z.object({
+        DASHSCOPE_API_KEY: nonEmpty("DASHSCOPE_API_KEY（或 QWEN_API_KEY）"),
+      }),
+      // 兼容两种命名：官方 DASHSCOPE_API_KEY 优先，回退 QWEN_API_KEY。
+      {
+        DASHSCOPE_API_KEY:
+          process.env.DASHSCOPE_API_KEY ?? process.env.QWEN_API_KEY,
+      },
+    );
+    return { provider: "qwen" as const, qwenApiKey: DASHSCOPE_API_KEY };
   }
 
   const { ANTHROPIC_API_KEY } = validate(
@@ -109,17 +124,53 @@ export const getPineconeEnv = memo(() =>
   ),
 );
 
+const DASHSCOPE_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1";
+
 /**
- * Embedding（RAG 向量化）。无论对话 provider 是谁，向量化统一走 OpenAI，
- * 因此独立要求 OPENAI_API_KEY。模型 / 维度可通过 EMBEDDING_MODEL 覆盖。
+ * Embedding（RAG 向量化）。统一走 OpenAI 兼容接口，仅切换 baseURL / 模型 / key。
+ *
+ * provider 选择：EMBEDDING_PROVIDER 显式指定；未设时若 LLM_PROVIDER=qwen 则默认
+ * dashscope，否则 openai。这样「全程 Qwen」无需额外配置。
+ * - openai：key=OPENAI_API_KEY，模型默认 text-embedding-3-small
+ * - dashscope/qwen：key=DASHSCOPE_API_KEY（回退 QWEN_API_KEY），DashScope 兼容端点，
+ *   模型默认 text-embedding-v4（配合 EMBEDDING_DIMENSION=1536）
+ * 输出维度统一为 EMBEDDING_DIMENSION，须与 Pinecone 索引维度一致。
  */
-export const getEmbeddingEnv = memo(() =>
-  validate(
+export const getEmbeddingEnv = memo(() => {
+  const provider = (
+    process.env.EMBEDDING_PROVIDER ??
+    (process.env.LLM_PROVIDER === "qwen" ? "dashscope" : "openai")
+  ).toLowerCase();
+
+  if (provider === "dashscope" || provider === "qwen") {
+    const { DASHSCOPE_API_KEY } = validate(
+      "Embedding(Qwen)",
+      z.object({
+        DASHSCOPE_API_KEY: nonEmpty("DASHSCOPE_API_KEY（或 QWEN_API_KEY）"),
+      }),
+      {
+        DASHSCOPE_API_KEY:
+          process.env.DASHSCOPE_API_KEY ?? process.env.QWEN_API_KEY,
+      },
+    );
+    return {
+      apiKey: DASHSCOPE_API_KEY,
+      baseURL: process.env.QWEN_BASE_URL ?? DASHSCOPE_BASE_URL,
+      model: process.env.EMBEDDING_MODEL ?? "text-embedding-v4",
+    };
+  }
+
+  const { OPENAI_API_KEY } = validate(
     "Embedding(OpenAI)",
     z.object({ OPENAI_API_KEY: nonEmpty("OPENAI_API_KEY") }),
     { OPENAI_API_KEY: process.env.OPENAI_API_KEY },
-  ),
-);
+  );
+  return {
+    apiKey: OPENAI_API_KEY,
+    baseURL: undefined as string | undefined,
+    model: process.env.EMBEDDING_MODEL ?? "text-embedding-3-small",
+  };
+});
 
 /** 一次性校验全部子系统（用于部署前自检 / CI / `npm run check:env`）。 */
 export function validateAllEnv(): void {

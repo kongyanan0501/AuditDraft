@@ -35,3 +35,9 @@ export interface RagDeps {
 /** OpenAI text-embedding-3-small 的维度，建索引时需一致。 */
 export const EMBEDDING_DIMENSION = 1536;
 export const DEFAULT_TOP_K = 5;
+
+/**
+ * 单次 embedding 请求的最大文本条数。DashScope（text-embedding-v3/v4）
+ * 限制每批 ≤10；OpenAI 上限更高，取 10 对两者都安全。超出需分批。
+ */
+export const EMBEDDING_BATCH_SIZE = 10;
