@@ -1,0 +1,219 @@
+{
+  "project": "AuditDraft",
+  "title": "安永华明 AI 赛 · 费用循环协审全流程",
+  "category": "EY Demo",
+  "description": "比赛演示：登录 → 上传初筛 → 风险依据 → 评测与对照 → 勾稽收尾。",
+  "output_name": "01-ey-full-demo",
+  "viewport": { "width": 1440, "height": 900 },
+  "use_setup_login": false,
+  "show_cursor": true,
+  "steps_summary": [
+    "登录与数据隔离",
+    "上传费用明细",
+    "工作流与风险依据",
+    "评测与对照",
+    "调参、勾稽与收尾"
+  ],
+  "steps": [
+    {
+      "id": "open_login",
+      "action": "navigate",
+      "value": "http://localhost:3000/login",
+      "narration": "各位评委好。这是 AuditDraft，用在费用循环协审：先把明细全量过一遍，再给出可复核的底稿草稿。判断和签字仍在项目组。",
+      "action_ms": 900,
+      "wait_for": "#email"
+    },
+    {
+      "id": "fill_email",
+      "action": "fill",
+      "selector": "#email",
+      "value": "${email}",
+      "action_ms": 300
+    },
+    {
+      "id": "fill_password",
+      "action": "fill",
+      "selector": "#password",
+      "value": "${password}",
+      "narration": "登录后数据按用户隔离，用行级权限控制，和项目组分账管理的习惯一致。",
+      "action_ms": 400
+    },
+    {
+      "id": "submit_login",
+      "action": "click",
+      "selector": "button[type=\"submit\"]",
+      "action_ms": 700,
+      "wait_for_url": "/dashboard",
+      "wait_timeout_ms": 20000
+    },
+    {
+      "id": "show_dashboard",
+      "action": "wait",
+      "narration": "这是工作台。今天演示关掉大模型，只用规则做检测，结果可复现；需要润色底稿时再开完整模式。",
+      "action_ms": 1000,
+      "wait_for": "h1"
+    },
+    {
+      "id": "pre_upload",
+      "action": "scroll",
+      "selector": "input[name=\"file\"]",
+      "narration": "费用明细经常是几千行。抽查覆盖有限，我们先用规则把整表过一遍，把时间留给复核。",
+      "action_ms": 500
+    },
+    {
+      "id": "select_csv",
+      "action": "upload",
+      "selector": "input[name=\"file\"]",
+      "value": "/Users/huangdeyu/Documents/coderHDY/AuditDraft/samples/ey_expense_demo_3k.csv",
+      "action_ms": 400
+    },
+    {
+      "id": "click_upload",
+      "action": "click",
+      "selector": "button[type=\"submit\"]",
+      "narration": "样本大约三千行，埋了重复付款、大额无审批、拆分报销、金额离群这几类常见红旗。",
+      "action_ms": 700,
+      "wait_for": "text=上传成功",
+      "wait_timeout_ms": 45000
+    },
+    {
+      "id": "bridge_to_results",
+      "action": "wait",
+      "narration": "任务建好了。结果页用同一套规则、同一批样本的标准快照，方便现场对照。",
+      "action_ms": 900
+    },
+    {
+      "id": "go_snapshot",
+      "action": "navigate",
+      "value": "http://localhost:3000/demo/snapshot",
+      "narration": "流程七步：解析、计划、规则、异常、风险、底稿、导出。风险结论只来自规则；模型只写说明，不改硬结论。",
+      "action_ms": 900,
+      "wait_for": "text=审计工作流",
+      "wait_timeout_ms": 15000
+    },
+    {
+      "id": "show_workflow",
+      "action": "scroll",
+      "selector": "text=规则引擎",
+      "narration": "节点可以单独测，也可以降级，后面还能加人工门闩，按质量流程设计，不是一次扫表了事。",
+      "action_ms": 700
+    },
+    {
+      "id": "show_risks",
+      "action": "scroll",
+      "selector": "text=风险事项",
+      "narration": "风险按高低分级。同样的输入给出同样的输出，可以直接放进复核底稿。",
+      "action_ms": 800,
+      "wait_for": "article",
+      "wait_timeout_ms": 10000
+    },
+    {
+      "id": "expand_explain",
+      "action": "click",
+      "selector": "article summary",
+      "narration": "点开一条看依据：触发哪条规则、对应哪几笔、引用哪段准则、为什么要关注。没有证据就不落结论。",
+      "action_ms": 700,
+      "wait_for": "text=触发规则",
+      "wait_timeout_ms": 8000
+    },
+    {
+      "id": "hold_evidence",
+      "action": "wait",
+      "narration": "证据能对到明细行。系统给的是复核材料，不是审计意见；也不能凭空多报一条风险。",
+      "action_ms": 1400
+    },
+    {
+      "id": "show_workpaper",
+      "action": "scroll",
+      "selector": "text=审计底稿",
+      "narration": "底稿会标明这是辅助草稿，必须项目组复核后才能往下走。",
+      "action_ms": 900
+    },
+    {
+      "id": "go_eval",
+      "action": "click",
+      "selector": "a[href=\"/eval\"]",
+      "narration": "这边是离线评测。召回和精确率有数字，跑评测时不调用大模型。",
+      "action_ms": 700,
+      "wait_for_url": "/eval",
+      "wait_timeout_ms": 15000
+    },
+    {
+      "id": "show_eval_metrics",
+      "action": "wait",
+      "narration": "右边是人工翻表和系统初筛的耗时、命中对比，用实测说话。",
+      "action_ms": 1200,
+      "wait_for": "h1"
+    },
+    {
+      "id": "scroll_eval_table",
+      "action": "scroll",
+      "value": "down",
+      "narration": "整表初筛一般是秒级到分钟级，不用靠几小时手工翻表。",
+      "action_ms": 800
+    },
+    {
+      "id": "go_contrast",
+      "action": "click",
+      "selector": "a[href=\"/contrast\"]",
+      "narration": "左边是把表丢给大模型扫；右边是我们的做法。差别在规则保底、依据可核、结果可评测。",
+      "action_ms": 700,
+      "wait_for_url": "/contrast",
+      "wait_timeout_ms": 12000
+    },
+    {
+      "id": "hold_contrast",
+      "action": "wait",
+      "narration": "关键不是在对话框里出意见，而是按步骤跑完，能降级，能复核。",
+      "action_ms": 1100
+    },
+    {
+      "id": "go_rules",
+      "action": "click",
+      "selector": "a[href=\"/settings/rules\"]",
+      "narration": "阈值可以改，规则可以版本管理。误报出现了就调参，再放进回归集。",
+      "action_ms": 700,
+      "wait_for_url": "/settings/rules",
+      "wait_timeout_ms": 12000
+    },
+    {
+      "id": "hold_rules",
+      "action": "wait",
+      "narration": "比如调高审批金额门槛，检出结果马上会变，参数是看得见的。",
+      "action_ms": 1100,
+      "wait_for": "input[type=\"number\"]"
+    },
+    {
+      "id": "go_reconcile",
+      "action": "click",
+      "selector": "a[href=\"/reconcile\"]",
+      "narration": "报销和付款还能交叉勾稽，补费用循环里另一类问题。",
+      "action_ms": 600,
+      "wait_for_url": "/reconcile",
+      "wait_timeout_ms": 12000
+    },
+    {
+      "id": "run_reconcile",
+      "action": "click",
+      "selector": "button:has-text(\"运行演示勾稽\")",
+      "narration": "点一下跑通演示样本，例外同样带依据。",
+      "action_ms": 900,
+      "wait_for": "article",
+      "wait_timeout_ms": 30000
+    },
+    {
+      "id": "closing",
+      "action": "click",
+      "selector": "a[href=\"/pilot\"]",
+      "narration": "小结三句：全量初筛省时间；规则结果可复现、可评测；每条风险带依据进复核。以上是 AuditDraft 的费用循环协审演示，谢谢各位评委。",
+      "action_ms": 800,
+      "wait_for_url": "/pilot",
+      "wait_timeout_ms": 12000
+    },
+    {
+      "id": "end_hold",
+      "action": "wait",
+      "action_ms": 1800
+    }
+  ]
+}

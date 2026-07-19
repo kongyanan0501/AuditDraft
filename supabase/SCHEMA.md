@@ -5,8 +5,9 @@
 >
 > **维护约定**：每次更新数据库（新增/修改表、列、索引、RLS 策略、Storage bucket 等）后，必须同步更新本文件。详见 `.cursor/rules/supabase.mdc`。
 
-- 最近同步迁移：`0003_job_error.sql`
-- 最近更新时间：2026-07-05
+- 最近同步迁移：`0004_fix_audit_reports_schema.sql`
+- 最近更新时间：2026-07-19
+- 备注：线上曾出现遗留 `audit_reports(task_id, content)`，与应用契约不符；`0004` 重建为 `job_id / report_json / risk_level`。
 
 ---
 

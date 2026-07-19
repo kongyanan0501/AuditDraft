@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "demo-video": {
+      "source": "alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/demo-video/skills/demo-video/SKILL.md",
+      "computedHash": "34ae2241c2fe9089d6693431a838988a75733fad947dde24382f0a50fa7ec474"
+    },
+    "playwright-recording": {
+      "source": "digitalsamba/claude-code-video-toolkit",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/playwright-recording/SKILL.md",
+      "computedHash": "65dd7d4d2097a5ee137ee9a9ab9ced260d98d8728611fa70c6d8ba7d3c21f1e1"
+    },
+    "video-docs-builder": {
+      "source": "tecnomanu/video-docs-builder",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "4428da00f1109e38c174cb9baaf9ef9fff42f0a9182d418edff24a42308dd1ce"
+    }
+  }
+}

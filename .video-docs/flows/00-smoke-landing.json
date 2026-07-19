@@ -1,0 +1,38 @@
+{
+  "project": "AuditDraft",
+  "title": "Smoke: 落地页到登录",
+  "category": "Smoke",
+  "description": "video-docs-builder 试跑：公开页录屏 + 中文旁白（无需登录）。",
+  "output_name": "00-smoke-landing",
+  "viewport": { "width": 1280, "height": 800 },
+  "use_setup_login": false,
+  "steps": [
+    {
+      "id": "open_home",
+      "action": "navigate",
+      "value": "http://localhost:3000/",
+      "narration": "这是 AuditDraft AI。费用循环协审：确定性规则全量初筛，可解释底稿草稿，不替代注册会计师判断。",
+      "action_ms": 1500,
+      "wait_for": "h1"
+    },
+    {
+      "id": "pre_login",
+      "action": "wait",
+      "narration": "接下来进入登录页，展示多租户隔离与安全边界。",
+      "action_ms": 600
+    },
+    {
+      "id": "click_login",
+      "action": "click",
+      "selector": "a[href=\"/login\"]",
+      "action_ms": 800,
+      "wait_for_url": "/login"
+    },
+    {
+      "id": "show_login",
+      "action": "wait",
+      "narration": "登录后数据按用户隔离，符合事务所项目组数据边界习惯。试跑到此结束。",
+      "action_ms": 2000
+    }
+  ]
+}
