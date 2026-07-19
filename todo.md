@@ -219,3 +219,6 @@ npm run dev         # 本地启动 http://localhost:3000
 - [x] 演讲稿 [`docs/ey-pitch-script.md`](./docs/ey-pitch-script.md)（含 5–6 分钟版 / 3 分钟压缩版 / 追问速查）
 - [x] 正式 PPT [`docs/pitch/AuditDraft-EY-Pitch.pptx`](./docs/pitch/AuditDraft-EY-Pitch.pptx)（13 页 + 演讲者备注；用 Anthropic `pptx` skill 生成）
 - [ ] 赛前干跑：PPT → Demo 连贯演练 1 次（对照 `demo-script-ey.md`）
+- [x] 安永演示讲解视频（旁白 + 聚光灯 + 底部烧录字幕）→ `.video-docs/output/01-ey-full-demo/final/01-ey-full-demo.mp4`
+- [x] 跨项目 skill：`~/.cursor/skills/web-walkthrough-video`（依赖 video-docs-builder + edge-tts）
+- [x] 档 A 底稿版式：Word 封面签核 + W/P 索引表 + 程序对照表 + 例外明细表；降级模板同步（`src/lib/export/word.ts`）
