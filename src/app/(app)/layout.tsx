@@ -1,7 +1,8 @@
-import { LogOut, ShieldCheck } from "lucide-react";
+import { ShieldCheck, UserRound } from "lucide-react";
+import Link from "next/link";
 
-import { signOut } from "@/app/(auth)/actions";
 import { SidebarNav } from "@/components/audit/sidebar-nav";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { requireUser } from "@/lib/supabase/repository";
 
 export const dynamic = "force-dynamic";
@@ -28,15 +29,14 @@ export default async function AppLayout({
           <span className="hidden text-xs text-muted-foreground sm:inline">
             {user.email}
           </span>
-          <form action={signOut}>
-            <button
-              type="submit"
-              className="flex h-8 items-center gap-1.5 rounded-md border border-input bg-card px-2.5 text-xs font-medium transition-colors hover:bg-secondary"
-            >
-              <LogOut className="h-3.5 w-3.5" strokeWidth={2} />
-              登出
-            </button>
-          </form>
+          <ThemeToggle />
+          <Link
+            href="/account"
+            className="flex h-8 items-center gap-1.5 rounded-md border border-input bg-card px-2.5 text-xs font-medium transition-colors hover:bg-secondary"
+          >
+            <UserRound className="h-3.5 w-3.5" strokeWidth={2} />
+            我的
+          </Link>
         </div>
       </header>
 

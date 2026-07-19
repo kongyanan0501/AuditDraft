@@ -1,8 +1,14 @@
 import Link from "next/link";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16">
+    <div className="relative min-h-[100dvh]">
+      <div className="absolute right-6 top-6 z-10">
+        <ThemeToggle />
+      </div>
+      <main className="mx-auto flex min-h-[100dvh] max-w-3xl flex-col justify-center gap-6 px-6 py-16">
       <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
         AI 审计创新大赛
       </span>
@@ -34,6 +40,7 @@ export default function Home() {
       <p className="text-sm text-muted-foreground">
         基础设施（Supabase 认证与数据）已就绪，开发进度见 <code>todo.md</code>。
       </p>
-    </main>
+      </main>
+    </div>
   );
 }

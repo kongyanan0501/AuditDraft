@@ -158,6 +158,7 @@ npm run dev         # 本地启动 http://localhost:3000
 - [x] Demo 脚本与评委演示流程（含话术）→ `docs/demo-script.md`
 - [x] 部署产物就绪：`vercel.json`（audit 路由 `maxDuration:60`）+ `waitUntil` 后台保活 + `docs/deployment.md`；**实际部署需用户真实账号/密钥**
 - [x] 性能策略落地（控输出字数 + 选快模型指引）；**实测 ≤30 秒需 live 环境**
+- [x] 可切换深/浅主题系统：CSS 变量 token（light/dark 双套 + 单一 brand 焦点色）+ `ThemeProvider`（light/dark/system 三态、localStorage 持久化、系统监听、View Transition 平滑切换）+ `ThemeToggle` 分段控件 + 无闪烁注水脚本；已接入 app header / landing / 登录 / 注册（组件全走语义 token，自动双模适配）
 
 ### ✅ 阶段验证
 - [ ] 生产环境（Vercel 部署后的 URL）完整跑通 demo 流程 → 需用户配 key + 部署后实测

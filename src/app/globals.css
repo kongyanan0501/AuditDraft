@@ -2,32 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * 主题系统 · Design tokens（HSL 通道值，供 tailwind `hsl(var(--token))` 消费）
+ * ── 单色 zinc/slate 骨架 + 单一钴蓝焦点色（brand）。风险语义色（red/amber/green）
+ *    仍锁定在 tailwind `risk-*`，不随主题波动（见 severity.ts）。
+ * ── light = :root；dark = .dark（由 ThemeProvider 在 <html> 上切换 class）。
+ * ── 不使用纯黑 / 纯白：深色底为偏冷 off-black，浅色底为偏冷 off-white，保留层次。
+ */
 @layer base {
   :root {
-    /* 配色映射自 docs/architecture/ui-system.md */
-    --background: 210 40% 98%; /* #f8fafc */
-    --foreground: 222 47% 11%; /* #111827 */
+    color-scheme: light;
+
+    --background: 210 40% 98%; /* off-white，偏冷 */
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
-    --primary: 222 47% 11%; /* #111827 */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 222 47% 11%; /* 近黑：主 CTA / 激活态（Linear/Vercel 式单色高级感） */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 210 40% 96%; /* hover / 次级表面 */
     --secondary-foreground: 222 47% 11%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96%;
+    --accent: 210 40% 96%; /* shadcn 语义：细微 hover 表面（保持中性） */
     --accent-foreground: 222 47% 11%;
+
+    /* 单一品牌焦点色：焦点环 / 链接 / 关键高亮。克制使用，不做发光渐变。 */
+    --brand: 224 76% 48%;
+    --brand-foreground: 210 40% 98%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 222 47% 11%;
+    --ring: 224 76% 48%; /* 焦点环用品牌色，提升可访问性与质感 */
 
     --radius: 0.5rem;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 222 47% 6%; /* off-black slate，非纯黑 */
+    --foreground: 210 40% 96%;
+
+    --card: 222 40% 9%; /* 比背景略亮，形成层次（elevation） */
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 40% 9%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 210 40% 98%; /* 深色下 CTA 反相为近白 */
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 15%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 217 33% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 96%;
+
+    --brand: 217 91% 65%; /* 深色下提亮，保证在暗底上足够跳 */
+    --brand-foreground: 222 47% 11%;
+
+    --border: 217 33% 18%;
+    --input: 217 33% 22%;
+    --ring: 217 91% 65%;
   }
 }
 
@@ -37,5 +84,26 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/*
+ * View Transition 主题切换：受支持的浏览器（Chromium）在切换时做柔和交叉淡出。
+ * 通过 ::view-transition-* 控制；prefers-reduced-motion 下由 ThemeProvider 跳过发起，
+ * 这里也兜底禁用动画，确保无障碍。
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.28s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 }

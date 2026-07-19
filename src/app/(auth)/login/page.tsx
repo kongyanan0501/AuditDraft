@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+
 import { signIn } from "../actions";
 
 export default function LoginPage({
@@ -12,7 +14,10 @@ export default function LoginPage({
   const redirectTo = searchParams?.redirectTo ?? "/dashboard";
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-16">
+    <main className="relative flex min-h-[100dvh] items-center justify-center px-6 py-16">
+      <div className="absolute right-6 top-6">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-sm">
         <div className="mb-8 space-y-2">
           <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">

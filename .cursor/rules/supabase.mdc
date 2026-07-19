@@ -17,6 +17,15 @@ globs: src/lib/supabase/**,supabase/**
 - `audit_reports` / `audit_raw_data` 通过 `job_id → audit_jobs.user_id` 校验归属。
 - 表：`audit_jobs / audit_reports / audit_raw_data`（结构见 data-model.md）。
 
+## Schema 快照维护（硬性约定）
+- `supabase/SCHEMA.md` 是数据库当前结构的权威快照。
+- **每次更新数据库后必须同步更新 `supabase/SCHEMA.md`**。「更新数据库」指以下任一：
+  1. 新增 / 修改迁移脚本（`supabase/migrations/*.sql`）。
+  2. 在 Supabase SQL Editor 直接执行了建表 / 改表 / 索引 / RLS / Storage 变更。
+  3. 变更了列、约束、默认值、CHECK、外键或 Storage bucket / 策略。
+- 更新范围：表结构、索引、RLS 策略、Storage bucket，以及文件顶部的「最近同步迁移 / 最近更新时间」。
+- 若同时改了行类型，一并同步 `src/lib/supabase/types.ts`。
+
 ## 认证
 - Email + Password；`signUp` / `signInWithPassword`；Session 管理。
 - 用户数据严格隔离。
