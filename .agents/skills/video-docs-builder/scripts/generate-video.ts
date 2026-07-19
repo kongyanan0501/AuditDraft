@@ -12,12 +12,23 @@
  * Usage: tsx src/generate-video.ts projects/demo-app/flows/01-feature-demo.json
  *        tsx src/generate-video.ts projects/demo-app/flows/01-feature-demo.enriched.json
  */
-import { chromium, type Page } from 'playwright';
+import { chromium, type Browser, type BrowserContext, type Page } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import type { Flow, FlowStep, SetupStep, ProjectConfig } from './types.js';
+import type { Flow, FlowStep, SetupStep, ProjectConfig, VideoPart } from './types.js';
 import { projectRootFromFlow, detectLangFromFlow, projectPaths } from './paths.js';
+
+/** LLM / uncontrollable waits: run off-camera between recorded parts. */
+function isOffrecordBreak(step: FlowStep): boolean {
+  if (step.offrecord) return true;
+  return step.action === 'wait_job_done' && !!(step.playback_speed && step.playback_speed > 1);
+}
+
+const ACCEL_SLATE_DEFAULT_MS = Math.max(
+  1500,
+  parseInt(process.env.ACCEL_SLATE_MS ?? '2500', 10) || 2500,
+);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -242,6 +253,43 @@ async function executeStep(page: Page, step: FlowStep | SetupStep, variables: Re
       break;
     case 'wait':
       break;
+    case 'wait_job_done': {
+      // Poll first task row until 已完成. On 失败, click 重试 (value = max retries, default 2).
+      const flowStep = step as FlowStep;
+      const timeout = flowStep.wait_timeout_ms ?? 360_000;
+      const maxRetries = Math.max(0, parseInt(flowStep.value ?? '2', 10) || 2);
+      const deadline = Date.now() + timeout;
+      let retries = 0;
+      console.log(`   ⏳ wait_job_done (timeout ${(timeout / 1000).toFixed(0)}s, retries=${maxRetries})`);
+      while (Date.now() < deadline) {
+        const row = page.locator('ul li').first();
+        const text = (await row.innerText().catch(() => '')) || '';
+        if (text.includes('已完成')) {
+          console.log('   ✅ first job: 已完成');
+          break;
+        }
+        if (text.includes('失败')) {
+          const errLine = text.split('\n').find(l => l.includes('失败') || l.includes('Error') || l.includes('error'));
+          console.warn(`   ⚠️  first job failed${errLine ? `: ${errLine.slice(0, 120)}` : ''}`);
+          const retryBtn = row.locator('button:has-text("重试")');
+          if (retries < maxRetries && (await retryBtn.count()) > 0) {
+            retries += 1;
+            console.log(`   ↻ click 重试 (${retries}/${maxRetries})`);
+            await retryBtn.click();
+            await page.waitForTimeout(2500);
+            continue;
+          }
+          throw new Error('wait_job_done: job failed and retries exhausted');
+        }
+        // Keep StatusPoller alive: light interaction not needed; just wait.
+        await page.waitForTimeout(2000);
+      }
+      const finalText = (await page.locator('ul li').first().innerText().catch(() => '')) || '';
+      if (!finalText.includes('已完成')) {
+        throw new Error('wait_job_done: timed out waiting for 已完成');
+      }
+      break;
+    }
     case 'hover': {
       const flowStep = step as FlowStep;
       await locator(step.selector!, flowStep.nth).waitFor({ timeout: 8000 });
@@ -346,132 +394,253 @@ async function main(): Promise<void> {
 
   const variables: Record<string, string> = {};
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
-
-  const context = await browser.newContext({
-    viewport: flow.viewport,
-    recordVideo: { dir: rawDir, size: flow.viewport },
-  });
-  if (showCursor) await context.addInitScript(CURSOR_SCRIPT);
-
-  const page = await context.newPage();
-
-  // ── Phase 1: Setup (recorded fast, no narration) ─────────────────────────
-  const setupStart = Date.now();
-
-  if (flow.use_setup_login) {
-    const { email, password } = config.setup_login;
-    console.log(`\n🔐 Setup: logging in as ${email}...`);
-    await page.goto(`${config.base_url}/login`, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.locator('#email').fill(email);
-    await page.waitForTimeout(150);
-    await page.locator('#password').fill(password);
-    await page.waitForTimeout(150);
-    await page.locator('button[type=submit]').click();
-    await page.waitForURL((url) => !url.pathname.endsWith('/login'), { timeout: 12000 }).catch(() => {
-      console.warn(`   ⚠️  Login redirect timeout, current URL: ${page.url()}`);
-    });
-    await page.waitForTimeout(800);
-    console.log(`   ✅ Logged in → ${page.url()}`);
-  }
-
-  for (const step of flow.setup ?? []) {
-    await executeStep(page, step, variables, config);
-    await page.waitForTimeout(300);
-  }
-
-  const setupDurationMs = Date.now() - setupStart;
-  if ((flow.use_setup_login || (flow.setup?.length ?? 0) > 0) && setupDurationMs > 500) {
-    // Store trim point so assemble.ts can cut the login section
-    flow.trim_start_ms = setupDurationMs;
-    console.log(`   ✂️  Setup took ${(setupDurationMs / 1000).toFixed(1)}s → trim_start_ms stored`);
-  }
-
-  // ── Phase 2: Recorded tutorial steps (measure ACTUAL timing) ────────────
-  // We measure real elapsed time for each step so audio_start_ms values
-  // reflect the actual video timestamps, not the assumed action_ms values.
-  const recordingStart = Date.now();
-  // trim_start_ms is already accounted for — recording cursor starts at 0
-  // (setup already happened; we measure from here)
-  let actualCursor = 0; // ms elapsed inside the tutorial (after setup)
   const totalSteps = flow.steps.length;
 
-  for (const [stepIdx, step] of flow.steps.entries()) {
-    const stepNum = stepIdx + 1;
-    const pct = Math.round((stepNum / totalSteps) * 100);
-    console.log(`\n▶  [${stepNum}/${totalSteps}] (${pct}%) [${step.id}] ${step.action}${step.value ? ` → ${step.value.slice(0, 60)}` : ''}`);
-
-    const stepStart = Date.now();
-
-    await executeStep(page, step, variables, config);
-
-    if (step.wait_for_url) {
-      await page.waitForURL(`**${step.wait_for_url}`, { timeout: step.wait_timeout_ms ?? 20000 }).catch(() => {
-        console.warn(`   ⚠️  Expected URL "${step.wait_for_url}", got: ${page.url()}`);
-      });
-    }
-    if (step.wait_for) {
-      const waitMs = step.wait_timeout_ms ?? 10000;
-      await page.locator(step.wait_for).first().waitFor({ timeout: waitMs }).catch(() => {
-        console.warn(`   ⚠️  wait_for not found (${waitMs}ms): ${step.wait_for}`);
-      });
-    }
-
-    await page.waitForTimeout(step.action_ms);
-
-    // Measure actual DOM operation + action_ms wait elapsed
-    const actionActualMs = Date.now() - stepStart;
-    actualCursor += actionActualMs;
-
-    // Store the measured audio_start_ms (overrides generate-audio.ts estimate)
-    step.audio_start_ms = actualCursor;
-
-    const narrationMs = (step.audio_duration_ms ?? 0) + (step.narration ? 500 : 0);
-    if (narrationMs > 0) {
-      // Spotlight the region being explained while narration plays
-      if (step.narration) await applyHighlight(page, step);
-      console.log(`   ⏸  ${(narrationMs / 1000).toFixed(1)}s narration pause`);
-      await page.waitForTimeout(narrationMs);
-      await clearHighlight(page);
-      actualCursor += narrationMs;
+  // Split around off-record breaks (LLM waits): [part0 steps][break][part1 steps]…
+  type Chunk =
+    | { kind: 'record'; steps: FlowStep[] }
+    | { kind: 'offrecord'; step: FlowStep };
+  const chunks: Chunk[] = [];
+  let buf: FlowStep[] = [];
+  for (const step of flow.steps) {
+    if (isOffrecordBreak(step)) {
+      if (buf.length) {
+        chunks.push({ kind: 'record', steps: buf });
+        buf = [];
+      }
+      chunks.push({ kind: 'offrecord', step });
     } else {
-      await clearHighlight(page);
-    }
-
-    if (step.narration) {
-      console.log(`   📍 audio_start_ms=${step.audio_start_ms}ms (action actual: ${actionActualMs}ms, was ${step.action_ms}ms)`);
-    }
-
-    if (step.wait_for_url) {
-      console.log(`   📍 ${page.url()}`);
+      buf.push(step);
     }
   }
+  if (buf.length) chunks.push({ kind: 'record', steps: buf });
 
-  const videoPath = await page.video()?.path();
-  await context.close();
+  const hasSplit = chunks.some((c) => c.kind === 'offrecord');
+  if (hasSplit) {
+    console.log(`   📼 Segmented recording: ${chunks.filter((c) => c.kind === 'record').length} parts around off-record LLM wait(s)`);
+  }
+
+  const videoParts: VideoPart[] = [];
+  let storageState: Awaited<ReturnType<BrowserContext['storageState']>> | undefined;
+  let resumeUrl = `${config.base_url}/dashboard`;
+  let globalStep = 0;
+  let partIndex = 0;
+  let slateMs = ACCEL_SLATE_DEFAULT_MS;
+
+  async function openRecordingContext(): Promise<{ context: BrowserContext; page: Page; clockStart: number }> {
+    const context = await browser.newContext({
+      viewport: flow.viewport,
+      recordVideo: { dir: rawDir, size: flow.viewport },
+      ...(storageState ? { storageState } : {}),
+    });
+    if (showCursor) await context.addInitScript(CURSOR_SCRIPT);
+    const page = await context.newPage();
+    return { context, page, clockStart: Date.now() };
+  }
+
+  async function savePartVideo(
+    context: BrowserContext,
+    page: Page,
+    partIdx: number,
+  ): Promise<string> {
+    const tmpPath = await page.video()?.path();
+    await context.close();
+    const dest = path.join(rawDir, `${flow.output_name}.part${partIdx}.webm`);
+    if (tmpPath && fs.existsSync(tmpPath)) {
+      if (fs.existsSync(dest)) fs.unlinkSync(dest);
+      fs.renameSync(tmpPath, dest);
+    }
+    return dest;
+  }
+
+  async function runRecordedSteps(
+    page: Page,
+    steps: FlowStep[],
+    partIdx: number,
+  ): Promise<{ trim_start_ms?: number }> {
+    const videoClockStart = Date.now();
+    // Warm page for part>0 (session restored; land on dashboard before actions)
+    if (partIdx > 0) {
+      await page.goto(resumeUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await page.waitForTimeout(600);
+    } else {
+      if (flow.use_setup_login) {
+        const { email, password } = config.setup_login;
+        console.log(`\n🔐 Setup: logging in as ${email}...`);
+        await page.goto(`${config.base_url}/login`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+        await page.locator('#email').fill(email);
+        await page.waitForTimeout(150);
+        await page.locator('#password').fill(password);
+        await page.waitForTimeout(150);
+        await page.locator('button[type=submit]').click();
+        await page.waitForURL((url) => !url.pathname.endsWith('/login'), { timeout: 12000 }).catch(() => {
+          console.warn(`   ⚠️  Login redirect timeout, current URL: ${page.url()}`);
+        });
+        await page.waitForTimeout(800);
+        console.log(`   ✅ Logged in → ${page.url()}`);
+      }
+      for (const step of flow.setup ?? []) {
+        await executeStep(page, step, variables, config);
+        await page.waitForTimeout(300);
+      }
+    }
+
+    const recordingStart = Date.now();
+    const prefixMs = Math.max(0, recordingStart - videoClockStart);
+    let trim_start_ms: number | undefined;
+    if (prefixMs > 100) {
+      trim_start_ms = prefixMs;
+      console.log(`   ✂️  part${partIdx} prefix ${(prefixMs / 1000).toFixed(2)}s`);
+    }
+
+    // Timestamps are relative to THIS part only (critical for post-LLM sync).
+    let actualCursor = 0;
+
+    for (const step of steps) {
+      globalStep += 1;
+      const pct = Math.round((globalStep / totalSteps) * 100);
+      console.log(
+        `\n▶  [${globalStep}/${totalSteps}] (${pct}%) [part${partIdx}/${step.id}] ${step.action}` +
+          `${step.value ? ` → ${String(step.value).slice(0, 60)}` : ''}`,
+      );
+
+      const stepRawStart = actualCursor;
+      const stepStart = Date.now();
+
+      await executeStep(page, step, variables, config);
+
+      if (step.wait_for_url) {
+        await page.waitForURL(`**${step.wait_for_url}`, { timeout: step.wait_timeout_ms ?? 20000 }).catch(() => {
+          console.warn(`   ⚠️  Expected URL "${step.wait_for_url}", got: ${page.url()}`);
+        });
+      }
+      if (step.wait_for) {
+        const waitMs = step.wait_timeout_ms ?? 10000;
+        await page.locator(step.wait_for).first().waitFor({ timeout: waitMs }).catch(() => {
+          console.warn(`   ⚠️  wait_for not found (${waitMs}ms): ${step.wait_for}`);
+        });
+      }
+
+      await page.waitForTimeout(step.action_ms);
+
+      const actionActualMs = Date.now() - stepStart;
+      actualCursor += actionActualMs;
+      step.audio_start_ms = actualCursor;
+
+      const narrationMs = (step.audio_duration_ms ?? 0) + (step.narration ? 500 : 0);
+      if (narrationMs > 0) {
+        if (step.narration) await applyHighlight(page, step);
+        console.log(`   ⏸  ${(narrationMs / 1000).toFixed(1)}s narration pause`);
+        await page.waitForTimeout(narrationMs);
+        await clearHighlight(page);
+        actualCursor += narrationMs;
+      } else {
+        await clearHighlight(page);
+      }
+
+      step.raw_start_ms = stepRawStart;
+      step.raw_end_ms = actualCursor;
+      step.record_part = partIdx;
+
+      if (step.narration) {
+        console.log(`   📍 part${partIdx} audio_start_ms=${step.audio_start_ms}ms`);
+      }
+      if (step.wait_for_url) console.log(`   📍 ${page.url()}`);
+    }
+
+    resumeUrl = page.url();
+    return { trim_start_ms };
+  }
+
+  // ── Execute chunks ───────────────────────────────────────────────────────
+  for (const chunk of chunks) {
+    if (chunk.kind === 'offrecord') {
+      const step = chunk.step;
+      slateMs = ACCEL_SLATE_DEFAULT_MS;
+      step.offrecord = true;
+      step.record_part = -1;
+      step.raw_start_ms = 0;
+      step.raw_end_ms = 0;
+      step.audio_start_ms = 0;
+      globalStep += 1;
+      console.log(
+        `\n⏭  [${globalStep}/${totalSteps}] OFF-RECORD [${step.id}] ${step.action}` +
+          ` (slate ${(slateMs / 1000).toFixed(1)}s in final)`,
+      );
+
+      // Wait without recording so uncontrollable LLM time never enters the webm.
+      const context = await browser.newContext({
+        viewport: flow.viewport,
+        ...(storageState ? { storageState } : {}),
+      });
+      const page = await context.newPage();
+      await page.goto(resumeUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await page.waitForTimeout(500);
+      await executeStep(page, step, variables, config);
+      if (step.action_ms) await page.waitForTimeout(step.action_ms);
+      resumeUrl = page.url();
+      storageState = await context.storageState();
+      await context.close();
+      console.log(`   ✅ off-record wait done → resume at ${resumeUrl}`);
+      continue;
+    }
+
+    // Recorded part
+    const { context, page } = await openRecordingContext();
+    // First part may need login; later parts use storageState
+    if (partIndex === 0 && !storageState && !flow.use_setup_login) {
+      // still ok — steps usually include login
+    }
+    const meta = await runRecordedSteps(page, chunk.steps, partIndex);
+    storageState = await context.storageState();
+    const file = await savePartVideo(context, page, partIndex);
+    videoParts.push({
+      index: partIndex,
+      file,
+      trim_start_ms: meta.trim_start_ms,
+      step_ids: chunk.steps.map((s) => s.id),
+    });
+    console.log(`   💾 Saved ${file}`);
+    partIndex += 1;
+  }
+
   await browser.close();
 
+  // Legacy single-file alias = part0 (assemble prefers video_parts when present)
   const expectedVideo = path.join(rawDir, `${flow.output_name}.webm`);
-  if (videoPath && videoPath !== expectedVideo) {
-    fs.renameSync(videoPath, expectedVideo);
+  if (videoParts[0]?.file && fs.existsSync(videoParts[0].file)) {
+    fs.copyFileSync(videoParts[0].file, expectedVideo);
   }
 
-  // Update enriched JSON with REAL measured audio_start_ms values + trim
+  flow.video_parts = videoParts;
+  flow.accel_slate_ms = hasSplit ? slateMs : undefined;
+  if (videoParts[0]?.trim_start_ms) flow.trim_start_ms = videoParts[0].trim_start_ms;
+
+  // Update enriched JSON with REAL measured timings + parts
   const enrichedPath = flowPath.endsWith('.enriched.json') ? flowPath : flowPath.replace('.json', '.enriched.json');
   if (fs.existsSync(enrichedPath)) {
     const enriched = JSON.parse(fs.readFileSync(enrichedPath, 'utf-8')) as Flow;
-    if (flow.trim_start_ms) enriched.trim_start_ms = flow.trim_start_ms;
-    // Sync measured audio_start_ms back to enriched steps
+    enriched.trim_start_ms = flow.trim_start_ms;
+    enriched.video_parts = videoParts;
+    enriched.accel_slate_ms = flow.accel_slate_ms;
     for (const measured of flow.steps) {
-      const target = enriched.steps.find(s => s.id === measured.id);
-      if (target && measured.audio_start_ms !== undefined) {
-        target.audio_start_ms = measured.audio_start_ms;
+      const target = enriched.steps.find((s) => s.id === measured.id);
+      if (!target) continue;
+      target.audio_start_ms = measured.audio_start_ms;
+      target.raw_start_ms = measured.raw_start_ms;
+      target.raw_end_ms = measured.raw_end_ms;
+      target.record_part = measured.record_part;
+      target.offrecord = measured.offrecord;
+      if (measured.playback_speed !== undefined) target.playback_speed = measured.playback_speed;
+      if (measured.accelerate_caption !== undefined) {
+        target.accelerate_caption = measured.accelerate_caption;
       }
     }
     fs.writeFileSync(enrichedPath, JSON.stringify(enriched, null, 2));
-    console.log(`\n   ✅ Updated audio_start_ms in enriched.json (measured timings)`);
+    console.log(`\n   ✅ Updated enriched.json (segmented timings + video_parts)`);
   }
 
-  console.log(`\n✅ Video recorded: ${expectedVideo}`);
+  console.log(`\n✅ Video recorded: ${videoParts.map((p) => p.file).join(' + ')}`);
 }
 
 main().catch((err: unknown) => { console.error(err); process.exit(1); });

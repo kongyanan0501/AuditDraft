@@ -58,6 +58,7 @@ export type StepAction =
   | 'otp_fill'     // fills a multi-input OTP component digit by digit using nth()
   | 'upload'       // setInputFiles on a file input (value = absolute path)
   | 'wait'
+  | 'wait_job_done' // poll dashboard first job until 已完成; auto-click 重试 on 失败
   | 'hover'
   | 'scroll'
   | 'screenshot'
@@ -95,11 +96,40 @@ export interface FlowStep {
   /** For mailpit_code: email address to search */
   email?: string;
 
+  /**
+   * Marks an uncontrollable wait (e.g. LLM job). When set with wait_job_done:
+   * the wait is executed OFF-record between video parts; assemble inserts a
+   * short slate with `accelerate_caption` (default 【视频加速中】).
+   * Numeric value is reserved for legacy jump-cut; prefer segmented recording.
+   */
+  playback_speed?: number;
+  /** Caption on the inter-part slate for accelerated / off-record waits. */
+  accelerate_caption?: string;
+  /**
+   * When true (or implied by wait_job_done + playback_speed>1), step runs
+   * between recorded parts and is not present in any webm.
+   */
+  offrecord?: boolean;
+
   // Populated by generate-audio.ts — do not set manually:
   audio_duration_ms?: number;
   audio_file?: string;
   /** Cumulative ms in the final video where this audio overlay starts */
   audio_start_ms?: number;
+  /** Measured by generate-video: step span in raw (post-trim) timeline. */
+  raw_start_ms?: number;
+  raw_end_ms?: number;
+  /** Which recorded part this step belongs to (0, 1, …). -1 = off-record/slate. */
+  record_part?: number;
+}
+
+/** One Playwright recording segment (split around off-record LLM waits). */
+export interface VideoPart {
+  index: number;
+  /** Absolute path to part webm/mp4 */
+  file: string;
+  trim_start_ms?: number;
+  step_ids: string[];
 }
 
 /** Steps that run BEFORE recording starts (login, setup state, etc.) */
@@ -146,6 +176,14 @@ export interface Flow {
   /**
    * Milliseconds to trim from the start of the raw video (login section).
    * Populated automatically by generate-video.ts — do not set manually.
+   * For multi-part recordings, prefer video_parts[].trim_start_ms.
    */
   trim_start_ms?: number;
+  /**
+   * Populated by generate-video when recording is split around off-record waits
+   * (typically LLM job completion). Assemble: part0 + slate + part1 + …
+   */
+  video_parts?: VideoPart[];
+  /** Duration of the synthetic 【视频加速中】 slate between parts (ms). */
+  accel_slate_ms?: number;
 }

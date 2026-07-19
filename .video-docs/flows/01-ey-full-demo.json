@@ -2,15 +2,15 @@
   "project": "AuditDraft",
   "title": "安永华明 AI 赛 · 费用循环协审全流程",
   "category": "EY Demo",
-  "description": "比赛演示：登录 → 上传初筛 → 风险依据 → 评测 → 调参勾稽收尾（含区域高亮）。",
+  "description": "完整模式：登录 → 上传 → 等待 LLM（成片加速）→ live 结果讲解 → 评测调参勾稽。",
   "output_name": "01-ey-full-demo",
   "viewport": { "width": 1440, "height": 900 },
   "use_setup_login": false,
   "show_cursor": true,
   "steps_summary": [
     "登录与数据隔离",
-    "上传费用明细",
-    "工作流与风险依据",
+    "上传并等待完整工作流",
+    "Live 风险依据与底稿",
     "质量评测",
     "调参、勾稽与收尾"
   ],
@@ -53,7 +53,7 @@
     {
       "id": "show_dashboard",
       "action": "wait",
-      "narration": "这是工作台。今天演示关掉大模型，只用规则做检测，结果可复现；需要润色底稿时再开完整模式。",
+      "narration": "这是工作台。今天开完整模式：规则引擎出硬结论，大模型写审计计划与底稿说明。",
       "highlight": "h1",
       "highlight_label": "审计任务工作台",
       "action_ms": 1000,
@@ -63,7 +63,7 @@
       "id": "pre_upload",
       "action": "scroll",
       "selector": "input[name=\"file\"]",
-      "narration": "费用明细经常是几千条。抽查覆盖有限，我们先用规则把整表过一遍，把时间留给复核。",
+      "narration": "生产里费用明细经常是几千条；今天用小样快速走完完整模式，逻辑一样。",
       "highlight": "section:has(input[name=\"file\"])",
       "highlight_label": "上传审计数据",
       "action_ms": 500
@@ -72,14 +72,14 @@
       "id": "select_csv",
       "action": "upload",
       "selector": "input[name=\"file\"]",
-      "value": "/Users/huangdeyu/Documents/coderHDY/AuditDraft/samples/ey_expense_demo_3k.csv",
+      "value": "/Users/huangdeyu/Documents/coderHDY/AuditDraft/samples/expense_transactions.csv",
       "action_ms": 400
     },
     {
       "id": "click_upload",
       "action": "click",
       "selector": "button[type=\"submit\"]",
-      "narration": "样本大约三千条，埋了重复付款、大额无审批、拆分报销、金额离群这几类常见红旗。",
+      "narration": "小样埋了重复付款、大额无审批、拆分报销、金额离群这几类常见红旗，方便当面看检出。",
       "highlight": "section:has(input[name=\"file\"])",
       "highlight_label": "上传并创建任务",
       "action_ms": 700,
@@ -87,26 +87,53 @@
       "wait_timeout_ms": 45000
     },
     {
-      "id": "bridge_to_results",
+      "id": "pre_llm_wait",
       "action": "wait",
-      "narration": "任务建好了。结果页用同一套规则、同一批样本的标准快照，方便现场对照。",
+      "narration": "任务已提交。完整工作流里模型要写计划和底稿，会等一会儿；成片里这段加速播放，避免干等。",
       "highlight": "ul",
       "highlight_label": "任务列表",
-      "action_ms": 900
+      "action_ms": 800
     },
     {
-      "id": "go_snapshot",
-      "action": "navigate",
-      "value": "http://localhost:3000/demo/snapshot",
+      "id": "wait_llm_done",
+      "action": "wait_job_done",
+      "value": "3",
+      "wait_timeout_ms": 180000,
+      "offrecord": true,
+      "playback_speed": 12,
+      "accelerate_caption": "【视频加速中】",
+      "action_ms": 500
+    },
+    {
+      "id": "open_live_job",
+      "action": "click",
+      "selector": "ul li:first-child a[href^=\"/jobs/\"]",
+      "action_ms": 400,
+      "wait_for_url": "/jobs/",
+      "wait_timeout_ms": 20000
+    },
+    {
+      "id": "announce_live",
+      "action": "wait",
+      "narration": "结果回来了。这是刚才这次 live 跑出来的页面，不是预置快照。",
+      "highlight": "h2:has-text(\"审计工作流\")",
+      "highlight_label": "Live 结果页",
+      "action_ms": 500,
+      "wait_for": "text=审计工作流",
+      "wait_timeout_ms": 20000
+    },
+    {
+      "id": "show_workflow",
+      "action": "wait",
       "narration": "流程七步：解析、计划、规则、异常、风险、底稿、导出。风险结论只来自规则；模型只写说明，不改硬结论。",
       "highlight": "h2:has-text(\"审计工作流\")",
       "highlight_label": "审计工作流",
       "action_ms": 900,
       "wait_for": "text=审计工作流",
-      "wait_timeout_ms": 15000
+      "wait_timeout_ms": 10000
     },
     {
-      "id": "show_workflow",
+      "id": "show_workflow_nodes",
       "action": "scroll",
       "selector": "text=规则引擎",
       "narration": "节点可以单独测，也可以降级，后面还能加人工门闩，按质量流程设计，不是一次扫表了事。",
@@ -118,7 +145,7 @@
       "id": "show_risks",
       "action": "scroll",
       "selector": "text=风险事项",
-      "narration": "风险按高低分级。同样的输入给出同样的输出，可以直接放进复核底稿。",
+      "narration": "风险按高低分级。同样的输入，规则侧给出同样的硬结论，可以直接放进复核底稿。",
       "highlight": "h2:has-text(\"风险事项\")",
       "highlight_label": "风险事项",
       "action_ms": 800,
@@ -148,7 +175,7 @@
       "id": "show_workpaper",
       "action": "scroll",
       "selector": "text=审计底稿",
-      "narration": "底稿会标明这是辅助草稿，必须项目组复核后才能往下走。",
+      "narration": "下面这段底稿说明由大模型生成，会标明这是辅助草稿，必须项目组复核后才能往下走。",
       "highlight": "h2:has-text(\"审计底稿\")",
       "highlight_label": "审计底稿",
       "action_ms": 900
