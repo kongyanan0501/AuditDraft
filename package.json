@@ -14,7 +14,9 @@
     "check:env": "node --env-file-if-exists=.env.local scripts/check-env.ts",
     "seed:rag": "node --env-file-if-exists=.env.local scripts/seed-rag.ts",
     "generate:demo-data": "node scripts/generate-demo-dataset.ts",
-    "assert:planted": "node scripts/assert-planted-risks.ts"
+    "assert:planted": "node scripts/assert-planted-risks.ts",
+    "build:golden": "node scripts/build-golden-set.ts",
+    "eval:golden": "vitest run tests/golden-eval.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",

@@ -190,8 +190,8 @@ npm run dev         # 本地启动 http://localhost:3000
 
 ### 包 A · 可信（进行中）
 
-- [ ] A1 大数据演示集（已交付，待你 Check → 见 `docs/ey-package-a-tasks.md` §A1）
-- [ ] A2 Golden Set + `npm run eval:golden`（Precision/Recall，不依赖 LLM）
+- [x] A1 大数据演示集（你已继续 → 视为 checked）
+- [ ] A2 Golden Set + `npm run eval:golden`（已交付，待你 Check → 见 `docs/ey-package-a-tasks.md` §A2）
 - [ ] A3 Eval 页（指标卡 + 人工 vs 系统对比）
 - [ ] A4 规则-only 降级模式（无 LLM 也能 done）
 - [ ] A5 预计算快照 / 预跑 done 任务兜底

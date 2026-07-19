@@ -10,8 +10,8 @@
 
 | 步骤 | 状态 | 你 Check 了吗 |
 | --- | --- | --- |
-| A1 大数据演示集 | `done_awaiting_check` | [ ] |
-| A2 Golden Set 评测 | `pending` | [ ] |
+| A1 大数据演示集 | `checked` | [x] |
+| A2 Golden Set 评测 | `done_awaiting_check` | [ ] |
 | A3 Eval 对比页 | `pending` | [ ] |
 | A4 规则-only 降级 | `pending` | [ ] |
 | A5 演示快照兜底 | `pending` | [ ] |

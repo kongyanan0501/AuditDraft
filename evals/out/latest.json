@@ -1,0 +1,1377 @@
+{
+  "version": "expense_v1",
+  "dataset": "ey_expense_demo_3k.csv",
+  "rulesetVersion": "rules-v1",
+  "ranAt": "2026-07-19T09:24:51.891Z",
+  "offline": true,
+  "metrics": {
+    "caseCount": 135,
+    "tp": 28,
+    "tn": 107,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "explainabilityPass": true,
+    "explainabilityFailures": 0
+  },
+  "thresholds": {
+    "recallMin": 0.95,
+    "precisionMin": 0.9,
+    "explainabilityRequired": true
+  },
+  "thresholdsMet": true,
+  "cases": [
+    {
+      "id": "plant-dup-1",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-2",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-3",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-4",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-5",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-6",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-7",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-dup-8",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-1",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-2",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-3",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-4",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-5",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-6",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-7",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-8",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-9",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-na-10",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-1",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-2",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-3",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-4",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-5",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-split-6",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-abn-1",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-abn-2",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-abn-3",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "plant-abn-4",
+      "shouldFire": true,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tp",
+      "detail": "expected rule(s) hit with evidence ids"
+    },
+    {
+      "id": "neg-na-1",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-2",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-3",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-4",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-5",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-6",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-7",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-8",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-9",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-10",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-11",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-12",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-13",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-14",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-15",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-16",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-17",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-18",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-19",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-20",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-21",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-22",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-23",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-24",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-25",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-26",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-27",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-28",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-29",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-30",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-31",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-32",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-33",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-34",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-35",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-36",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-37",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-38",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-39",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-40",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-41",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-42",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-43",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-44",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-na-45",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-1",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-2",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-3",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-4",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-5",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-6",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-7",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-8",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-9",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-10",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-11",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-12",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-13",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-14",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-15",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-16",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-17",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-18",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-19",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-20",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-21",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-22",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-23",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-24",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-dup-25",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-1",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-2",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-3",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-4",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-5",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-6",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-7",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-8",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-9",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-10",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-11",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-12",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-13",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-14",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-15",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-16",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-17",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-18",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-19",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-20",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-21",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-22",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-23",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-24",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-abn-25",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-1",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-2",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-3",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-4",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-5",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-6",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-7",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-8",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-9",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-10",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-11",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    },
+    {
+      "id": "neg-split-12",
+      "shouldFire": false,
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "passed": true,
+      "kind": "tn",
+      "detail": "correctly did not fire on these ids"
+    }
+  ]
+}

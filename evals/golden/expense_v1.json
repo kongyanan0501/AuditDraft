@@ -1,0 +1,1536 @@
+{
+  "version": "expense_v1",
+  "dataset": "ey_expense_demo_3k.csv",
+  "rulesetVersion": "rules-v1",
+  "thresholds": {
+    "recallMin": 0.95,
+    "precisionMin": 0.9,
+    "explainabilityRequired": true
+  },
+  "cases": [
+    {
+      "id": "plant-dup-1",
+      "transactionIds": [
+        "1",
+        "2"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-2",
+      "transactionIds": [
+        "3",
+        "4"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-3",
+      "transactionIds": [
+        "5",
+        "6"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-4",
+      "transactionIds": [
+        "7",
+        "8"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-5",
+      "transactionIds": [
+        "9",
+        "10"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-6",
+      "transactionIds": [
+        "11",
+        "12"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-7",
+      "transactionIds": [
+        "13",
+        "14"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-8",
+      "transactionIds": [
+        "15",
+        "16"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": true,
+      "notes": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-na-1",
+      "transactionIds": [
+        "17"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-2",
+      "transactionIds": [
+        "18"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-3",
+      "transactionIds": [
+        "19"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-4",
+      "transactionIds": [
+        "20"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-5",
+      "transactionIds": [
+        "21"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-6",
+      "transactionIds": [
+        "22"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-7",
+      "transactionIds": [
+        "23"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-8",
+      "transactionIds": [
+        "24"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-9",
+      "transactionIds": [
+        "25"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-10",
+      "transactionIds": [
+        "26"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": true,
+      "notes": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-split-1",
+      "transactionIds": [
+        "27",
+        "28"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-2",
+      "transactionIds": [
+        "29",
+        "30"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-3",
+      "transactionIds": [
+        "31",
+        "32"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-4",
+      "transactionIds": [
+        "33",
+        "34"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-5",
+      "transactionIds": [
+        "35",
+        "36"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-6",
+      "transactionIds": [
+        "37",
+        "38"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": true,
+      "notes": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-abn-1",
+      "transactionIds": [
+        "39"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": true,
+      "notes": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-2",
+      "transactionIds": [
+        "40"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": true,
+      "notes": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-3",
+      "transactionIds": [
+        "41"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": true,
+      "notes": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-4",
+      "transactionIds": [
+        "42"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": true,
+      "notes": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "neg-na-1",
+      "transactionIds": [
+        "43"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-2",
+      "transactionIds": [
+        "44"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-3",
+      "transactionIds": [
+        "45"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-4",
+      "transactionIds": [
+        "46"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-5",
+      "transactionIds": [
+        "47"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-6",
+      "transactionIds": [
+        "48"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-7",
+      "transactionIds": [
+        "49"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-8",
+      "transactionIds": [
+        "50"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-9",
+      "transactionIds": [
+        "51"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-10",
+      "transactionIds": [
+        "52"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-11",
+      "transactionIds": [
+        "53"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-12",
+      "transactionIds": [
+        "54"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-13",
+      "transactionIds": [
+        "55"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-14",
+      "transactionIds": [
+        "56"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-15",
+      "transactionIds": [
+        "57"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-16",
+      "transactionIds": [
+        "58"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-17",
+      "transactionIds": [
+        "59"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-18",
+      "transactionIds": [
+        "60"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-19",
+      "transactionIds": [
+        "61"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-20",
+      "transactionIds": [
+        "62"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-21",
+      "transactionIds": [
+        "63"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-22",
+      "transactionIds": [
+        "64"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-23",
+      "transactionIds": [
+        "65"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-24",
+      "transactionIds": [
+        "66"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-25",
+      "transactionIds": [
+        "67"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-26",
+      "transactionIds": [
+        "68"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-27",
+      "transactionIds": [
+        "69"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-28",
+      "transactionIds": [
+        "70"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-29",
+      "transactionIds": [
+        "71"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-30",
+      "transactionIds": [
+        "72"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-31",
+      "transactionIds": [
+        "73"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-32",
+      "transactionIds": [
+        "74"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-33",
+      "transactionIds": [
+        "75"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-34",
+      "transactionIds": [
+        "76"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-35",
+      "transactionIds": [
+        "77"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-36",
+      "transactionIds": [
+        "78"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-37",
+      "transactionIds": [
+        "79"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-38",
+      "transactionIds": [
+        "80"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-39",
+      "transactionIds": [
+        "81"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-40",
+      "transactionIds": [
+        "82"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-41",
+      "transactionIds": [
+        "83"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-42",
+      "transactionIds": [
+        "84"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-43",
+      "transactionIds": [
+        "85"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-44",
+      "transactionIds": [
+        "86"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-na-45",
+      "transactionIds": [
+        "87"
+      ],
+      "expectedRuleIds": [
+        "missing_approval"
+      ],
+      "shouldFire": false,
+      "notes": "正常已审批/未超阈值 — 不应触发 missing_approval"
+    },
+    {
+      "id": "neg-dup-1",
+      "transactionIds": [
+        "43",
+        "44"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-2",
+      "transactionIds": [
+        "44",
+        "60"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-3",
+      "transactionIds": [
+        "60",
+        "72"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-4",
+      "transactionIds": [
+        "72",
+        "78"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-5",
+      "transactionIds": [
+        "78",
+        "85"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-6",
+      "transactionIds": [
+        "85",
+        "92"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-7",
+      "transactionIds": [
+        "92",
+        "94"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-8",
+      "transactionIds": [
+        "94",
+        "104"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-9",
+      "transactionIds": [
+        "104",
+        "110"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-10",
+      "transactionIds": [
+        "110",
+        "136"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-11",
+      "transactionIds": [
+        "136",
+        "146"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-12",
+      "transactionIds": [
+        "146",
+        "163"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-13",
+      "transactionIds": [
+        "163",
+        "190"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-14",
+      "transactionIds": [
+        "190",
+        "197"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-15",
+      "transactionIds": [
+        "197",
+        "212"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-16",
+      "transactionIds": [
+        "212",
+        "217"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-17",
+      "transactionIds": [
+        "217",
+        "219"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-18",
+      "transactionIds": [
+        "219",
+        "227"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-19",
+      "transactionIds": [
+        "227",
+        "233"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-20",
+      "transactionIds": [
+        "233",
+        "267"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-21",
+      "transactionIds": [
+        "267",
+        "284"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-22",
+      "transactionIds": [
+        "284",
+        "297"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-23",
+      "transactionIds": [
+        "297",
+        "310"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-24",
+      "transactionIds": [
+        "310",
+        "311"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-dup-25",
+      "transactionIds": [
+        "311",
+        "320"
+      ],
+      "expectedRuleIds": [
+        "duplicate_payment"
+      ],
+      "shouldFire": false,
+      "notes": "同供应商但金额/发票不同 — 不应触发 duplicate_payment"
+    },
+    {
+      "id": "neg-abn-1",
+      "transactionIds": [
+        "43"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-2",
+      "transactionIds": [
+        "44"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-3",
+      "transactionIds": [
+        "45"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-4",
+      "transactionIds": [
+        "46"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-5",
+      "transactionIds": [
+        "47"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-6",
+      "transactionIds": [
+        "48"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-7",
+      "transactionIds": [
+        "49"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-8",
+      "transactionIds": [
+        "50"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-9",
+      "transactionIds": [
+        "51"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-10",
+      "transactionIds": [
+        "52"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-11",
+      "transactionIds": [
+        "53"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-12",
+      "transactionIds": [
+        "54"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-13",
+      "transactionIds": [
+        "55"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-14",
+      "transactionIds": [
+        "56"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-15",
+      "transactionIds": [
+        "57"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-16",
+      "transactionIds": [
+        "58"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-17",
+      "transactionIds": [
+        "59"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-18",
+      "transactionIds": [
+        "60"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-19",
+      "transactionIds": [
+        "61"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-20",
+      "transactionIds": [
+        "62"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-21",
+      "transactionIds": [
+        "63"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-22",
+      "transactionIds": [
+        "64"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-23",
+      "transactionIds": [
+        "65"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-24",
+      "transactionIds": [
+        "66"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-abn-25",
+      "transactionIds": [
+        "67"
+      ],
+      "expectedRuleIds": [
+        "abnormal_amount"
+      ],
+      "shouldFire": false,
+      "notes": "普通小额 — 不应作为 abnormal_amount 证据行"
+    },
+    {
+      "id": "neg-split-1",
+      "transactionIds": [
+        "43"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-2",
+      "transactionIds": [
+        "44"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-3",
+      "transactionIds": [
+        "45"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-4",
+      "transactionIds": [
+        "46"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-5",
+      "transactionIds": [
+        "47"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-6",
+      "transactionIds": [
+        "48"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-7",
+      "transactionIds": [
+        "49"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-8",
+      "transactionIds": [
+        "50"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-9",
+      "transactionIds": [
+        "51"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-10",
+      "transactionIds": [
+        "52"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-11",
+      "transactionIds": [
+        "53"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    },
+    {
+      "id": "neg-split-12",
+      "transactionIds": [
+        "54"
+      ],
+      "expectedRuleIds": [
+        "split_expense"
+      ],
+      "shouldFire": false,
+      "notes": "普通行 — 不应出现在 split_expense 证据中"
+    }
+  ]
+}
