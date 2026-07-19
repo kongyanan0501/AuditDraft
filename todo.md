@@ -191,12 +191,12 @@ npm run dev         # 本地启动 http://localhost:3000
 ### 包 A · 可信（进行中）
 
 - [x] A1 大数据演示集（你已继续 → 视为 checked）
-- [ ] A2 Golden Set + `npm run eval:golden`（已交付，待你 Check → 见 `docs/ey-package-a-tasks.md` §A2）
-- [ ] A3 Eval 页（指标卡 + 人工 vs 系统对比）
-- [ ] A4 规则-only 降级模式（无 LLM 也能 done）
-- [ ] A5 预计算快照 / 预跑 done 任务兜底
-- [ ] A6 安永版演示脚本 + runbook 干跑
-- [ ] 包 A DoD：见 `ey-package-a-tasks.md` 完成定义
+- [x] A2 Golden Set + `npm run eval:golden`（继续 → 视为 checked）
+- [x] A3 Eval 页（继续 → 视为 checked）
+- [x] A4 规则-only 降级（继续 → 视为 checked；演示请保持降级或按需关闭）
+- [ ] A5 预计算快照（已交付，待 Check：`/demo/snapshot` + runbook）
+- [ ] A6 安永版演示脚本（已交付，待 Check：`docs/demo-script-ey.md` 干跑）
+- [ ] 包 A DoD：A5/A6 Check 通过后勾选，见 `ey-package-a-tasks.md`
 
 ### 包 B / C（包 A 完成后再拆）
 

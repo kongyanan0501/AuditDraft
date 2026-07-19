@@ -172,10 +172,23 @@ export const getEmbeddingEnv = memo(() => {
   };
 });
 
+/**
+ * 规则-only 降级：跳过 LLM 与 RAG 网络调用，仅跑解析 + 规则 + 模板底稿。
+ * 设置 `AUDIT_DEGRADED_MODE=rules_only`（或 `DEMO_RULES_ONLY=1`）。
+ */
+export function isAuditDegradedMode(): boolean {
+  const mode = (process.env.AUDIT_DEGRADED_MODE ?? "").trim().toLowerCase();
+  if (mode === "rules_only" || mode === "1" || mode === "true") return true;
+  const demo = (process.env.DEMO_RULES_ONLY ?? "").trim().toLowerCase();
+  return demo === "1" || demo === "true" || demo === "yes";
+}
+
 /** 一次性校验全部子系统（用于部署前自检 / CI / `npm run check:env`）。 */
 export function validateAllEnv(): void {
   getSupabaseEnv();
-  getLLMEnv();
-  getPineconeEnv();
-  getEmbeddingEnv();
+  if (!isAuditDegradedMode()) {
+    getLLMEnv();
+    getPineconeEnv();
+    getEmbeddingEnv();
+  }
 }

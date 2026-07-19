@@ -25,7 +25,9 @@
 | [`ARCHITECTURE.md`](./ARCHITECTURE.md) | 系统架构总览 |
 | [`docs/architecture/`](./docs/architecture/) | AI 系统 / 数据模型 / UI 详细设计 |
 | [`docs/deployment.md`](./docs/deployment.md) | 部署指南（Vercel + Supabase + Pinecone） |
-| [`docs/demo-script.md`](./docs/demo-script.md) | 评委演示流程与话术 |
+| [`docs/demo-script.md`](./docs/demo-script.md) | 通用评委演示流程与话术 |
+| [`docs/demo-script-ey.md`](./docs/demo-script-ey.md) | **安永华明赛**演示话术（推荐） |
+| [`docs/ey-package-a-tasks.md`](./docs/ey-package-a-tasks.md) | 冲击第一 · 包 A 执行与 Check |
 | [`todo.md`](./todo.md) | 开发路线图与任务追踪 |
 
 ## 快速开始

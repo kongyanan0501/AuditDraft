@@ -74,6 +74,11 @@ export default async function JobDetailPage({
             <StatusBadge status={job.status} />
           </div>
         </div>
+        {report?.report_json.meta?.degraded ? (
+          <p className="mt-3 inline-flex rounded-md border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-800 dark:text-amber-300">
+            降级模式（仅规则引擎 · 未调用 LLM）
+          </p>
+        ) : null}
       </div>
 
       <section>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RunAuditButton } from "@/components/audit/run-audit-button";
 import { StatusBadge } from "@/components/audit/status-badge";
 import { StatusPoller } from "@/components/audit/status-poller";
+import { isAuditDegradedMode } from "@/lib/env";
 import { getJobs } from "@/lib/supabase/repository";
 
 import { UploadForm } from "./upload-form";
@@ -27,6 +28,12 @@ export default async function DashboardPage() {
         <p className="mt-1 text-sm text-muted-foreground">
           上传财务数据，自动运行审计工作流并生成可解释底稿。
         </p>
+        {isAuditDegradedMode() ? (
+          <p className="mt-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-300">
+            当前为<strong className="font-medium">规则-only 降级模式</strong>
+            （AUDIT_DEGRADED_MODE=rules_only）：跳过 LLM/RAG，仍可产出可解释风险与模板底稿。
+          </p>
+        ) : null}
       </div>
 
       <section className="rounded-lg border border-border bg-card p-5">

@@ -1,0 +1,475 @@
+{
+  "kind": "failover_snapshot",
+  "label": "Official Demo Snapshot (failover)",
+  "disclaimer": "Snapshot for failover — 非本次 live 跑批结果。用于演示故障时展示可解释风险与底稿骨架。",
+  "dataset": "ey_expense_demo_3k.csv",
+  "generatedAt": "2026-07-19T09:39:54.189Z",
+  "report": {
+    "jobId": "snapshot-ey-demo",
+    "riskLevel": "high",
+    "findings": [
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-01",
+          "amount": 4100,
+          "invoiceId": "DUP-INV-001",
+          "transactionIds": [
+            "1",
+            "2"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-01」存在 2 笔金额(4100)与发票号(DUP-INV-001)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-02",
+          "amount": 4200,
+          "invoiceId": "DUP-INV-002",
+          "transactionIds": [
+            "3",
+            "4"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-02」存在 2 笔金额(4200)与发票号(DUP-INV-002)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-03",
+          "amount": 4300,
+          "invoiceId": "DUP-INV-003",
+          "transactionIds": [
+            "5",
+            "6"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-03」存在 2 笔金额(4300)与发票号(DUP-INV-003)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-04",
+          "amount": 4400,
+          "invoiceId": "DUP-INV-004",
+          "transactionIds": [
+            "7",
+            "8"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-04」存在 2 笔金额(4400)与发票号(DUP-INV-004)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-05",
+          "amount": 4500,
+          "invoiceId": "DUP-INV-005",
+          "transactionIds": [
+            "9",
+            "10"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-05」存在 2 笔金额(4500)与发票号(DUP-INV-005)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-06",
+          "amount": 4600,
+          "invoiceId": "DUP-INV-006",
+          "transactionIds": [
+            "11",
+            "12"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-06」存在 2 笔金额(4600)与发票号(DUP-INV-006)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-07",
+          "amount": 4700,
+          "invoiceId": "DUP-INV-007",
+          "transactionIds": [
+            "13",
+            "14"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-07」存在 2 笔金额(4700)与发票号(DUP-INV-007)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "duplicate_payment",
+        "severity": "high",
+        "triggeredRule": "duplicate_payment: same vendor + same amount + same invoiceId",
+        "evidence": {
+          "vendor": "DupVendor-08",
+          "amount": 4800,
+          "invoiceId": "DUP-INV-008",
+          "transactionIds": [
+            "15",
+            "16"
+          ],
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》",
+        "explanation": "供应商「DupVendor-08」存在 2 笔金额(4800)与发票号(DUP-INV-008)完全相同的付款，疑似重复付款 / 重复发票。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "17",
+          "vendor": "NoAppr-01",
+          "amount": 13500,
+          "approver": null,
+          "invoiceId": "NA-INV-001"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 17（供应商「NoAppr-01」，金额 13500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "18",
+          "vendor": "NoAppr-02",
+          "amount": 15000,
+          "approver": null,
+          "invoiceId": "NA-INV-002"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 18（供应商「NoAppr-02」，金额 15000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "19",
+          "vendor": "NoAppr-03",
+          "amount": 16500,
+          "approver": null,
+          "invoiceId": "NA-INV-003"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 19（供应商「NoAppr-03」，金额 16500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "20",
+          "vendor": "NoAppr-04",
+          "amount": 18000,
+          "approver": null,
+          "invoiceId": "NA-INV-004"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 20（供应商「NoAppr-04」，金额 18000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "21",
+          "vendor": "NoAppr-05",
+          "amount": 19500,
+          "approver": null,
+          "invoiceId": "NA-INV-005"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 21（供应商「NoAppr-05」，金额 19500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "22",
+          "vendor": "NoAppr-06",
+          "amount": 21000,
+          "approver": null,
+          "invoiceId": "NA-INV-006"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 22（供应商「NoAppr-06」，金额 21000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "23",
+          "vendor": "NoAppr-07",
+          "amount": 22500,
+          "approver": null,
+          "invoiceId": "NA-INV-007"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 23（供应商「NoAppr-07」，金额 22500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "24",
+          "vendor": "NoAppr-08",
+          "amount": 24000,
+          "approver": null,
+          "invoiceId": "NA-INV-008"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 24（供应商「NoAppr-08」，金额 24000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "25",
+          "vendor": "NoAppr-09",
+          "amount": 25500,
+          "approver": null,
+          "invoiceId": "NA-INV-009"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 25（供应商「NoAppr-09」，金额 25500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "missing_approval",
+        "severity": "high",
+        "triggeredRule": "missing_approval: amount > 10000 && approver == null",
+        "evidence": {
+          "transactionId": "26",
+          "vendor": "NoAppr-10",
+          "amount": 27000,
+          "approver": null,
+          "invoiceId": "NA-INV-010"
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）",
+        "explanation": "交易 26（供应商「NoAppr-10」，金额 27000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-01",
+          "transactionIds": [
+            "27",
+            "28"
+          ],
+          "amounts": [
+            8050,
+            8540
+          ],
+          "total": 16590,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-01」存在 2 笔接近审批阈值(10000)的支出，合计 16590，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-02",
+          "transactionIds": [
+            "29",
+            "30"
+          ],
+          "amounts": [
+            8100,
+            8580
+          ],
+          "total": 16680,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-02」存在 2 笔接近审批阈值(10000)的支出，合计 16680，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-03",
+          "transactionIds": [
+            "31",
+            "32"
+          ],
+          "amounts": [
+            8150,
+            8620
+          ],
+          "total": 16770,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-03」存在 2 笔接近审批阈值(10000)的支出，合计 16770，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-04",
+          "transactionIds": [
+            "33",
+            "34"
+          ],
+          "amounts": [
+            8200,
+            8660
+          ],
+          "total": 16860,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-04」存在 2 笔接近审批阈值(10000)的支出，合计 16860，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-05",
+          "transactionIds": [
+            "35",
+            "36"
+          ],
+          "amounts": [
+            8250,
+            8700
+          ],
+          "total": 16950,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-05」存在 2 笔接近审批阈值(10000)的支出，合计 16950，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "split_expense",
+        "severity": "medium",
+        "triggeredRule": "split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出",
+        "evidence": {
+          "vendor": "SplitCo-06",
+          "transactionIds": [
+            "37",
+            "38"
+          ],
+          "amounts": [
+            8300,
+            8740
+          ],
+          "total": 17040,
+          "count": 2
+        },
+        "standardRef": "《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）",
+        "explanation": "供应商「SplitCo-06」存在 2 笔接近审批阈值(10000)的支出，合计 17040，疑似拆分报销以规避审批。"
+      },
+      {
+        "riskType": "abnormal_amount",
+        "severity": "medium",
+        "triggeredRule": "abnormal_amount: |z-score| > 2",
+        "evidence": {
+          "transactionId": "39",
+          "vendor": "MegaPay-01",
+          "amount": 280000,
+          "mean": 3311.91,
+          "std": 19690.04,
+          "zScore": 14.05
+        },
+        "standardRef": "《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》",
+        "explanation": "交易 39 金额 280000 显著偏离均值(3312)，z-score=14.05，属金额离群异常。"
+      },
+      {
+        "riskType": "abnormal_amount",
+        "severity": "medium",
+        "triggeredRule": "abnormal_amount: |z-score| > 2",
+        "evidence": {
+          "transactionId": "40",
+          "vendor": "MegaPay-02",
+          "amount": 420000,
+          "mean": 3311.91,
+          "std": 19690.04,
+          "zScore": 21.16
+        },
+        "standardRef": "《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》",
+        "explanation": "交易 40 金额 420000 显著偏离均值(3312)，z-score=21.16，属金额离群异常。"
+      },
+      {
+        "riskType": "abnormal_amount",
+        "severity": "medium",
+        "triggeredRule": "abnormal_amount: |z-score| > 2",
+        "evidence": {
+          "transactionId": "41",
+          "vendor": "MegaPay-03",
+          "amount": 550000,
+          "mean": 3311.91,
+          "std": 19690.04,
+          "zScore": 27.76
+        },
+        "standardRef": "《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》",
+        "explanation": "交易 41 金额 550000 显著偏离均值(3312)，z-score=27.76，属金额离群异常。"
+      },
+      {
+        "riskType": "abnormal_amount",
+        "severity": "medium",
+        "triggeredRule": "abnormal_amount: |z-score| > 2",
+        "evidence": {
+          "transactionId": "42",
+          "vendor": "MegaPay-04",
+          "amount": 780000,
+          "mean": 3311.91,
+          "std": 19690.04,
+          "zScore": 39.45
+        },
+        "standardRef": "《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》",
+        "explanation": "交易 42 金额 780000 显著偏离均值(3312)，z-score=39.45，属金额离群异常。"
+      }
+    ],
+    "workpaper": "# 审计工作底稿（规则引擎降级模式）\n\n> **降级声明**：本底稿由确定性规则引擎生成骨架，**未调用 LLM**。\n> 输出为 AI-assisted draft，须经项目组复核后方可归档。\n\n## 1. 审计概述\n\n【官方演示快照】基于 ey_expense_demo_3k.csv 的规则引擎预计算结果，用于断网/故障兜底。\n\n**整体风险等级**：HIGH\n\n## 2. 审计程序（已执行）\n\n- 解析上传交易明细\n- 运行规则包 `rules-v1`（duplicate_payment / missing_approval / split_expense / abnormal_amount）\n- 汇总可解释 findings（triggeredRule / evidence / standardRef / explanation）\n\n## 3. 风险事项\n\n### 3.1 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-01」存在 2 笔金额(4100)与发票号(DUP-INV-001)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-01\",\"amount\":4100,\"invoiceId\":\"DUP-INV-001\",\"transactionIds\":[\"1\",\"2\"],\"count\":2}`\n\n### 3.2 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-02」存在 2 笔金额(4200)与发票号(DUP-INV-002)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-02\",\"amount\":4200,\"invoiceId\":\"DUP-INV-002\",\"transactionIds\":[\"3\",\"4\"],\"count\":2}`\n\n### 3.3 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-03」存在 2 笔金额(4300)与发票号(DUP-INV-003)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-03\",\"amount\":4300,\"invoiceId\":\"DUP-INV-003\",\"transactionIds\":[\"5\",\"6\"],\"count\":2}`\n\n### 3.4 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-04」存在 2 笔金额(4400)与发票号(DUP-INV-004)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-04\",\"amount\":4400,\"invoiceId\":\"DUP-INV-004\",\"transactionIds\":[\"7\",\"8\"],\"count\":2}`\n\n### 3.5 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-05」存在 2 笔金额(4500)与发票号(DUP-INV-005)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-05\",\"amount\":4500,\"invoiceId\":\"DUP-INV-005\",\"transactionIds\":[\"9\",\"10\"],\"count\":2}`\n\n### 3.6 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-06」存在 2 笔金额(4600)与发票号(DUP-INV-006)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-06\",\"amount\":4600,\"invoiceId\":\"DUP-INV-006\",\"transactionIds\":[\"11\",\"12\"],\"count\":2}`\n\n### 3.7 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-07」存在 2 笔金额(4700)与发票号(DUP-INV-007)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-07\",\"amount\":4700,\"invoiceId\":\"DUP-INV-007\",\"transactionIds\":[\"13\",\"14\"],\"count\":2}`\n\n### 3.8 duplicate_payment（high）\n\n- **触发规则**：duplicate_payment: same vendor + same amount + same invoiceId\n- **解释**：供应商「DupVendor-08」存在 2 笔金额(4800)与发票号(DUP-INV-008)完全相同的付款，疑似重复付款 / 重复发票。\n- **准则引用**：《中国注册会计师审计准则第 1141 号——财务报表审计中与舞弊相关的责任》\n- **证据**：`{\"vendor\":\"DupVendor-08\",\"amount\":4800,\"invoiceId\":\"DUP-INV-008\",\"transactionIds\":[\"15\",\"16\"],\"count\":2}`\n\n### 3.9 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 17（供应商「NoAppr-01」，金额 13500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"17\",\"vendor\":\"NoAppr-01\",\"amount\":13500,\"approver\":null,\"invoiceId\":\"NA-INV-001\"}`\n\n### 3.10 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 18（供应商「NoAppr-02」，金额 15000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"18\",\"vendor\":\"NoAppr-02\",\"amount\":15000,\"approver\":null,\"invoiceId\":\"NA-INV-002\"}`\n\n### 3.11 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 19（供应商「NoAppr-03」，金额 16500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"19\",\"vendor\":\"NoAppr-03\",\"amount\":16500,\"approver\":null,\"invoiceId\":\"NA-INV-003\"}`\n\n### 3.12 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 20（供应商「NoAppr-04」，金额 18000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"20\",\"vendor\":\"NoAppr-04\",\"amount\":18000,\"approver\":null,\"invoiceId\":\"NA-INV-004\"}`\n\n### 3.13 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 21（供应商「NoAppr-05」，金额 19500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"21\",\"vendor\":\"NoAppr-05\",\"amount\":19500,\"approver\":null,\"invoiceId\":\"NA-INV-005\"}`\n\n### 3.14 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 22（供应商「NoAppr-06」，金额 21000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"22\",\"vendor\":\"NoAppr-06\",\"amount\":21000,\"approver\":null,\"invoiceId\":\"NA-INV-006\"}`\n\n### 3.15 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 23（供应商「NoAppr-07」，金额 22500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"23\",\"vendor\":\"NoAppr-07\",\"amount\":22500,\"approver\":null,\"invoiceId\":\"NA-INV-007\"}`\n\n### 3.16 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 24（供应商「NoAppr-08」，金额 24000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"24\",\"vendor\":\"NoAppr-08\",\"amount\":24000,\"approver\":null,\"invoiceId\":\"NA-INV-008\"}`\n\n### 3.17 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 25（供应商「NoAppr-09」，金额 25500）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"25\",\"vendor\":\"NoAppr-09\",\"amount\":25500,\"approver\":null,\"invoiceId\":\"NA-INV-009\"}`\n\n### 3.18 missing_approval（high）\n\n- **触发规则**：missing_approval: amount > 10000 && approver == null\n- **解释**：交易 26（供应商「NoAppr-10」，金额 27000）超过审批阈值 10000 却无审批人，存在未授权大额支出风险。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（授权审批控制）\n- **证据**：`{\"transactionId\":\"26\",\"vendor\":\"NoAppr-10\",\"amount\":27000,\"approver\":null,\"invoiceId\":\"NA-INV-010\"}`\n\n### 3.19 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-01」存在 2 笔接近审批阈值(10000)的支出，合计 16590，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-01\",\"transactionIds\":[\"27\",\"28\"],\"amounts\":[8050,8540],\"total\":16590,\"count\":2}`\n\n### 3.20 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-02」存在 2 笔接近审批阈值(10000)的支出，合计 16680，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-02\",\"transactionIds\":[\"29\",\"30\"],\"amounts\":[8100,8580],\"total\":16680,\"count\":2}`\n\n### 3.21 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-03」存在 2 笔接近审批阈值(10000)的支出，合计 16770，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-03\",\"transactionIds\":[\"31\",\"32\"],\"amounts\":[8150,8620],\"total\":16770,\"count\":2}`\n\n### 3.22 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-04」存在 2 笔接近审批阈值(10000)的支出，合计 16860，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-04\",\"transactionIds\":[\"33\",\"34\"],\"amounts\":[8200,8660],\"total\":16860,\"count\":2}`\n\n### 3.23 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-05」存在 2 笔接近审批阈值(10000)的支出，合计 16950，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-05\",\"transactionIds\":[\"35\",\"36\"],\"amounts\":[8250,8700],\"total\":16950,\"count\":2}`\n\n### 3.24 split_expense（medium）\n\n- **触发规则**：split_expense: ≥2 笔金额落在 [8000, 10000) 的同一供应商支出\n- **解释**：供应商「SplitCo-06」存在 2 笔接近审批阈值(10000)的支出，合计 17040，疑似拆分报销以规避审批。\n- **准则引用**：《中国注册会计师审计准则第 1211 号——识别和评估重大错报风险》（规避内部控制）\n- **证据**：`{\"vendor\":\"SplitCo-06\",\"transactionIds\":[\"37\",\"38\"],\"amounts\":[8300,8740],\"total\":17040,\"count\":2}`\n\n### 3.25 abnormal_amount（medium）\n\n- **触发规则**：abnormal_amount: |z-score| > 2\n- **解释**：交易 39 金额 280000 显著偏离均值(3312)，z-score=14.05，属金额离群异常。\n- **准则引用**：《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》\n- **证据**：`{\"transactionId\":\"39\",\"vendor\":\"MegaPay-01\",\"amount\":280000,\"mean\":3311.91,\"std\":19690.04,\"zScore\":14.05}`\n\n### 3.26 abnormal_amount（medium）\n\n- **触发规则**：abnormal_amount: |z-score| > 2\n- **解释**：交易 40 金额 420000 显著偏离均值(3312)，z-score=21.16，属金额离群异常。\n- **准则引用**：《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》\n- **证据**：`{\"transactionId\":\"40\",\"vendor\":\"MegaPay-02\",\"amount\":420000,\"mean\":3311.91,\"std\":19690.04,\"zScore\":21.16}`\n\n### 3.27 abnormal_amount（medium）\n\n- **触发规则**：abnormal_amount: |z-score| > 2\n- **解释**：交易 41 金额 550000 显著偏离均值(3312)，z-score=27.76，属金额离群异常。\n- **准则引用**：《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》\n- **证据**：`{\"transactionId\":\"41\",\"vendor\":\"MegaPay-03\",\"amount\":550000,\"mean\":3311.91,\"std\":19690.04,\"zScore\":27.76}`\n\n### 3.28 abnormal_amount（medium）\n\n- **触发规则**：abnormal_amount: |z-score| > 2\n- **解释**：交易 42 金额 780000 显著偏离均值(3312)，z-score=39.45，属金额离群异常。\n- **准则引用**：《中国注册会计师审计准则第 1231 号——针对评估的重大错报风险采取的应对措施》\n- **证据**：`{\"transactionId\":\"42\",\"vendor\":\"MegaPay-04\",\"amount\":780000,\"mean\":3311.91,\"std\":19690.04,\"zScore\":39.45}`\n\n## 4. 待 LLM 增强的章节（占位）\n\n- 详细审计计划叙述\n- 内控评价与建议的自然语言扩写\n- 合伙人摘要润色\n\n## 5. 结论\n\n规则引擎已完成可复现的硬性检测。建议对 high 级事项执行进一步查证程序，并在完整模式下（关闭降级）生成正式底稿文本。\n",
+    "meta": {
+      "degraded": true,
+      "llmSkipped": true,
+      "mode": "rules_only"
+    }
+  }
+}

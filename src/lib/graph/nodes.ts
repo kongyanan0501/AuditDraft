@@ -8,18 +8,22 @@ import {
 import { runRules } from "@/lib/rules";
 import type { AuditFinding, AuditReport, RiskLevel } from "@/types/audit";
 
+import { buildRulesOnlyWorkpaper } from "./degraded-workpaper";
 import { parseCsv } from "./parse";
 import type { AuditState } from "./state";
 
 // 审计工作流节点。职责分离（不得越界）：
 // - auditPlanner / anomalyDetection / riskAssessment / workpaperGeneration → 调用 LLM(+RAG)。
 // - ruleEngine / anomalyDetection 的命中判定 → 调用确定性规则纯函数。
+// - degraded=true 时跳过全部 LLM/RAG，改用模板底稿（演示/额度耗尽兜底）。
 // 节点以工厂方式注入依赖（llm / retrieve），便于用 mock 单测整张图。
 
 /** 注入式依赖：解耦真实 LLM/RAG 与可测 mock。 */
 export interface AuditGraphDeps {
   llm: LLMProvider;
   retrieve: (query: string) => Promise<string[]>;
+  /** When true, skip LLM/RAG; rules + template workpaper only. */
+  degraded?: boolean;
 }
 
 const SEVERITY_RANK: Record<RiskLevel, number> = { low: 0, medium: 1, high: 2 };
@@ -34,6 +38,8 @@ function deriveRiskLevel(findings: AuditFinding[]): RiskLevel {
 }
 
 export function createNodes(deps: AuditGraphDeps) {
+  const degraded = Boolean(deps.degraded);
+
   /** 1. parseData：输入归一为 Transaction[]。 */
   async function parseData(state: AuditState): Promise<Partial<AuditState>> {
     const fromInput = state.input.transactions;
@@ -52,6 +58,12 @@ export function createNodes(deps: AuditGraphDeps) {
 
   /** 2. auditPlanner：RAG 检索 + LLM 生成审计计划。 */
   async function auditPlanner(state: AuditState): Promise<Partial<AuditState>> {
+    if (degraded) {
+      return {
+        knowledge: [],
+        plan: "【降级模式】跳过 LLM 审计计划；执行规则包 rules-v1 全量检测。",
+      };
+    }
     const knowledge = await deps.retrieve(
       "审计计划 风险识别 重复付款 缺审批 拆分报销 异常金额",
     );
@@ -80,6 +92,13 @@ export function createNodes(deps: AuditGraphDeps) {
     state: AuditState,
   ): Promise<Partial<AuditState>> {
     const anomalyFindings = runRules(state.transactions, ["abnormal_amount"]);
+    if (degraded) {
+      return {
+        anomalyFindings,
+        anomalyAnalysis:
+          "【降级模式】已完成 abnormal_amount 确定性检测；跳过 LLM 异常叙述。",
+      };
+    }
     const interim = [...state.ruleFindings, ...anomalyFindings];
     const prompt = buildExecutorPrompt({
       transactions: state.transactions,
@@ -97,6 +116,13 @@ export function createNodes(deps: AuditGraphDeps) {
   ): Promise<Partial<AuditState>> {
     const findings = [...state.ruleFindings, ...state.anomalyFindings];
     const riskLevel = deriveRiskLevel(findings);
+    if (degraded) {
+      return {
+        findings,
+        riskLevel,
+        riskNarrative: `【降级模式】整体风险等级 ${riskLevel}（取 findings 最高 severity）；跳过 LLM 评级说明。`,
+      };
+    }
     const prompt = buildRiskEnginePrompt({
       findings,
       overallRisk: riskLevel,
@@ -112,6 +138,15 @@ export function createNodes(deps: AuditGraphDeps) {
   async function workpaperGeneration(
     state: AuditState,
   ): Promise<Partial<AuditState>> {
+    if (degraded) {
+      return {
+        workpaper: buildRulesOnlyWorkpaper({
+          riskLevel: state.riskLevel,
+          findings: state.findings,
+          planNote: state.plan,
+        }),
+      };
+    }
     const prompt = buildWorkpaperPrompt({
       plan: state.plan,
       anomalyAnalysis: state.anomalyAnalysis,
@@ -134,6 +169,9 @@ export function createNodes(deps: AuditGraphDeps) {
       riskLevel: state.riskLevel,
       findings: state.findings,
       workpaper: state.workpaper,
+      meta: degraded
+        ? { degraded: true, llmSkipped: true, mode: "rules_only" }
+        : { degraded: false, llmSkipped: false, mode: "full" },
     };
     return { report };
   }

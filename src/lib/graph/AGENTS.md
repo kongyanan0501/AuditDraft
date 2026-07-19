@@ -13,6 +13,7 @@ parseData → auditPlanner(LLM+RAG) → ruleEngine(deterministic)
 - `auditPlanner` / `workpaperGeneration`：调用 `lib/llm`（+ `lib/rag` 增强）。
 - `ruleEngine`：调用 `lib/rules` 纯函数，确定性检测。
 - `reportExport`：调用 `lib/export` + 写 `audit_reports`。
+- **降级**：`AUDIT_DEGRADED_MODE=rules_only` 时跳过 LLM/RAG，模板底稿见 `degraded-workpaper.ts`。
 
 ## 规则
 - 节点间通过共享 state 传递数据；调整流程**只改图定义**，不要把流程顺序散落到 api/业务代码。

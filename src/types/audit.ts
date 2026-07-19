@@ -46,4 +46,10 @@ export interface AuditReport {
   findings: AuditFinding[];
   /** 生成的审计底稿文本（Markdown / 富文本） */
   workpaper: string;
+  /** 运行元数据（如规则-only 降级） */
+  meta?: {
+    degraded?: boolean;
+    llmSkipped?: boolean;
+    mode?: "full" | "rules_only";
+  };
 }

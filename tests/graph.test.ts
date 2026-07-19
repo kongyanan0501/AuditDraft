@@ -73,4 +73,28 @@ describe("LangGraph 审计流程（mock LLM，无网络调用）", () => {
       graph.invoke({ jobId: "job-empty", input: {} }),
     ).rejects.toThrow();
   });
+
+  it("degraded=rules_only 不调用 LLM/RAG，仍产出可解释报告", async () => {
+    const llm = mockLLM();
+    const retrieve = vi.fn(async () => {
+      throw new Error("retrieve must not be called in degraded mode");
+    });
+
+    const graph = buildAuditGraph({ llm, retrieve, degraded: true });
+    const result = await graph.invoke({
+      jobId: "job-degraded",
+      input: { transactions: DEMO_TRANSACTIONS },
+    });
+
+    expect(llm.generate).not.toHaveBeenCalled();
+    expect(retrieve).not.toHaveBeenCalled();
+    expect(result.findings.length).toBeGreaterThanOrEqual(2);
+    expect(result.workpaper).toContain("降级");
+    expect(result.report?.meta?.degraded).toBe(true);
+    expect(result.report?.meta?.llmSkipped).toBe(true);
+    for (const f of result.report!.findings) {
+      expect(f.triggeredRule).toBeTruthy();
+      expect(f.evidence).toBeDefined();
+    }
+  });
 });
