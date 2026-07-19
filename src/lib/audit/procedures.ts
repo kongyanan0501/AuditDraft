@@ -26,6 +26,18 @@ export const PROCEDURES_BY_RISK: Record<string, string[]> = {
     "检查合同、验收单与付款支持文件的完整性",
     "考虑是否需将该供应商纳入扩大实质性测试范围",
   ],
+  reconcile_unmatched_expense: [
+    "向财务索取该报销对应的付款凭证或说明未付原因",
+    "检查是否存在跨期付款或对公账户未入账",
+  ],
+  reconcile_orphan_payment: [
+    "追查付款支持文件与审批链，确认业务实质",
+    "与供应商对账，排除重复付款或错误支付",
+  ],
+  reconcile_amount_mismatch: [
+    "核对发票、报销单与银行回单金额差异原因",
+    "检查是否存在部分付款、折扣或汇率差异",
+  ],
 };
 
 export function proceduresForRisk(riskType: string): string[] {

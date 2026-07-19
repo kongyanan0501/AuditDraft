@@ -45,6 +45,9 @@ export const RISK_TYPE_LABEL: Record<string, string> = {
   missing_approval: "无审批大额支出",
   split_expense: "拆分报销",
   abnormal_amount: "金额异常离群",
+  reconcile_unmatched_expense: "有报销无付款",
+  reconcile_orphan_payment: "有付款无报销",
+  reconcile_amount_mismatch: "报销付款金额不一致",
 };
 
 export function riskTypeLabel(riskType: string): string {

@@ -1,11 +1,16 @@
 "use client";
 
 import {
+  ArrowLeftRight,
   BookOpen,
   FileText,
   FlaskConical,
+  GitCompare,
   LayoutDashboard,
+  Map,
+  Settings2,
   Shield,
+  Swords,
   UserRound,
   type LucideIcon,
 } from "lucide-react";
@@ -24,6 +29,11 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", label: "任务 Jobs", icon: LayoutDashboard },
   { href: "/reports", label: "报告 Reports", icon: FileText },
   { href: "/eval", label: "可信证据 Eval", icon: FlaskConical },
+  { href: "/contrast", label: "对照墙", icon: ArrowLeftRight },
+  { href: "/settings/rules", label: "规则调参", icon: Settings2 },
+  { href: "/reconcile", label: "多源勾稽", icon: GitCompare },
+  { href: "/challenge", label: "评委挑战", icon: Swords },
+  { href: "/pilot", label: "试点方案", icon: Map },
   { href: "/governance", label: "治理 RAI", icon: Shield },
   { href: "/rag", label: "知识库 RAG", icon: BookOpen },
   { href: "/account", label: "我的 Account", icon: UserRound },

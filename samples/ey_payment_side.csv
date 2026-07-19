@@ -1,0 +1,4 @@
+id,vendor,amount,approver,invoice_id
+P1,Alpha Supplies,8000,Treasury,INV-R-001
+P2,Beta Travel,14000,Treasury,INV-R-002
+P3,Solo Pay Co,50000,Treasury,INV-P-ONLY

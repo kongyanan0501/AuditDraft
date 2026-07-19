@@ -10,11 +10,11 @@
 
 | 步骤 | 状态 | 你 Check 了吗 |
 | --- | --- | --- |
-| B1 重要性参数 | `done_awaiting_check` | [ ] |
-| B2 Review 复核流 | `done_awaiting_check` | [ ] |
-| B3 事务所版式底稿 | `done_awaiting_check` | [ ] |
-| B4 审计程序建议 | `done_awaiting_check` | [ ] |
-| B5 RAI / 轨迹 / 版本 | `done_awaiting_check` | [ ] |
+| B1 重要性参数 | `checked` | [x] |
+| B2 Review 复核流 | `checked` | [x] |
+| B3 事务所版式底稿 | `checked` | [x] |
+| B4 审计程序建议 | `checked` | [x] |
+| B5 RAI / 轨迹 / 版本 | `checked` | [x] |
 
 ---
 

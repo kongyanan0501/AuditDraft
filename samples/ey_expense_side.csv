@@ -1,0 +1,5 @@
+id,vendor,amount,approver,invoice_id
+E1,Alpha Supplies,8000,Alice,INV-R-001
+E2,Beta Travel,15000,,INV-R-002
+E3,Gamma Soft,4200,Bob,INV-R-003
+E4,Ghost Vendor,9900,Carol,INV-R-ORPHAN

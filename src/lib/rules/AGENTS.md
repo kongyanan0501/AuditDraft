@@ -7,9 +7,12 @@
 | 规则 | 判定逻辑 |
 | --- | --- |
 | `duplicate_payment` | same vendor + same amount + same invoice |
-| `missing_approval` | amount > 10000 && approver == null |
+| `missing_approval` | amount > threshold && approver == null（阈值可配） |
 | `split_expense` | 多笔金额接近审批阈值（疑似拆分） |
-| `abnormal_amount` | 金额离群异常 |
+| `abnormal_amount` | 金额离群异常（z-score 可配） |
+| `reconcileExpensePayments` | 报销↔付款勾稽（独立函数，非默认 runRules） |
+
+阈值见 `config.ts` / `runRules(..., config)`。
 
 ## 契约
 每条规则是独立**纯函数**：输入交易数据，输出 `AuditFinding[]`（见 `ARCHITECTURE.md` §6）。

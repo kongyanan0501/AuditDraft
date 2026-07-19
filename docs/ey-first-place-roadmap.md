@@ -255,6 +255,8 @@ interface AuditFindingV2 {
 
 ### 包 C · 制胜差异
 
+> 可开工拆单：[`ey-package-c-tasks.md`](./ey-package-c-tasks.md)
+
 1. 纯 LLM vs AuditDraft 对照  
 2. 规则调参台  
 3. 多源勾稽（至少报销↔付款）  

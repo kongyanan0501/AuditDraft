@@ -50,6 +50,12 @@
 - 话术：「离线 Golden Set：召回 / 精确率有数字，且不依赖大模型。  
   旁边是人工 vs 系统耗时与命中对比——实用性用证据说话。」
 
+### Step 6b · 对照墙 / 调参 / 勾稽（选讲 20s）
+- `/contrast`：纯 LLM vs 本系统  
+- `/settings/rules`：改审批阈值，findings 即时变  
+- `/reconcile`：报销↔付款多源勾稽  
+- 被点名挑战：`/challenge` 上传评委 CSV
+
 ### Step 7 · 底稿 + 导出（15s）
 - 操作：底稿折叠区 +（完整模式）导出 Word/PDF。
 - 话术：「输出明确标注 AI-assisted draft，须项目组复核。我们赋能项目组，不替代签字合伙人。」
