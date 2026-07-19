@@ -10,12 +10,11 @@ export default function Home() {
       </div>
       <main className="mx-auto flex min-h-[100dvh] max-w-3xl flex-col justify-center gap-6 px-6 py-16">
       <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-        AI 审计创新大赛
+        智能审计工作台
       </span>
       <h1 className="text-4xl font-semibold tracking-tight">AuditDraft AI</h1>
       <p className="text-lg text-muted-foreground">
-        智能审计底稿生成 + 风险识别 + 可解释审计系统。 Excel → AI 审计流程 →
-        标准审计底稿（30 秒）。
+        费用循环风险识别、可解释发现与审计底稿起草辅助。规则引擎保证可复现结论，大模型辅助成文，输出须经项目组复核。
       </p>
       <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
         <span className="rounded border border-border px-2 py-1">Next.js 14</span>
@@ -37,9 +36,6 @@ export default function Home() {
           注册
         </Link>
       </div>
-      <p className="text-sm text-muted-foreground">
-        基础设施（Supabase 认证与数据）已就绪，开发进度见 <code>todo.md</code>。
-      </p>
       </main>
     </div>
   );

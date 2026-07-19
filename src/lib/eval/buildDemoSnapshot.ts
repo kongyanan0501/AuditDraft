@@ -42,7 +42,7 @@ export function buildDemoSnapshot(
     riskLevel,
     findings,
     planNote:
-      "【官方演示快照】基于 ey_expense_demo_3k.csv 的规则引擎预计算结果，用于断网/故障兜底。",
+      `基于 ${dataset} 的规则引擎预计算结果。`,
   });
 
   const report = finalizeReport(
@@ -61,9 +61,9 @@ export function buildDemoSnapshot(
 
   return {
     kind: "failover_snapshot",
-    label: "Official Demo Snapshot (failover)",
+    label: "预计算结果",
     disclaimer:
-      "Snapshot for failover — 非本次 live 跑批结果。用于演示故障时展示可解释风险与底稿骨架。",
+      "基于标准数据集的规则引擎预跑结果，只读参考；与当前任务实时跑批相互独立。",
     dataset,
     generatedAt: new Date().toISOString(),
     report,

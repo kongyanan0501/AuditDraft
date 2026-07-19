@@ -9,71 +9,54 @@ export default function ContrastPage() {
         <div className="flex items-center gap-2">
           <ArrowLeftRight className="h-5 w-5 text-muted-foreground" />
           <h1 className="text-xl font-semibold tracking-tight">
-            对照墙 · 纯 LLM vs AuditDraft
+            方法对比
           </h1>
         </div>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          30
-          秒讲清差异：通用对话模型可以「看起来很懂审计」，但缺少可复现硬结论与证据链；AuditDraft
-          用规则定责、四要素可复核。
+          通用大模型对话与本系统在审计场景下的能力边界差异。
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <section className="rounded-lg border border-risk-high/30 bg-card p-5">
-          <h2 className="text-sm font-semibold text-risk-high">
-            纯 LLM 扫表（反面示例）
-          </h2>
+        <section className="rounded-lg border border-border bg-card p-5">
+          <h2 className="text-sm font-semibold">通用 LLM 直接分析</h2>
           <p className="mt-2 text-xs text-muted-foreground">
-            示意：把整表贴进聊天窗口后的典型风险
+            将明细粘贴至对话模型时的常见局限
           </p>
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              「供应商 Office Co
-              存在舞弊嫌疑」——无触发规则、无行级证据、不可复现。
+              可能输出无触发规则、无行级证据的风险判断，难以复核。
             </li>
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              「建议出具保留意见」——越权生成审计意见，违反质量边界。
+              可能越权生成审计意见类表述，超出辅助分析边界。
             </li>
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              同问再问，结论漂移；无 Golden Set、无阈值可调。
+              同一输入多次询问结论可能漂移；缺少固定阈值与回归基线。
             </li>
           </ul>
-          <p className="mt-4 text-xs font-medium text-risk-high">
-            评委一句话：黑盒、不可审计、不可治理。
-          </p>
         </section>
 
-        <section className="rounded-lg border border-emerald-500/30 bg-card p-5">
-          <h2 className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-            AuditDraft 混合推理
-          </h2>
+        <section className="rounded-lg border border-border bg-card p-5">
+          <h2 className="text-sm font-semibold">AuditDraft 混合推理</h2>
           <p className="mt-2 text-xs text-muted-foreground">
-            同一费用循环数据上的系统行为
+            规则引擎 + 可选生成式成文
           </p>
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              硬结论仅来自规则：`duplicate_payment` / `missing_approval` /
-              …
+              风险硬结论由确定性规则产出，同输入同输出。
             </li>
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              每条 finding：触发规则 + 证据 + 准则 + 解释 + 建议程序。
+              每条发现包含触发规则、数据证据、准则引用、解释与建议程序。
             </li>
             <li className="rounded-md border border-border bg-secondary/40 p-3">
-              离线 Golden Set 可回归；可降级、可复核、可调阈值。
+              支持离线评测回归、规则阈值配置、人工复核与降级运行。
             </li>
           </ul>
-          <p className="mt-4 text-xs font-medium text-emerald-700 dark:text-emerald-400">
-            评委一句话：协审初筛 + 可进 Prepare→Review。
-          </p>
         </section>
       </div>
 
       <section className="rounded-lg border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
-        <p className="font-medium text-foreground">路演话术（收束）</p>
-        <p className="mt-1">
-          「我们不是用大模型替代审计师判断，而是把可复现的劳动交给规则，把表达交给模型，把签字留给人。」
-        </p>
+        本系统定位为项目组协审工具：规则承担可复现检测，模型辅助表达，专业判断与签字由人完成。
       </section>
     </div>
   );

@@ -31,7 +31,7 @@ export default function ChallengePage() {
       const res = await fetch("/api/challenge", { method: "POST", body });
       const data = (await res.json()) as ChallengeResponse;
       if (!res.ok) {
-        setError(data.error ?? "挑战失败");
+        setError(data.error ?? "分析失败");
         return;
       }
       setResult(data);
@@ -41,12 +41,9 @@ export default function ChallengePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">
-          评委挑战模式
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight">即时分析</h1>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          上传评委自带 CSV/Excel，规则引擎同步初筛（不调用 LLM、不建任务）。目标：现场约
-          60 秒内给出可解释 findings。
+          上传 CSV / Excel，由规则引擎同步完成风险初筛（不调用大模型、不创建后台任务）。
         </p>
       </div>
 
@@ -63,7 +60,7 @@ export default function ChallengePage() {
           onClick={run}
           className="h-9 shrink-0 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground disabled:opacity-50"
         >
-          {pending ? "分析中…" : "开始挑战"}
+          {pending ? "分析中…" : "开始分析"}
         </button>
       </section>
 
@@ -76,7 +73,7 @@ export default function ChallengePage() {
             <span className="font-medium text-foreground">
               {result.elapsedMs} ms
             </span>{" "}
-            · 风险等级 {result.report.riskLevel.toUpperCase()} · findings{" "}
+            · 风险等级 {result.report.riskLevel.toUpperCase()} · 发现{" "}
             {result.report.findings.length}
           </p>
           <RiskCards findings={result.report.findings} />
@@ -87,9 +84,7 @@ export default function ChallengePage() {
         </section>
       ) : (
         <p className="text-sm text-muted-foreground">
-          也可先用仓库内{" "}
-          <code className="text-xs">samples/ey_expense_demo_3k.csv</code>{" "}
-          自测。
+          支持标准费用明细表头：id / vendor / amount / approver / invoice_id。
         </p>
       )}
     </div>

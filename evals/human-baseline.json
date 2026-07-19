@@ -1,12 +1,12 @@
 {
   "datasetId": "ey_expense_demo_3k.csv",
-  "label": "人工筛查基线（演示用）",
-  "notes": "路演前可用资深助理实测后替换数字。当前为基于埋雷说明书的合理演示估计值。",
+  "label": "人工筛查基线",
+  "notes": "同一数据集上的人工筛查与规则引擎对比估计值，可按实测更新。",
   "analystMinutes": 45,
   "systemSecondsEstimate": 8,
   "hits": 24,
   "misses": 4,
   "falsePositives": 6,
   "plantedPositiveCount": 28,
-  "method": "同一演示集：人工按供应商/金额/发票抽查 vs 规则引擎全量扫描"
+  "method": "同一数据集：人工按供应商/金额/发票抽查 vs 规则引擎全量扫描"
 }

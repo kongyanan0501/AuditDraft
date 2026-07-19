@@ -48,11 +48,9 @@ export default function RuleTuningPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">规则调参台</h1>
+        <h1 className="text-xl font-semibold tracking-tight">规则参数</h1>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          阈值由项目组设定——专业判断仍在人。以下对内置小样{" "}
-          <code className="text-xs">expense_transactions.csv</code>{" "}
-          即时重跑规则（不调用 LLM）。
+          配置审批阈值、拆分贴边比例与离群判定阈值，并基于样例数据即时预览规则命中结果（不调用大模型）。
         </p>
       </div>
 
@@ -116,8 +114,7 @@ export default function RuleTuningPage() {
         </section>
       ) : (
         <p className="text-sm text-muted-foreground">
-          点击「预览 findings」查看调参效果。试着把审批阈值改为 25000，观察
-          missing_approval 是否减少。
+          调整参数后点击「预览 findings」查看命中变化。
         </p>
       )}
     </div>

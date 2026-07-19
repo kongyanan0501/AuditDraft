@@ -38,13 +38,10 @@ export default function DemoSnapshotPage() {
           className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          返回 Eval
+          返回质量评测
         </Link>
         <p className="rounded-lg border border-dashed border-border bg-card px-4 py-10 text-center text-sm text-muted-foreground">
-          缺少快照文件。请执行{" "}
-          <code className="rounded bg-secondary px-1.5 py-0.5 text-xs">
-            npm run generate:snapshot
-          </code>
+          暂无预计算结果，请联系管理员生成标准数据集预跑结果。
         </p>
       </div>
     );
@@ -64,31 +61,30 @@ export default function DemoSnapshotPage() {
           className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          返回 Eval
+          返回质量评测
         </Link>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <Camera className="h-5 w-5 text-muted-foreground" />
           <h1 className="text-xl font-semibold tracking-tight">
-            官方演示快照
+            预计算结果
           </h1>
-          <span className="rounded-md border border-violet-500/40 bg-violet-500/10 px-2 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-300">
-            Snapshot for failover
+          <span className="rounded-md border border-border bg-secondary px-2 py-0.5 text-xs font-medium text-muted-foreground">
+            只读参考
           </span>
         </div>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          {snap.disclaimer}
+          基于标准数据集的规则引擎预跑结果，供查阅参考；与当前任务实时跑批相互独立。
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           数据集 {snap.dataset} · 生成于{" "}
           {new Date(snap.generatedAt).toLocaleString("zh-CN", {
             hour12: false,
-          })}{" "}
-          · {snap.label}
+          })}
         </p>
       </div>
 
       <section>
-        <h2 className="mb-3 text-sm font-medium">审计工作流（快照·已完成）</h2>
+        <h2 className="mb-3 text-sm font-medium">审计工作流</h2>
         <WorkflowTracker status="done" />
       </section>
 
@@ -113,7 +109,7 @@ export default function DemoSnapshotPage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-medium">审计底稿（快照）</h2>
+        <h2 className="mb-3 text-sm font-medium">审计底稿</h2>
         <ReportViewer workpaper={snap.report.workpaper} />
       </section>
     </div>

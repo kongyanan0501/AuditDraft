@@ -30,8 +30,8 @@ export default async function DashboardPage() {
         </p>
         {isAuditDegradedMode() ? (
           <p className="mt-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-300">
-            当前为<strong className="font-medium">规则-only 降级模式</strong>
-            （AUDIT_DEGRADED_MODE=rules_only）：跳过 LLM/RAG，仍可产出可解释风险与模板底稿。
+            当前为<strong className="font-medium">规则-only 模式</strong>
+            ：跳过大型模型与知识检索，仍输出可解释风险发现与结构化底稿。
           </p>
         ) : null}
       </div>
@@ -39,11 +39,8 @@ export default async function DashboardPage() {
       <section className="rounded-lg border border-border bg-card p-5">
         <h2 className="mb-1 text-sm font-medium">上传审计数据</h2>
         <p className="mb-4 text-xs text-muted-foreground">
-          支持 CSV / Excel。演示推荐{" "}
-          <code className="rounded bg-secondary px-1 py-0.5 text-[11px]">
-            samples/ey_expense_demo_3k.csv
-          </code>
-          （约 3000 行，含埋雷风险）。上传后将自动创建任务并运行审计。
+          支持 CSV / Excel。表头需包含供应商、金额等字段（如 vendor / amount /
+          approver / invoice_id）。上传后将自动创建任务并运行审计。
         </p>
         <UploadForm />
       </section>

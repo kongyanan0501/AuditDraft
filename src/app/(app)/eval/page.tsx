@@ -41,34 +41,19 @@ export default function EvalPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">
-          可信证据 Eval
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight">质量评测</h1>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          离线 Golden Set 回归与人工基线对比。规则引擎结论可复现；生成底稿为{" "}
-          <span className="font-medium text-foreground">
-            AI-assisted draft
-          </span>
-          ，须经项目组复核后方可归档。
+          规则引擎离线回归指标与人工基线对比。系统输出为辅助草稿，须经项目组复核后方可归档，不构成审计意见。
         </p>
       </div>
-
-      <section className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm">
-        <p className="font-medium text-foreground">免责声明</p>
-        <p className="mt-1 text-muted-foreground">
-          本系统输出用于费用循环初筛与底稿起草辅助，不构成审计意见，亦不替代注册会计师的专业判断。高风险事项须
-          Human-in-the-loop 复核。
-        </p>
-      </section>
 
       <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card px-4 py-3">
         <div className="flex items-start gap-2 text-sm">
           <Camera className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
           <div>
-            <p className="font-medium">故障兜底 · 官方演示快照</p>
+            <p className="font-medium">预计算结果</p>
             <p className="text-xs text-muted-foreground">
-              断网或任务失败时，可展示预计算风险卡与底稿（明确标注 Snapshot for
-              failover，非本次 live 结果）。
+              查看基于标准数据集的规则引擎预跑结果（只读参考）。
             </p>
           </div>
         </div>
@@ -76,7 +61,7 @@ export default function EvalPage() {
           href="/demo/snapshot"
           className="shrink-0 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
         >
-          查看官方演示快照
+          查看预计算结果
         </Link>
       </section>
 
@@ -199,7 +184,7 @@ export default function EvalPage() {
                   </tr>
                   <tr>
                     <td className="px-4 py-2.5 text-muted-foreground">
-                      命中埋雷
+                      正例命中
                     </td>
                     <td className="px-4 py-2.5 font-medium tabular-nums">
                       {human.hits} / {human.plantedPositiveCount}
@@ -243,18 +228,17 @@ export default function EvalPage() {
       </section>
 
       <section className="space-y-2 text-sm">
-        <h2 className="text-sm font-medium">方法说明（评委 15 秒版）</h2>
+        <h2 className="text-sm font-medium">方法说明</h2>
         <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
           <li>
-            风险硬结论由确定性规则产出，同输入同输出，可单测、可离线回归。
+            风险硬结论由确定性规则产出，同输入同输出，支持离线回归。
           </li>
           <li>
-            Golden Set 含正例（埋雷）与负例；指标见上方 Precision / Recall。
+            Golden Set 包含正例与负例；Precision / Recall 见上方指标。
           </li>
           <li>
-            LLM 只负责计划与底稿成文，且受「无证据无结论」约束；额度不足时可切规则-only
-            降级（见环境变量{" "}
-            <code className="text-xs">AUDIT_DEGRADED_MODE</code>）。
+            大模型仅用于计划与底稿成文，受「无证据无结论」约束；必要时可启用规则-only
+            降级模式。
           </li>
         </ul>
       </section>

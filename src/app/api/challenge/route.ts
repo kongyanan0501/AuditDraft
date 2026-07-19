@@ -34,11 +34,11 @@ export async function POST(request: Request): Promise<Response> {
       riskLevel,
       findings,
       workpaper: [
-        "# 评委挑战模式结果（规则-only）",
+        "# 即时分析结果（规则引擎）",
         "",
         `文件：${file.name} · 交易 ${transactions.length} 笔 · 耗时 ${Date.now() - started}ms`,
         "",
-        "> 本结果未调用 LLM，仅确定性规则。AI-assisted draft — subject to engagement review.",
+        "> 本结果由确定性规则引擎生成，未调用大模型。输出为辅助草稿，须经项目组复核。",
         "",
       ].join("\n"),
       meta: { degraded: true, llmSkipped: true, mode: "rules_only" },
