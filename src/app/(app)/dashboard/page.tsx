@@ -32,7 +32,11 @@ export default async function DashboardPage() {
       <section className="rounded-lg border border-border bg-card p-5">
         <h2 className="mb-1 text-sm font-medium">上传审计数据</h2>
         <p className="mb-4 text-xs text-muted-foreground">
-          支持 CSV / Excel。上传后将自动创建任务并运行审计。
+          支持 CSV / Excel。演示推荐{" "}
+          <code className="rounded bg-secondary px-1 py-0.5 text-[11px]">
+            samples/ey_expense_demo_3k.csv
+          </code>
+          （约 3000 行，含埋雷风险）。上传后将自动创建任务并运行审计。
         </p>
         <UploadForm />
       </section>

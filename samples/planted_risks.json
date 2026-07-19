@@ -1,0 +1,301 @@
+{
+  "seed": 42,
+  "dataset": "ey_expense_demo_3k.csv",
+  "rowCount": 3000,
+  "planted": [
+    {
+      "id": "plant-dup-1",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "1",
+        "2"
+      ],
+      "vendor": "DupVendor-01",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-2",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "3",
+        "4"
+      ],
+      "vendor": "DupVendor-02",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-3",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "5",
+        "6"
+      ],
+      "vendor": "DupVendor-03",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-4",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "7",
+        "8"
+      ],
+      "vendor": "DupVendor-04",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-5",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "9",
+        "10"
+      ],
+      "vendor": "DupVendor-05",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-6",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "11",
+        "12"
+      ],
+      "vendor": "DupVendor-06",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-7",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "13",
+        "14"
+      ],
+      "vendor": "DupVendor-07",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-dup-8",
+      "ruleId": "duplicate_payment",
+      "severity": "high",
+      "transactionIds": [
+        "15",
+        "16"
+      ],
+      "vendor": "DupVendor-08",
+      "talkTrack": "同供应商同金额同发票号出现 2 笔，典型重复付款红旗。"
+    },
+    {
+      "id": "plant-na-1",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "17"
+      ],
+      "vendor": "NoAppr-01",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-2",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "18"
+      ],
+      "vendor": "NoAppr-02",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-3",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "19"
+      ],
+      "vendor": "NoAppr-03",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-4",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "20"
+      ],
+      "vendor": "NoAppr-04",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-5",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "21"
+      ],
+      "vendor": "NoAppr-05",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-6",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "22"
+      ],
+      "vendor": "NoAppr-06",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-7",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "23"
+      ],
+      "vendor": "NoAppr-07",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-8",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "24"
+      ],
+      "vendor": "NoAppr-08",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-9",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "25"
+      ],
+      "vendor": "NoAppr-09",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-na-10",
+      "ruleId": "missing_approval",
+      "severity": "high",
+      "transactionIds": [
+        "26"
+      ],
+      "vendor": "NoAppr-10",
+      "talkTrack": "金额超过审批阈值 10000 且无审批人。"
+    },
+    {
+      "id": "plant-split-1",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "27",
+        "28"
+      ],
+      "vendor": "SplitCo-01",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-2",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "29",
+        "30"
+      ],
+      "vendor": "SplitCo-02",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-3",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "31",
+        "32"
+      ],
+      "vendor": "SplitCo-03",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-4",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "33",
+        "34"
+      ],
+      "vendor": "SplitCo-04",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-5",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "35",
+        "36"
+      ],
+      "vendor": "SplitCo-05",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-split-6",
+      "ruleId": "split_expense",
+      "severity": "medium",
+      "transactionIds": [
+        "37",
+        "38"
+      ],
+      "vendor": "SplitCo-06",
+      "talkTrack": "两笔贴边低于 10000，疑似拆分规避审批。"
+    },
+    {
+      "id": "plant-abn-1",
+      "ruleId": "abnormal_amount",
+      "severity": "medium",
+      "transactionIds": [
+        "39"
+      ],
+      "vendor": "MegaPay-01",
+      "talkTrack": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-2",
+      "ruleId": "abnormal_amount",
+      "severity": "medium",
+      "transactionIds": [
+        "40"
+      ],
+      "vendor": "MegaPay-02",
+      "talkTrack": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-3",
+      "ruleId": "abnormal_amount",
+      "severity": "medium",
+      "transactionIds": [
+        "41"
+      ],
+      "vendor": "MegaPay-03",
+      "talkTrack": "金额相对总体均值显著离群（z-score）。"
+    },
+    {
+      "id": "plant-abn-4",
+      "ruleId": "abnormal_amount",
+      "severity": "medium",
+      "transactionIds": [
+        "42"
+      ],
+      "vendor": "MegaPay-04",
+      "talkTrack": "金额相对总体均值显著离群（z-score）。"
+    }
+  ]
+}

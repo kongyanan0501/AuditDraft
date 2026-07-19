@@ -179,3 +179,26 @@ npm run dev         # 本地启动 http://localhost:3000
 - [ ] 底稿模板格式标准（事务所是否有既定模板）
 - [x] 是否引入测试框架（Vitest）作为规则引擎/解析器的回归保障 → 阶段2 已引入 Vitest（`npm run test`）
 - [x] 长任务执行方式（同步 API vs 队列/后台 job）→ 阶段3 决策：API 触发 + detached 异步 + 状态机轮询；Serverless 限额场景后续换队列
+
+---
+
+## 阶段 EY · 安永华明 AI 赛冲击第一
+
+> 完整方向见 [`docs/ey-first-place-roadmap.md`](./docs/ey-first-place-roadmap.md)。  
+> 包 A 可开工任务见 [`docs/ey-package-a-tasks.md`](./docs/ey-package-a-tasks.md)。  
+> 执行顺序：包 A 可信 → 包 B 像安永 → 包 C 制胜差异。
+
+### 包 A · 可信（进行中）
+
+- [ ] A1 大数据演示集（已交付，待你 Check → 见 `docs/ey-package-a-tasks.md` §A1）
+- [ ] A2 Golden Set + `npm run eval:golden`（Precision/Recall，不依赖 LLM）
+- [ ] A3 Eval 页（指标卡 + 人工 vs 系统对比）
+- [ ] A4 规则-only 降级模式（无 LLM 也能 done）
+- [ ] A5 预计算快照 / 预跑 done 任务兜底
+- [ ] A6 安永版演示脚本 + runbook 干跑
+- [ ] 包 A DoD：见 `ey-package-a-tasks.md` 完成定义
+
+### 包 B / C（包 A 完成后再拆）
+
+- [ ] 包 B：重要性参数 + Review 复核流 + 事务所版式底稿 + 程序建议 + RAI/审计轨迹
+- [ ] 包 C：纯 LLM 对照墙 + 规则调参台 + 多源勾稽 + 评委挑战模式 + 试点方案页

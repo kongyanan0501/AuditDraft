@@ -12,7 +12,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:env": "node --env-file-if-exists=.env.local scripts/check-env.ts",
-    "seed:rag": "node --env-file-if-exists=.env.local scripts/seed-rag.ts"
+    "seed:rag": "node --env-file-if-exists=.env.local scripts/seed-rag.ts",
+    "generate:demo-data": "node scripts/generate-demo-dataset.ts",
+    "assert:planted": "node scripts/assert-planted-risks.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",
