@@ -92,9 +92,13 @@ describe("LangGraph 审计流程（mock LLM，无网络调用）", () => {
     expect(result.workpaper).toContain("降级");
     expect(result.report?.meta?.degraded).toBe(true);
     expect(result.report?.meta?.llmSkipped).toBe(true);
+    expect(result.report?.meta?.rulesetVersion).toBe("rules-v1");
+    expect(result.report?.meta?.trail?.length).toBeGreaterThan(0);
     for (const f of result.report!.findings) {
       expect(f.triggeredRule).toBeTruthy();
       expect(f.evidence).toBeDefined();
+      expect(f.findingId).toBeTruthy();
+      expect(f.recommendedProcedures?.length).toBeGreaterThan(0);
     }
   });
 });

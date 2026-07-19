@@ -7,6 +7,7 @@ import { ReportViewer } from "@/components/audit/report-viewer";
 import { RiskCards } from "@/components/audit/risk-card";
 import { WorkflowTracker } from "@/components/audit/workflow-tracker";
 import { SEVERITY } from "@/components/audit/severity";
+import { enrichFindings } from "@/lib/audit/finalizeReport";
 import type { DemoSnapshotFile } from "@/lib/eval/buildDemoSnapshot";
 import type { RiskLevel } from "@/types/audit";
 
@@ -49,7 +50,7 @@ export default function DemoSnapshotPage() {
     );
   }
 
-  const findings = snap.report.findings;
+  const findings = enrichFindings(snap.report.findings);
   const counts = RISK_ORDER.map((level) => ({
     level,
     n: findings.filter((f) => f.severity === level).length,

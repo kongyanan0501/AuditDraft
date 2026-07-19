@@ -11,6 +11,7 @@ const PROTECTED_PREFIXES = [
   "/reports",
   "/eval",
   "/demo",
+  "/governance",
   "/rag",
   "/account",
 ];

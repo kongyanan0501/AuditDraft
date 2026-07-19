@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { finalizeReport } from "@/lib/audit/finalizeReport";
 import { exportReport, type ExportFormat } from "@/lib/export";
 import { getReportByJobId, requireUser } from "@/lib/supabase/repository";
 
@@ -28,7 +29,11 @@ export async function GET(
       );
     }
 
-    const file = await exportReport(row.report_json, format);
+    const report = finalizeReport(row.report_json, {
+      trailEvent: "export_requested",
+      trailDetail: format,
+    });
+    const file = await exportReport(report, format);
     return new Response(new Uint8Array(file.buffer), {
       headers: {
         "Content-Type": file.contentType,

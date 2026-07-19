@@ -8,6 +8,8 @@ import {
 import { runRules } from "@/lib/rules";
 import type { AuditFinding, AuditReport, RiskLevel } from "@/types/audit";
 
+import { finalizeReport } from "@/lib/audit/finalizeReport";
+
 import { buildRulesOnlyWorkpaper } from "./degraded-workpaper";
 import { parseCsv } from "./parse";
 import type { AuditState } from "./state";
@@ -164,7 +166,7 @@ export function createNodes(deps: AuditGraphDeps) {
   async function reportExport(
     state: AuditState,
   ): Promise<Partial<AuditState>> {
-    const report: AuditReport = {
+    const draft: AuditReport = {
       jobId: state.jobId,
       riskLevel: state.riskLevel,
       findings: state.findings,
@@ -173,7 +175,13 @@ export function createNodes(deps: AuditGraphDeps) {
         ? { degraded: true, llmSkipped: true, mode: "rules_only" }
         : { degraded: false, llmSkipped: false, mode: "full" },
     };
-    return { report };
+    const report = finalizeReport(draft, {
+      trailEvent: "workflow_completed",
+      trailDetail: degraded
+        ? "rules_only degraded path"
+        : "full LLM+RAG path",
+    });
+    return { report, findings: report.findings };
   }
 
   return {

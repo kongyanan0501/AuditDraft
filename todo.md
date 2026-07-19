@@ -198,7 +198,16 @@ npm run dev         # 本地启动 http://localhost:3000
 - [ ] A6 安永版演示脚本（已交付，待 Check：`docs/demo-script-ey.md` 干跑）
 - [ ] 包 A DoD：A5/A6 Check 通过后勾选，见 `ey-package-a-tasks.md`
 
-### 包 B / C（包 A 完成后再拆）
+### 包 B · 像安永（已交付，待 Check）
 
-- [ ] 包 B：重要性参数 + Review 复核流 + 事务所版式底稿 + 程序建议 + RAI/审计轨迹
+> 清单：[`docs/ey-package-b-tasks.md`](./docs/ey-package-b-tasks.md)
+
+- [ ] B1 重要性参数（任务页可见 PM / trivial；finding 有 materialityImpact）
+- [ ] B2 Review 复核流（风险卡改状态 + 高风险门闩提示）
+- [ ] B3 事务所版式 Word（封面/索引/程序/免责）
+- [ ] B4 建议审计程序（风险卡展开可见）
+- [ ] B5 `/governance` 系统卡 + 报告 trail / rulesetVersion
+
+### 包 C（包 B Check 后再拆）
+
 - [ ] 包 C：纯 LLM 对照墙 + 规则调参台 + 多源勾稽 + 评委挑战模式 + 试点方案页

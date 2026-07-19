@@ -1,6 +1,12 @@
 import "server-only";
 
-import type { AuditReport, JobStatus, RiskLevel } from "@/types/audit";
+import { enrichFindings } from "@/lib/audit/finalizeReport";
+import type {
+  AuditReport,
+  JobStatus,
+  ReviewerStatus,
+  RiskLevel,
+} from "@/types/audit";
 import { createClient } from "./server";
 import {
   AUDIT_UPLOADS_BUCKET,
@@ -167,6 +173,50 @@ export async function saveReport(input: {
     throw new RepositoryError("saveReport", error?.message ?? "无返回数据");
   }
   return data;
+}
+
+/** Update one finding's reviewerStatus on the latest report for a job (RLS). */
+export async function updateFindingReviewStatus(input: {
+  jobId: string;
+  findingId: string;
+  status: ReviewerStatus;
+}): Promise<AuditReport> {
+  const row = await getReportByJobId(input.jobId);
+  if (!row) throw new RepositoryError("updateFindingReviewStatus", "报告不存在");
+
+  const report = row.report_json as AuditReport;
+  const findings = enrichFindings(report.findings).map((f) =>
+    f.findingId === input.findingId
+      ? { ...f, reviewerStatus: input.status }
+      : f,
+  );
+  const at = new Date().toISOString();
+  const next: AuditReport = {
+    ...report,
+    findings,
+    meta: {
+      ...report.meta,
+      trail: [
+        ...(report.meta?.trail ?? []),
+        {
+          at,
+          event: "review_status_updated",
+          detail: `${input.findingId} → ${input.status}`,
+        },
+      ],
+    },
+  };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("audit_reports")
+    .update({ report_json: next })
+    .eq("id", row.id);
+
+  if (error) {
+    throw new RepositoryError("updateFindingReviewStatus", error.message);
+  }
+  return next;
 }
 
 /** 落库解析后的原始交易数据（parseData 产出）。 */

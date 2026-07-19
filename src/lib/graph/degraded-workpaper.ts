@@ -44,16 +44,30 @@ export function buildRulesOnlyWorkpaper(input: {
     });
   }
 
+  lines.push("## 4. 工作底稿索引（例外）", "");
+  if (findings.length === 0) {
+    lines.push("无。", "");
+  } else {
+    findings.forEach((f, i) => {
+      lines.push(
+        `- A-${i + 1} ← ${f.findingId ?? `F-${i + 1}`} · ${f.riskType} · ${f.severity}`,
+      );
+    });
+    lines.push("");
+  }
+
   lines.push(
-    "## 4. 待 LLM 增强的章节（占位）",
+    "## 5. 待 LLM 增强的章节（占位）",
     "",
     "- 详细审计计划叙述",
     "- 内控评价与建议的自然语言扩写",
     "- 合伙人摘要润色",
     "",
-    "## 5. 结论",
+    "## 6. 结论与免责",
     "",
     "规则引擎已完成可复现的硬性检测。建议对 high 级事项执行进一步查证程序，并在完整模式下（关闭降级）生成正式底稿文本。",
+    "",
+    "**AI-assisted draft — subject to engagement review.** 不构成审计意见。",
     "",
   );
 

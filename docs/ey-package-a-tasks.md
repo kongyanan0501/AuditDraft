@@ -14,8 +14,8 @@
 | A2 Golden Set 评测 | `checked` | [x] |
 | A3 Eval 对比页 | `checked` | [x] |
 | A4 规则-only 降级 | `checked` | [x] |
-| A5 演示快照兜底 | `done_awaiting_check` | [ ] |
-| A6 安永演示脚本 | `done_awaiting_check` | [ ] |
+| A5 演示快照兜底 | `checked` | [x] |
+| A6 安永演示脚本 | `checked` | [x] |
 
 > 状态约定：`pending` → `in_progress` → `done_awaiting_check` → `checked`（你勾选后）
 

@@ -12,6 +12,10 @@ export type RiskType =
   | "split_expense"
   | "abnormal_amount";
 
+export type ReviewerStatus = "open" | "cleared" | "exception";
+
+export type MaterialityImpact = "trivial" | "below_pm" | "above_pm";
+
 /**
  * 可解释审计结论。任何风险结论都必须可序列化为该结构：
  * 禁止产出没有 triggeredRule / evidence 支撑的结论。
@@ -27,6 +31,13 @@ export interface AuditFinding {
   standardRef?: string;
   /** 自然语言解释 */
   explanation: string;
+  /** Stable id for review workflow */
+  findingId?: string;
+  rulesetVersion?: string;
+  recommendedProcedures?: string[];
+  materialityImpact?: MaterialityImpact;
+  reviewerStatus?: ReviewerStatus;
+  fraudRiskFlag?: boolean;
 }
 
 /** 一次审计任务的结构化交易记录（parseData 产出） */
@@ -39,6 +50,18 @@ export interface Transaction {
   [key: string]: unknown;
 }
 
+export type AuditTrailEvent = {
+  at: string;
+  event: string;
+  detail?: string;
+};
+
+export type MaterialityConfig = {
+  planningMateriality: number;
+  performanceMateriality: number;
+  trivialThreshold: number;
+};
+
 /** 最终落库到 audit_reports.report_json 的结构 */
 export interface AuditReport {
   jobId: string;
@@ -46,10 +69,13 @@ export interface AuditReport {
   findings: AuditFinding[];
   /** 生成的审计底稿文本（Markdown / 富文本） */
   workpaper: string;
-  /** 运行元数据（如规则-only 降级） */
+  /** 运行元数据（降级 / 版本 / 重要性 / 轨迹） */
   meta?: {
     degraded?: boolean;
     llmSkipped?: boolean;
     mode?: "full" | "rules_only";
+    rulesetVersion?: string;
+    materiality?: MaterialityConfig;
+    trail?: AuditTrailEvent[];
   };
 }
