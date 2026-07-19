@@ -63,10 +63,6 @@ export default function PilotPage() {
         <Link href="/governance" className="underline">
           治理
         </Link>
-        {" · "}
-        <Link href="/contrast" className="underline">
-          方法对比
-        </Link>
       </p>
     </div>
   );

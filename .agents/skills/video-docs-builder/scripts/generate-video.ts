@@ -88,6 +88,96 @@ const CURSOR_SCRIPT = `
 })();
 `;
 
+// ── Spotlight: Playwright resolves selectors; we only paint the overlay. ───
+async function applyHighlight(page: Page, step: FlowStep): Promise<void> {
+  const sel = step.highlight ?? step.selector ?? step.wait_for;
+  if (!sel || sel.startsWith('http')) return;
+  if (sel === 'text=上传成功' || sel === 'text=已完成') return;
+
+  const loc = page.locator(sel).first();
+  try {
+    await loc.waitFor({ state: 'visible', timeout: 4000 });
+    await loc.scrollIntoViewIfNeeded();
+  } catch {
+    console.warn(`   ⚠️  highlight miss (not visible): ${sel}`);
+    return;
+  }
+
+  const box = await loc.boundingBox();
+  if (!box || box.width < 2 || box.height < 2) {
+    console.warn(`   ⚠️  highlight miss (no box): ${sel}`);
+    return;
+  }
+
+  const label = step.highlight_label ?? null;
+  await page.evaluate(
+    ({ box, label }) => {
+      const PAD = 10;
+      const top = Math.max(8, box.y - PAD);
+      const left = Math.max(8, box.x - PAD);
+      const width = Math.min(window.innerWidth - left - 8, box.width + PAD * 2);
+      const height = Math.min(window.innerHeight - top - 8, box.height + PAD * 2);
+
+      let style = document.getElementById('__demo_hl_style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = '__demo_hl_style';
+        style.textContent = `
+          #__demo_hl_root { pointer-events: none; position: fixed; inset: 0; z-index: 2147483640; }
+          #__demo_hl_hole {
+            position: absolute; border: 2.5px solid #f59e0b; border-radius: 10px;
+            box-shadow: 0 0 0 9999px rgba(15,23,42,0.55), 0 0 0 3px rgba(245,158,11,0.35), 0 8px 28px rgba(0,0,0,0.35);
+            background: transparent;
+          }
+          #__demo_hl_label {
+            position: absolute; max-width: min(360px, 70vw); padding: 6px 12px; border-radius: 6px;
+            background: #111827; color: #f8fafc;
+            font: 600 13px/1.35 ui-sans-serif, system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.35); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+          }`;
+        document.documentElement.appendChild(style);
+      }
+
+      let root = document.getElementById('__demo_hl_root');
+      if (!root) {
+        root = document.createElement('div');
+        root.id = '__demo_hl_root';
+        root.innerHTML = '<div id="__demo_hl_hole"></div><div id="__demo_hl_label"></div>';
+        document.body.appendChild(root);
+      }
+      root.style.display = 'block';
+      const hole = root.querySelector('#__demo_hl_hole') as HTMLElement;
+      const lab = root.querySelector('#__demo_hl_label') as HTMLElement;
+      hole.style.top = `${top}px`;
+      hole.style.left = `${left}px`;
+      hole.style.width = `${width}px`;
+      hole.style.height = `${height}px`;
+      if (label) {
+        lab.style.display = 'block';
+        lab.textContent = label;
+        let labTop = top - 36;
+        if (labTop < 8) labTop = top + height + 10;
+        lab.style.top = `${labTop}px`;
+        lab.style.left = `${Math.min(left, window.innerWidth - 200)}px`;
+      } else {
+        lab.style.display = 'none';
+      }
+    },
+    { box, label },
+  );
+
+  console.log(`   🔦 highlight → ${sel}${label ? ` (${label})` : ''}`);
+}
+
+async function clearHighlight(page: Page): Promise<void> {
+  await page
+    .evaluate(() => {
+      const root = document.getElementById('__demo_hl_root');
+      if (root) root.style.display = 'none';
+    })
+    .catch(() => {});
+}
+
 // ── Mailpit: extract 6-digit verification code ─────────────────────────────
 async function extractMailpitCode(mailpitUrl: string, toEmail: string): Promise<string> {
   const listUrl = `${mailpitUrl}/api/v1/messages`;
@@ -141,8 +231,9 @@ async function executeStep(page: Page, step: FlowStep | SetupStep, variables: Re
     }
     case 'click': {
       const flowStep = step as FlowStep;
-      await locator(step.selector!, flowStep.nth).waitFor({ timeout: 8000 });
-      await locator(step.selector!, flowStep.nth).click();
+      const clickTimeout = flowStep.wait_timeout_ms ?? 8000;
+      await locator(step.selector!, flowStep.nth).waitFor({ timeout: clickTimeout });
+      await locator(step.selector!, flowStep.nth).click({ timeout: clickTimeout });
       console.log(`   📍 ${page.url()}`);
       break;
     }
@@ -336,9 +427,14 @@ async function main(): Promise<void> {
 
     const narrationMs = (step.audio_duration_ms ?? 0) + (step.narration ? 500 : 0);
     if (narrationMs > 0) {
+      // Spotlight the region being explained while narration plays
+      if (step.narration) await applyHighlight(page, step);
       console.log(`   ⏸  ${(narrationMs / 1000).toFixed(1)}s narration pause`);
       await page.waitForTimeout(narrationMs);
+      await clearHighlight(page);
       actualCursor += narrationMs;
+    } else {
+      await clearHighlight(page);
     }
 
     if (step.narration) {

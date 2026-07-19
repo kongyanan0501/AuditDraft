@@ -213,3 +213,9 @@ npm run dev         # 本地启动 http://localhost:3000
 - [ ] C3 `/reconcile` 报销↔付款
 - [ ] C4 `/challenge` 评委挑战
 - [ ] C5 `/pilot` 试点一页纸
+
+### 路演表达（PPT）
+
+- [x] 演讲稿 [`docs/ey-pitch-script.md`](./docs/ey-pitch-script.md)（含 5–6 分钟版 / 3 分钟压缩版 / 追问速查）
+- [x] 正式 PPT [`docs/pitch/AuditDraft-EY-Pitch.pptx`](./docs/pitch/AuditDraft-EY-Pitch.pptx)（13 页 + 演讲者备注；用 Anthropic `pptx` skill 生成）
+- [ ] 赛前干跑：PPT → Demo 连贯演练 1 次（对照 `demo-script-ey.md`）

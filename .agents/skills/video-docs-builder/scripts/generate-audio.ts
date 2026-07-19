@@ -117,6 +117,22 @@ function resolveVoices(lang: string | undefined) {
 }
 
 // ── Edge TTS (Microsoft; free CLI via `pip install edge-tts`) ────────────────
+/**
+ * Force hang (háng) readings for table/row senses of 行.
+ * Edge TTS often defaults to xíng; rewrite ambiguous phrases before synthesis.
+ */
+function normalizeChinesePolyphones(text: string): string {
+  return text
+    .replace(/行级/g, '记录级')
+    .replace(/明细行/g, '明细记录')
+    .replace(/原始行/g, '原始记录')
+    .replace(/数据行/g, '数据记录')
+    .replace(/几千行/g, '几千条')
+    .replace(/三千行/g, '三千条')
+    .replace(/上万行/g, '上万条')
+    .replace(/(\d+)行/g, '$1条');
+}
+
 async function generateEdge(text: string, outputPath: string, voiceName: string): Promise<void> {
   const { spawnSync } = await import('child_process');
   const edgeBin =
@@ -125,7 +141,8 @@ async function generateEdge(text: string, outputPath: string, voiceName: string)
   // Rate e.g. +20% / +30%; pitch e.g. -5Hz (optional).
   const rate = process.env.EDGE_TTS_RATE ?? '+20%';
   const pitch = process.env.EDGE_TTS_PITCH;
-  const args = ['--voice', voiceName, '--rate', rate, '--text', text, '--write-media', outputPath];
+  const spoken = normalizeChinesePolyphones(text);
+  const args = ['--voice', voiceName, '--rate', rate, '--text', spoken, '--write-media', outputPath];
   if (pitch) args.splice(4, 0, '--pitch', pitch);
   const result = spawnSync(edgeBin, args, { encoding: 'utf-8', timeout: 60000 });
   if (result.status !== 0) {

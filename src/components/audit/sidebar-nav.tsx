@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowLeftRight,
   BookOpen,
   FileText,
   FlaskConical,
@@ -29,7 +28,6 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", label: "任务 Jobs", icon: LayoutDashboard },
   { href: "/reports", label: "报告 Reports", icon: FileText },
   { href: "/eval", label: "质量评测", icon: FlaskConical },
-  { href: "/contrast", label: "方法对比", icon: ArrowLeftRight },
   { href: "/settings/rules", label: "规则参数", icon: Settings2 },
   { href: "/reconcile", label: "多源勾稽", icon: GitCompare },
   { href: "/challenge", label: "即时分析", icon: Swords },

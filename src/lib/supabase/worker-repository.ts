@@ -57,7 +57,13 @@ export async function workerSaveReport(input: {
     report_json: input.report,
     risk_level: input.report.riskLevel,
   });
-  if (error) throw new WorkerRepositoryError("workerSaveReport", error.message);
+  if (error) {
+    const hint =
+      /job_id/i.test(error.message) && /schema|does not exist|42703/i.test(error.message)
+        ? " — 线上 audit_reports 仍是旧结构(task_id/content)。请在 Supabase SQL Editor 执行 supabase/migrations/0004_fix_audit_reports_schema.sql 后重试。"
+        : "";
+    throw new WorkerRepositoryError("workerSaveReport", error.message + hint);
+  }
 }
 
 export async function workerSaveRawData(input: {

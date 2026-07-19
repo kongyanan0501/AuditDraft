@@ -75,6 +75,13 @@ export interface FlowStep {
   /** Narration text converted to voice. Omit for silent steps. */
   narration?: string;
   /**
+   * CSS/Playwright selector to spotlight during narration (dim rest of page).
+   * Falls back to `selector` / `wait_for` when omitted.
+   */
+  highlight?: string;
+  /** Short label shown near the spotlight (optional). */
+  highlight_label?: string;
+  /**
    * Milliseconds to wait AFTER the action completes (and after wait_for resolves)
    * before the narration audio starts. Allows UI animations/transitions to finish.
    */

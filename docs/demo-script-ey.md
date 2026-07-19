@@ -2,7 +2,8 @@
 
 > 目标时长 **3–5 分钟**。  
 > 统一口径：**费用循环 AI 协审**（初筛 + 可复核草稿底稿），**不替代**注册会计师判断。  
-> 赛前检查：[`ey-demo-runbook.md`](./ey-demo-runbook.md)
+> 赛前检查：[`ey-demo-runbook.md`](./ey-demo-runbook.md)  
+> 路演 PPT + 讲稿：[`ey-pitch-script.md`](./ey-pitch-script.md) · [`pitch/AuditDraft-EY-Pitch.pptx`](./pitch/AuditDraft-EY-Pitch.pptx)
 
 ---
 
@@ -50,8 +51,7 @@
 - 话术：「离线 Golden Set：召回 / 精确率有数字，且不依赖大模型。  
   旁边是人工 vs 系统耗时与命中对比——实用性用证据说话。」
 
-### Step 6b · 对照墙 / 调参 / 勾稽（选讲 20s）
-- `/contrast`：纯 LLM vs 本系统  
+### Step 6b · 调参 / 勾稽（选讲 20s）
 - `/settings/rules`：改审批阈值，findings 即时变  
 - `/reconcile`：报销↔付款多源勾稽  
 - 被点名挑战：`/challenge` 上传评委 CSV
